@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 
-class Nav extends Component {
+class Tips extends Component {
     constructor(props) {
         super(props);
     }
@@ -37,5 +37,5 @@ class Nav extends Component {
     }
 }
 
-export default Nav
+export default Tips
 
