@@ -1,7 +1,7 @@
 react-scheduler
 ========================
 
-A scheduler and resource planning component built for React and made for modern browsers (IE10+) and uses flexbox and table layouts.
+A scheduler and resource planning component built for React and made for modern browsers (IE10+) .
 
 Inspired by [Full Calendar Scheduler](https://fullcalendar.io/scheduler/).
 
