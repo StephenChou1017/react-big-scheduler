@@ -3,7 +3,7 @@ import moment from 'moment'
 import 'moment/locale/zh-cn'
 import AgendaEventItem from './AgendaEventItem'
 import {DATE_FORMAT} from './Scheduler'
-import './style.css'
+import './Scheduler.css'
 
 class AgendaResourceEvents extends Component {
     constructor(props) {

@@ -30,7 +30,11 @@
   "licenses": "MIT",
   "config": {},
   "scripts": {
-    "example": "webpack-dev-server --config ./example/webpack.config.js --hot"
+    "clean": "rimraf ./dist && mkdir dist",
+    "clean-test": "rimraf ./test && mkdir test",
+    "prebuild": "npm run clean-test",
+    "build": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.config.js",
+    "example": "webpack-dev-server --config ./webpack/webpack-dev.config.js --hot"
   },
   "pre-commit": [
     "lint"
@@ -54,18 +58,19 @@
     "babel-preset-es2015": "6.24.0",
     "babel-preset-react": "6.23.0",
     "babel-preset-stage-0": "6.22.0",
+    "cross-env": "^5.1.3",
     "css-loader": "^0.27.3",
     "eslint": "3.18.0",
     "eslint-plugin-react": "6.10.2",
     "json-loader": "0.5.4",
     "mocha": "3.2.0",
     "mocha-babel": "3.0.3",
+    "node-sass": "^4.7.2",
     "react-hot-loader": "^1.3.1",
     "react-redux": "^4.4.5",
     "react-router": "^3.0.0",
     "react-router-redux": "^4.0.7",
     "sass-loader": "6.0.3",
-    "node-sass": "^4.7.2",
     "style-loader": "0.14.1",
     "url-loader": "0.5.8",
     "webpack": "2.2.1",

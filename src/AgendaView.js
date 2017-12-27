@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import AgendaResourceEvents from './AgendaResourceEvents'
-import './style.css'
+import './Scheduler.css'
 
 class AgendaView extends Component {
     constructor(props) {

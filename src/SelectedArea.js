@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import './style.css'
+import './Scheduler.css'
 
 class SelectedArea extends Component {
     constructor(props){

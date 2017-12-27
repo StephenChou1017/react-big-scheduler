@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import {SummaryPos} from './Scheduler'
-import './style.css'
+import './Scheduler.css'
 
 class Summary extends Component {
     constructor(props) {

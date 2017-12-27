@@ -4,7 +4,7 @@ import moment from 'moment'
 import 'moment/locale/zh-cn'
 import EventItemPopover from './EventItemPopover'
 import {ViewTypes, DATETIME_FORMAT} from './Scheduler'
-import './style.css'
+import './Scheduler.css'
 
 class EventItem extends Component {
     constructor(props) {

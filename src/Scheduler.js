@@ -15,7 +15,7 @@ import ViewTypes from './ViewTypes'
 import SummaryPos from './SummaryPos'
 import SchedulerData from './SchedulerData'
 import DemoData from './DemoData'
-import './style.css'
+import './Scheduler.css'
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 const {Calendar} = DatePicker;

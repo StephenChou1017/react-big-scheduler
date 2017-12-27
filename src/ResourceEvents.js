@@ -6,7 +6,7 @@ import Summary from './Summary'
 import SelectedArea from './SelectedArea'
 import {ViewTypes, DATETIME_FORMAT, SummaryPos} from './Scheduler'
 import {getPos} from './Util'
-import './style.css'
+import './Scheduler.css'
 
 class ResourceEvents extends Component {
 
