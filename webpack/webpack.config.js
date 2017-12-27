@@ -27,7 +27,19 @@ module.exports = {
         //    template: root + "/example/index.html"
         //}),
         new webpack.optimize.OccurrenceOrderPlugin(),
-        new webpack.optimize.UglifyJsPlugin(),
-        //new ExtractTextPlugin("style.css")
+        new webpack.optimize.UglifyJsPlugin({
+            output: {
+                comments: false,  // remove all comments
+            },
+            compress: {
+                warnings: false
+            }
+        }),
+        new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+            },
+        }),
+        //new ExtractTextPlugin("bundle.css")
     ]
 };
