@@ -33,8 +33,10 @@
     "clean": "rimraf ./dist && mkdir dist",
     "clean-test": "rimraf ./test && mkdir test",
     "prebuild": "npm run clean-test",
+    "build-dll": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.dll.config.js",
     "build": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.config.js",
-    "example": "webpack-dev-server --config ./webpack/webpack-dev.config.js --hot"
+    "example": "webpack-dev-server --config ./webpack/webpack-dev.config.js --hot",
+    "analyz": "cross-env NODE_ENV=production npm_config_report=true npm run build"
   },
   "pre-commit": [
     "lint"
@@ -74,6 +76,7 @@
     "style-loader": "0.14.1",
     "url-loader": "0.5.8",
     "webpack": "2.2.1",
+    "webpack-bundle-analyzer": "^2.9.1",
     "webpack-dev-server": "2.4.2"
   }
 }
