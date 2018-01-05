@@ -4,7 +4,7 @@ import 'moment/locale/zh-cn';
 import {DragDropContext} from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 import {Row, Col} from 'antd'
-import Scheduler, {SchedulerData, ViewTypes, DnDSource, DATE_FORMAT, DemoData} from '../src/Scheduler'
+import Scheduler, {SchedulerData, ViewTypes, DnDSource, DATE_FORMAT, DemoData} from '../src/index'
 import {DnDTypes} from './DnDTypes'
 import TaskItem from './TaskItem'
 import TaskList from './TaskList'

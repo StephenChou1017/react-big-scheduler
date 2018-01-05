@@ -4,9 +4,8 @@ import 'moment/locale/zh-cn'
 import AddMore from './AddMore'
 import Summary from './Summary'
 import SelectedArea from './SelectedArea'
-import {ViewTypes, DATETIME_FORMAT, SummaryPos} from './Scheduler'
+import {ViewTypes, DATETIME_FORMAT, SummaryPos} from './index'
 import {getPos} from './Util'
-import './Scheduler.css'
 
 class ResourceEvents extends Component {
 

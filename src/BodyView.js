@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react'
-import './Scheduler.css'
 
 class BodyView extends Component {
 

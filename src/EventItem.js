@@ -3,8 +3,7 @@ import {Popover} from 'antd';
 import moment from 'moment'
 import 'moment/locale/zh-cn'
 import EventItemPopover from './EventItemPopover'
-import {ViewTypes, DATETIME_FORMAT} from './Scheduler'
-import './Scheduler.css'
+import {ViewTypes, DATETIME_FORMAT} from './index'
 
 class EventItem extends Component {
     constructor(props) {

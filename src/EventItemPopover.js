@@ -2,7 +2,6 @@ import React, {Component, PropTypes} from 'react'
 import {Row, Col} from 'antd'
 import moment from 'moment'
 import 'moment/locale/zh-cn'
-import './Scheduler.css'
 
 class EventItemPopover extends Component {
     constructor(props) {

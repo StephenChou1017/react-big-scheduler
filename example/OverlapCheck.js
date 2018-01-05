@@ -3,7 +3,7 @@ import moment from 'moment'
 import 'moment/locale/zh-cn';
 import {DragDropContext} from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
-import Scheduler, {SchedulerData, ViewTypes, DATE_FORMAT, DemoData} from '../src/Scheduler'
+import Scheduler, {SchedulerData, ViewTypes, DATE_FORMAT, DemoData} from '../src/index'
 import Nav from './Nav'
 
 class OverlapCheck extends Component{

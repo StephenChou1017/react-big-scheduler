@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react'
-import './Scheduler.css'
 
 class ResourceView extends Component {
 

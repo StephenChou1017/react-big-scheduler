@@ -4,7 +4,6 @@ import moment from 'moment'
 import 'moment/locale/zh-cn'
 import EventItem from './EventItem'
 import DnDSource from './DnDSource'
-import './Scheduler.css'
 
 class AddMorePopover extends Component {
     constructor(props) {

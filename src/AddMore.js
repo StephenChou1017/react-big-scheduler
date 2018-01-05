@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react'
-import './Scheduler.css'
 
 class AddMore extends Component {
     constructor(props) {

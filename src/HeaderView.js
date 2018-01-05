@@ -1,8 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import moment from 'moment'
 import 'moment/locale/zh-cn';
-import {ViewTypes} from './Scheduler'
-import './Scheduler.css'
+import {ViewTypes} from './index'
 
 class HeaderView extends Component {
 

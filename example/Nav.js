@@ -21,7 +21,7 @@ class Nav extends Component {
             <div>
                 <ul style={ulStyle}>
                     <li style={liStyle}>
-                        <span style={{fontWeight: 'bold'}}>React Scheduler</span>
+                        <span style={{fontWeight: 'bold'}}>React Big Scheduler</span>
                     </li>
                     <li style={liStyle}>
                         <Link target="_self"

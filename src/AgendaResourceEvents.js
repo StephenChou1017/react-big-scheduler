@@ -2,8 +2,7 @@ import React, {Component, PropTypes} from 'react'
 import moment from 'moment'
 import 'moment/locale/zh-cn'
 import AgendaEventItem from './AgendaEventItem'
-import {DATE_FORMAT} from './Scheduler'
-import './Scheduler.css'
+import {DATE_FORMAT} from './index'
 
 class AgendaResourceEvents extends Component {
     constructor(props) {

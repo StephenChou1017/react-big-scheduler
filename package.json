@@ -1,42 +1,40 @@
 {
-  "name": "react-scheduler",
+  "name": "react-big-scheduler",
   "version": "0.1.0",
-  "description": "React Scheduler",
+  "description": "A scheduler and resource planning component built for React and made for modern browsers (IE10+)",
   "keywords": [
-    "react",
-    "react-component",
-    "react-scheduler",
     "scheduler",
+    "react-component",
+    "react",
+    "react-big-scheduler",
     "resource planning",
     "antd"
   ],
   "files": [
-    "lib",
-    "es",
-    "assets/*.css",
-    "dist"
+    "lib/",
+    "LICENSE",
+    "README.md"
   ],
   "main": "lib/index",
-  "module": "es/index",
-  "homepage": "https://github.com/StephenChou1017/react-scheduler",
+  "homepage": "https://github.com/StephenChou1017/react-big-scheduler",
   "author": "Stephen Chou <27788280@qq.com> (https://github.com/StephenChou1017)",
   "repository": {
     "type": "git",
-    "url": "git@github.com:StephenChou1017/react-scheduler.git"
+    "url": "git@github.com:StephenChou1017/react-big-scheduler.git"
   },
   "bugs": {
-    "url": "http://github.com/StephenChou1017/react-scheduler/issues"
+    "url": "http://github.com/StephenChou1017/react-big-scheduler/issues"
   },
   "licenses": "MIT",
   "config": {},
   "scripts": {
-    "clean": "rimraf ./dist && mkdir dist",
-    "clean-test": "rimraf ./test && mkdir test",
-    "prebuild": "npm run clean-test",
-    "build-dll": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.dll.config.js",
-    "build": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.config.js",
+    "clean": "rimraf ./lib && mkdir lib",
+    "build": "npm run clean && babel src --out-dir lib && cpy src/css/style.css lib/css",
+    "clean:exampledist": "rimraf ./exampledist/static",
+    "build:exampledist": "npm run clean:exampledist && cpy src/css/style.css exampledist/static && cross-env NODE_ENV=production webpack --config ./webpack/webpack.config.js",
     "example": "webpack-dev-server --config ./webpack/webpack-dev.config.js --hot",
-    "analyz": "cross-env NODE_ENV=production npm_config_report=true npm run build"
+    "analyz": "cross-env NODE_ENV=production npm_config_report=true npm run build",
+    "build:dll": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.dll.config.js"
   },
   "pre-commit": [
     "lint"
@@ -60,6 +58,7 @@
     "babel-preset-es2015": "6.24.0",
     "babel-preset-react": "6.23.0",
     "babel-preset-stage-0": "6.22.0",
+    "cpy": "^3.4.1",
     "cross-env": "^5.1.3",
     "css-loader": "^0.27.3",
     "eslint": "3.18.0",

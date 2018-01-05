@@ -2,7 +2,7 @@ import moment from 'moment'
 import 'moment/locale/zh-cn'
 import config from './config'
 import behaviors from './behaviors'
-import {ViewTypes, DATE_FORMAT, DATETIME_FORMAT} from './Scheduler'
+import {ViewTypes, DATE_FORMAT, DATETIME_FORMAT} from './index'
 
 export default class SchedulerData {
     constructor(date=moment().format(DATE_FORMAT), viewType = ViewTypes.Week,
@@ -19,7 +19,6 @@ export default class SchedulerData {
         this.scrollToToday = false;
         this._resolveDate(0, date);
         this.config = newConfig == undefined ? config : {...config, ...newConfig};
-        console.log(this.config);
         this.behaviors = newBehaviors == undefined ? behaviors : {...behaviors, ...newBehaviors};
         this._createHeaders();
         this._createRenderData();

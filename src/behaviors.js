@@ -1,6 +1,6 @@
 import moment from 'moment'
 import 'moment/locale/zh-cn'
-import {ViewTypes} from './Scheduler'
+import {ViewTypes} from './index'
 
 //getSummaryFuncExample
 export const getSummary = (schedulerData, headerEvents, slotId, slotName, headerStart, headerEnd) => {

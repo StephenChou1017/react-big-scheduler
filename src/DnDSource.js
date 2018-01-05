@@ -1,5 +1,5 @@
 import { DragSource } from 'react-dnd'
-import {ViewTypes, DATETIME_FORMAT} from './Scheduler'
+import {ViewTypes, DATETIME_FORMAT} from './index'
 import {DnDTypes} from './DnDTypes'
 import moment from 'moment'
 import 'moment/locale/zh-cn'

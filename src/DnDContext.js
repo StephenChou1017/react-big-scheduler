@@ -1,7 +1,7 @@
 import { DropTarget } from 'react-dnd'
 import {getPos} from './Util'
 import {DnDTypes} from './DnDTypes'
-import {ViewTypes, DATETIME_FORMAT} from './Scheduler'
+import {ViewTypes, DATETIME_FORMAT} from './index'
 import moment from 'moment'
 import 'moment/locale/zh-cn'
 
