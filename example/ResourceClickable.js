@@ -5,6 +5,7 @@ import {DragDropContext} from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 import Scheduler, {SchedulerData, ViewTypes, DATE_FORMAT, DemoData} from '../src/index'
 import Nav from './Nav'
+import ViewSrcCode from './ViewSrcCode'
 
 class Basic extends Component{
     constructor(props){
@@ -24,7 +25,7 @@ class Basic extends Component{
             <div>
                 <Nav />
                 <div>
-                    <h3 style={{textAlign: 'center'}}>Resource clickable</h3>
+                    <h3 style={{textAlign: 'center'}}>Resource clickable<ViewSrcCode srcCodeUrl="https://github.com/StephenChou1017/react-big-scheduler/blob/master/example/ResourceClickable.js" /></h3>
                     <Scheduler schedulerData={viewModel}
                                prevClick={this.prevClick}
                                nextClick={this.nextClick}

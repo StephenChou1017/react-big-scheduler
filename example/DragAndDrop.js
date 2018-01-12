@@ -11,6 +11,7 @@ import TaskList from './TaskList'
 import ResourceItem from './ResourceItem'
 import ResourceList from './ResourceList'
 import Nav from './Nav'
+import ViewSrcCode from './ViewSrcCode'
 
 class DragAndDrop extends Component{
     constructor(props){
@@ -48,7 +49,7 @@ class DragAndDrop extends Component{
             <div>
                 <Nav />
                 <div>
-                    <h3 style={{textAlign: 'center'}}>{h3}</h3>
+                    <h3 style={{textAlign: 'center'}}>{h3}<ViewSrcCode srcCodeUrl="https://github.com/StephenChou1017/react-big-scheduler/blob/master/example/DragAndDrop.js" /></h3>
                     <Row>
                         <Col span={20}>
                             <Scheduler schedulerData={viewModel}

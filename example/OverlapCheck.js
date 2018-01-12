@@ -5,6 +5,7 @@ import {DragDropContext} from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 import Scheduler, {SchedulerData, ViewTypes, DATE_FORMAT, DemoData} from '../src/index'
 import Nav from './Nav'
+import ViewSrcCode from './ViewSrcCode'
 
 class OverlapCheck extends Component{
     constructor(props){
@@ -26,7 +27,7 @@ class OverlapCheck extends Component{
             <div>
                 <Nav />
                 <div>
-                    <h3 style={{textAlign: 'center'}}>Overlap check</h3>
+                    <h3 style={{textAlign: 'center'}}>Overlap check<ViewSrcCode srcCodeUrl="https://github.com/StephenChou1017/react-big-scheduler/blob/master/example/OverlapCheck.js" /></h3>
                     <Scheduler schedulerData={viewModel}
                                prevClick={this.prevClick}
                                nextClick={this.nextClick}

@@ -21,7 +21,7 @@ class Nav extends Component {
             <div>
                 <ul style={ulStyle}>
                     <li style={liStyle}>
-                        <span style={{fontWeight: 'bold'}}>React Big Scheduler</span>
+                        <span style={{fontWeight: 'bold'}}><a href="https://github.com/StephenChou1017/react-big-scheduler" target="_blank">React Big Scheduler</a></span>
                     </li>
                     <li style={liStyle}>
                         <Link target="_self"

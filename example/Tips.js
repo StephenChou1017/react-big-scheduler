@@ -16,7 +16,7 @@ class Tips extends Component {
         };
         return (
             <div style={divStyle}>
-                <h3>Thank you for trying React Scheduler. Here are some tips:</h3>
+                <h3>Thank you for trying React Big Scheduler. Here are some tips:</h3>
                 <ul>
                     <li style={liStyle}>
                         <span style={{fontWeight: 'bold'}}>1. SchedulerData is the view model of Scheduler. For simplicity, I put it in react state object, you'd better put it in react props object when using.</span>
