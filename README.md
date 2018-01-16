@@ -20,7 +20,7 @@ import 'react-big-scheduler/lib/css/style.css'
 ...
 
 //2. create the view model, put it in the props obj
-let schedulerData = new SchedulerData("2017-12-18", ViewTypes.Week);
+let schedulerData = new SchedulerData(new moment().format(DATE_FORMAT), ViewTypes.Week);
 //set resources here or later
 let resources = [
                     {
@@ -37,7 +37,8 @@ let resources = [
                     }
                 ];
 schedulerData.setResources(resources);
-//set events here or later, the event array should be sorted in ascending order by event.start property, otherwise there will be some rendering errors
+//set events here or later, 
+//the event array should be sorted in ascending order by event.start property, otherwise there will be some rendering errors
 let events = [
                 {
                      id: 1,
@@ -86,6 +87,7 @@ schedulerData.setEvents(events);
 
 //3. render the scheduler component
 ...
+const {schedulerData} = this.props;
 <Scheduler schedulerData={schedulerData}
            prevClick={this.prevClick}
            nextClick={this.nextClick}
