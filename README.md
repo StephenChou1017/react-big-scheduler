@@ -104,3 +104,20 @@ const {schedulerData} = this.props;
 * Retrieve dependencies: `npm install`
 * Start: `npm run example`
 * Open [http://localhost:8081/example/#/](http://localhost:8081/example/#/).
+
+## API
+
+### SchedulerData
+
+SchedulerData is the view model of Scheduler, we can modify it to control the view of the Scheduler. Below is the
+ constructor function of SchedulerData: 
+ ```
+ constructor(date=moment().format(DATE_FORMAT), viewType = ViewTypes.Week,
+                 showAgenda = false, isEventPerspective = false,
+                 newConfig = undefined, newBehaviors=undefined) {
+                 ...
+     }
+ ```
+ `date` is a string in `YYYY-MM-DD` format, and is the initial date that Scheduler will render. Take the date `2017-12-20`
+ for example, Scheduler will render the time window of the week from `2017-12-18` to `2017-12-24` in `ViewTypes.Week`
+ view type, and will render the time window of the `2017-12` month in `ViewTypes.Month` view type. 
