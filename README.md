@@ -151,7 +151,33 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
   ```
   Used to set the events. the event array should be sorted in ascending order by event.start property.
   See the demo `events` in the [DemoData.js](https://github.com/StephenChou1017/react-big-scheduler/blob/master/src/DemoData.js).
-  If we use the task view, we'd better add the `groupId` and the `groupName` property to each event object, See the 
+  If we use the task view, we'd better add the `groupId` and the `groupName` property to each event object, see the 
   `eventsForTaskView` in the [DemoData.js](https://github.com/StephenChou1017/react-big-scheduler/blob/master/src/DemoData.js) for details.
+  
+  #### prev
+  ```
+  prev()
+  ```
+  Let the time window scroll to the left once. When `SchedulerData,viewType` is `ViewTypes.Month`, the time window will
+  scroll a month, when `SchedulerData,viewType` is `ViewTypes.Week`, the time window will scroll a week.
+  
+  #### next
+  ```
+  next()
+  ```
+  Let the time window scroll to the right once.
+  
+  #### setDate
+  ```
+  setDate(date=moment().format(DATE_FORMAT))
+  ```
+  Let the time window jump to the provided `date` directly.
+  
+  #### setViewType
+  ```
+  setViewType(viewType = ViewTypes.Week, showAgenda = false, isEventPerspective = false)
+  ```
+  Tell SchedulerData to change current view, the `viewType`, `showAgenda` and `isEventPerspective` group should be 
+  provided, and should be contained in the `SchedulerData.config.views` array.
   
   
