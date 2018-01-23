@@ -109,19 +109,48 @@ const {schedulerData} = this.props;
 
 ### SchedulerData
 
-SchedulerData is the view model of Scheduler, we can modify it to control the view of the Scheduler. Below is the
- constructor function of SchedulerData: 
+SchedulerData is the view model of Scheduler, we can modify it to control the view of the Scheduler. 
+
+#### constructor
+
  ```
  constructor(date=moment().format(DATE_FORMAT), viewType = ViewTypes.Week,
                  showAgenda = false, isEventPerspective = false,
-                 newConfig = undefined, newBehaviors=undefined) {
-                 ...
-     }
+                 newConfig = undefined, newBehaviors=undefined)
  ```
- * `date` is a string in `YYYY-MM-DD` format, and is the initial date that Scheduler will render. Take the date `2017-12-20`
+ * `date` is a string in `YYYY-MM-DD` format, and is the initial date Scheduler will render. Take the date `2017-12-20`
  for example, Scheduler will render the time window of the week from `2017-12-18` to `2017-12-24` in `ViewTypes.Week`
  view type, and will render the time window of the `2017-12` month in `ViewTypes.Month` view type. 
- * `viewType` is the initial view type, now Scheduler supports `Day`, `Week`, `Month`, `Year` 4 view types, and will support 
- `Quarter` later. `viewType`, `showAgenda` and `isEventPerspective` together decide which view should be rendered. 
- When `showAgenda` and `isEventPerspective` are both `false`, Scheduler will render the resource view, refer 
- to [this example](https://stephenchou1017.github.io/scheduler/#/views)
+ * `viewType` is the initial view type, now Scheduler supports `Day`, `Week`, `Month`, `Year` 4 view types, and will 
+ support `Quarter` later. `viewType`, `showAgenda` and `isEventPerspective` are a group which should be contained in 
+ the SchedulerData.config.views array, and they together decide which view should be rendered. When `showAgenda` and 
+ `isEventPerspective` are both `false`, Scheduler will render the resource view, refer 
+ to [this example](https://stephenchou1017.github.io/scheduler/#/views).
+ * `showAgenda` is a bool value, if true, Scheduler will display the agenda view of current view type.
+ * `isEventPerspective` is a bool value, if true, Scheduler will display the task view of current view type. In the 
+ resource view, every slot(row) describes how many events a resource does in the time window, while in the task view, 
+  every slot describes how many events a big task is divided into and who will make it done. Add a `groupId` and 
+  `groupName` property to every event object, so that the events having the same `groupId` will belong to the same big task and
+  be rendered in the same slot in the task view. If `groupId` and `groupName` are not provided, SchedulerData will take
+  the `id` as the `groupId`, and take the `title` as the `groupName`. See the `eventsForTaskView` in the 
+  [DemoData.js](https://github.com/StephenChou1017/react-big-scheduler/blob/master/src/DemoData.js) for details.
+  * `newConfig` is a config object, used to override the [default config](https://github.com/StephenChou1017/react-big-scheduler/blob/master/src/config.js)
+  fully or partly.
+  * `newBehaviors` is a config object, used to override the [default behaviors](https://github.com/StephenChou1017/react-big-scheduler/blob/master/src/behaviors.js)
+  fully or partly.
+  
+  #### setResources
+   ```
+   setResources(resources)
+   ```
+   Used to set the resources(the slots in the resource view). See the demo `resources` in the [DemoData.js](https://github.com/StephenChou1017/react-big-scheduler/blob/master/src/DemoData.js)
+  
+  #### setEvents
+  ```
+  setEvents(events)
+  ```
+  Used to set the events. the event array should be sorted in ascending order by event.start property.
+  See the demo `events` in the [DemoData.js](https://github.com/StephenChou1017/react-big-scheduler/blob/master/src/DemoData.js).
+  If we use the task view, we'd better add the `groupId` and the `groupName` property to each event object.
+  
+  
