@@ -373,3 +373,158 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
   getSummary(schedulerData, headerEvents, slotId, slotName, headerStart, headerEnd)
   ```
   Method that defines the summary text displayed in the Scheduler cells.
+  
+  ### Scheduler.propTypes
+  
+  #### schedulerData
+  ```
+  schedulerData: PropTypes.object.isRequired
+  ```
+  View model of the Scheduler component, provides data.
+  
+  #### prevClick
+  ```
+  prevClick: PropTypes.func.isRequired
+  prevClick(schedulerData)
+  ```
+  Callback function fired when the left point bracket '<' is clicked.
+  
+  #### nextClick
+  ```
+  nextClick: PropTypes.func.isRequired
+  nextClick(schedulerData)
+  ```
+  Callback function fired when the right point bracket '>' is clicked.
+  
+  #### onViewChange
+  ```
+  onViewChange: PropTypes.func.isRequired
+  onViewChange(schedulerData, view)
+  ```
+  Callback function fired when the Scheduler view changed. `view` is a json such as { viewType: ViewTypes.Month, 
+  showAgenda: true, isEventPerspective: false}.
+  
+  #### onSelectDate
+  ```
+  onSelectDate: PropTypes.func.isRequired
+  onSelectDate(schedulerData, date)
+  ```
+  Callback funtion fired when a new date is selected. `date` is the new selected data, a string in `YYYY-MM-DD` format.
+  
+  #### eventItemClick
+  ```
+  eventItemClick: PropTypes.func
+  eventItemClick(schedulerData, event)
+  ```
+  Callback function fired when you click an event item.
+  
+  #### updateEventStart
+  ```
+  updateEventStart: PropTypes.func
+  updateEventStart(schedulerData, event, newStart)
+  ```
+  Callback function fired when resizing the start of the `event`, `newStart` is a string in `YYYY-MM-DD HH:mm:ss` format.
+  
+  #### updateEventEnd
+  ```
+  updateEventEnd: PropTypes.func
+  updateEventEnd(schedulerData, event, newEnd)
+  ```
+  Callback function fired when resizing the end of the `event`, `newEnd` is a string in `YYYY-MM-DD HH:mm:ss` format.
+  
+  #### moveEvent
+  ```
+  moveEvent: PropTypes.func
+  moveEvent((schedulerData, event, slotId, slotName, newStart, newEnd))
+  ```
+  Callback function fired when moving the `event`. `slotId`, `slotName` are the new `id` and `name` of the slot moving into, 
+  but they won't change if the `SchedulerData.config.crossResourceMove` is `false`. `newStart`, `newEnd` are the new beginning 
+  and ending of the `event`.
+  
+  #### newEvent
+  ```
+  newEvent: PropTypes.func
+  newEvent(schedulerData, slotId, slotName, start, end, type, item)
+  ```
+  Callback function fired when creating a new event, or dragging an external item and dropping it into the resource view or task
+  view. `slotId` and `slotName` are the slot creating in or dropping into, `start`, `end` are the beginning and ending of the 
+  event. If it's a drag&drop operation, the `type` is the DnDType of DnDSource registered to Scheduler, and the `item` is the 
+  external item.
+  
+  #### customHeader
+  ```
+  customHeader: PropTypes.object
+  ```
+  Component you need to put in the Scheduler header, it could be a div or a react component.
+  
+  #### conflictOccurred
+  ```
+  conflictOccurred: PropTypes.func
+  ```
+  Callback function fired when there is a conflict. This could happen when creating, resizing or moving an event, and when  
+  `SchedulerData.config.checkConflict` is `true`.
+  
+  #### eventItemTemplateResolver
+  ```
+  eventItemTemplateResolver: PropTypes.func
+  eventItemTemplateResolver(schedulerData, event, bgColor, isStart, isEnd, mustAddCssClass, mustBeHeight)
+  ```
+  Use this function, you can customize the event style.
+  
+  #### resourceClickedFunc
+  ```
+  resourceClickedFunc: PropTypes.func
+  ```
+  If it's set, resources will be clickable, and will fire this function when a resource is clicked.
+  
+  #### dndSources
+  ```
+  dndSources: PropTypes.array
+  ```
+  DnDSource array that registered to Scheduler. Use [DnDSource](https://github.com/StephenChou1017/react-big-scheduler/blob/master/src/DnDSource.js), we can simplify the drag and drop coding in React-Big-Scheduler.
+  
+  #### onSetAddMoreState
+  ```
+  onSetAddMoreState: PropTypes.func
+  onSetAddMoreState(newState)
+  ```
+  Callback function fired when a '+N more' is clicked, is used to control the visibility and the position of the `AddMorePopover`.
+  `newState` is a json such as {headerItem: headerItem, left: 20, top: 20, height: 100}.
+  
+  #### subtitleGetter
+  ```
+  subtitleGetter: PropTypes.func
+  subtitleGetter(schedulerData, event)
+  ```
+  Use this function, you can display a subtitle in the `EventItemPopover`. 
+  
+  #### viewEventClick
+  ```
+  viewEventClick: PropTypes.func
+  viewEventClick(schedulerData, event)
+  ```
+  Callback function fired when you click one operation link in the `EventItemPopover`. The operation link won't appear if this
+  function isn't set.
+  
+  #### viewEventText
+  ```
+  viewEventText: PropTypes.string
+  ```
+  Text of one operation link in the `EventItemPopover`. The operation link won't appear if this text isn't set.
+  
+  #### viewEvent2Click
+  ```
+  viewEvent2Click: PropTypes.func
+  viewEvent2Click(schedulerData, event)
+  ```
+  Callback function fired when you click the other operation link in the `EventItemPopover`. The other operation link won't 
+  appear if this function isn't set.
+  
+  #### viewEvent2Text
+  ```
+  viewEvent2Text: PropTypes.string
+  ```
+  Text of the other operation link in the `EventItemPopover`. The other operation link won't appear if this text isn't set.
+  
+  
+  
