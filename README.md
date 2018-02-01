@@ -107,7 +107,7 @@ const {schedulerData} = this.props;
 
 ## API
 
-### SchedulerData
+### 1.SchedulerData
 
 SchedulerData is the view model of Scheduler, we can modify it to control the view of the Scheduler. 
 
@@ -141,11 +141,11 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
   fully or partly.
   
   #### setResources
-   ```
-   setResources(resources)
-   ```
-   Used to set the resources(the slots in resource view), make sure that there are no duplicated `resource.id` in the `resources`.
-   See the demo `resources` in the [DemoData.js](https://github.com/StephenChou1017/react-big-scheduler/blob/master/src/DemoData.js).
+  ```
+  setResources(resources)
+  ```
+  Used to set the resources(the slots in resource view), make sure that there are no duplicated `resource.id` in the `resources`.
+  See the demo `resources` in the [DemoData.js](https://github.com/StephenChou1017/react-big-scheduler/blob/master/src/DemoData.js).
   
   #### setEvents
   ```
@@ -203,7 +203,8 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
   ```
   addResource(resource)
   ```
-  Add the `resource` to the `SchedulerData.resources`, make sure that `resource.id` is not duplicated.
+  Add the `resource` to the `SchedulerData.resources`, make sure that `resource.id` is not duplicated. Refer 
+  to [this example](https://stephenchou1017.github.io/scheduler/#/addresource).
   
   #### addEventGroup
   ```
@@ -259,14 +260,15 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
   ```
   Returns the resource by `resourceId`, returns `undefined` if not found.
   
-  ### SchedulerData.config(See the [config.js](https://github.com/StephenChou1017/react-big-scheduler/blob/master/src/config.js) for details.)
+  ### 2.SchedulerData.config(See the [config.js](https://github.com/StephenChou1017/react-big-scheduler/blob/master/src/config.js) for details.)
   
   #### schedulerWidth
   The width of Scheduler.
   
   #### schedulerMaxHeight
   The max height of Scheduler. If the desired height is bigger than the max height, the header row of Scheduler will be
-   frozen and vertical scroll bar will appear, but this won't happen when the max height is set to `0`.
+  frozen and vertical scroll bar will appear, but this won't happen when the max height is set to `0`. Refer 
+  to [this example](https://stephenchou1017.github.io/scheduler/#/freezefirstrow).
    
   #### tableHeaderHeight
   Height of Scheduler table header.
@@ -285,6 +287,7 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
   
   #### dayMaxEvents, weekMaxEvents, monthMaxEvents, yearMaxEvents, quarterMaxEvents
   Max events count of a cell in resource view and task view of different view types. A '+N more' will appear when exceeded.
+  Refer to [this example](https://stephenchou1017.github.io/scheduler/#/addmore).
    
   #### eventItemHeight
   Height of an event item in 3 views.
@@ -302,7 +305,7 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
   Default event item background color in 3 views, will be override if there is a `bgColor` property in event object.
   
   #### selectedAreaColor
-  Select cells color in resource view and task view, cells are selectable only when `creatable` is `true`.
+  Selected cells color in resource view and task view, cells are selectable only when `creatable` is `true`.
   
   #### nonWorkingTimeHeadColor
   Color of non-working time head cells. Modify `SchedulerData.behaviors.isNonWorkingTimeFunc` to re-define non-working time.
@@ -324,28 +327,29 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
   
   #### startResizable
   Controls whether to resize the start of every event item in resource view and task view. If `false`, all item starts are
-  non-resizable, if `true`, all item starts are resizable except those events who have a `resizable` or `startResizable`
+  non-resizable, if `true`, all item starts are resizable except those who have a `resizable` or `startResizable`
   property and its value is `false`.
   
   #### endResizable
   Controls whether to resize the end of every event item in resource view and task view. If `false`, all item ends are
-  non-resizable, if `true`, all item ends are resizable except those events who have a `resizable` or `endResizable`
+  non-resizable, if `true`, all item ends are resizable except those who have a `resizable` or `endResizable`
   property and its value is `false`.
   
   #### movable
   Controls whether to move every event item in resource view and task view. If `false`, all items are
-  non-movable, if `true`, all items are movable except those events who have a `movable` property and its value is `false`.
+  non-movable, if `true`, all items are movable except those who have a `movable` property and its value is `false`.
   
   #### creatable
   Controls whether to create new event item in resource view and task view.
   
   #### crossResourceMove
   Controls whether to cross-slot move an event item in resource view and task view. If `false`, the `slotId` and `slotName`
-  won't change in the `moveEvent` method.
+  won't change in the `moveEvent` method. Refer to [this example](https://stephenchou1017.github.io/scheduler/#/nocrossslotmove).
   
   #### checkConflict
   Controls whether to check conflicts when creating, resizing or moving an event item in resource view and task view. If
-  `true`, Scheduler will call the `conflictOccurred` function if given.
+  `true`, Scheduler will call the `conflictOccurred` function if given. Refer to 
+  [this example](https://stephenchou1017.github.io/scheduler/#/overlapcheck).
   
   #### scrollToTodayEnabled
   Controls Scheduler whether to scroll to today automatically when the time window contains today. If `true`, Scheduler 
@@ -354,7 +358,7 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
   #### views
   Array of view that Scheduler will support.
   
-  ### SchedulerData.behaviors(See the [behaviors.js](https://github.com/StephenChou1017/react-big-scheduler/blob/master/src/behaviors.js) for details.)
+  ### 3.SchedulerData.behaviors(See the [behaviors.js](https://github.com/StephenChou1017/react-big-scheduler/blob/master/src/behaviors.js) for details.)
   
   #### getEventTextFunc
   ```
@@ -372,9 +376,10 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
   ```
   getSummary(schedulerData, headerEvents, slotId, slotName, headerStart, headerEnd)
   ```
-  Method that defines the summary text displayed in the Scheduler cells.
+  Method that defines the summary text displayed in the Scheduler cells.Refer 
+  to [this example](https://stephenchou1017.github.io/scheduler/#/summary).
   
-  ### Scheduler.propTypes
+  ### 4.Scheduler.propTypes
   
   #### schedulerData
   ```
@@ -409,7 +414,7 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
   onSelectDate: PropTypes.func.isRequired
   onSelectDate(schedulerData, date)
   ```
-  Callback funtion fired when a new date is selected. `date` is the new selected data, a string in `YYYY-MM-DD` format.
+  Callback function fired when a new date is selected. `date` is the new selected data, a string in `YYYY-MM-DD` format.
   
   #### eventItemClick
   ```
@@ -455,7 +460,8 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
   ```
   customHeader: PropTypes.object
   ```
-  Component you need to put in the Scheduler header, it could be a div or a react component.
+  Component you need to put in the Scheduler header, it could be a div or a react component. Refer 
+  to [this example](https://stephenchou1017.github.io/scheduler/#/customheader).
   
   #### conflictOccurred
   ```
@@ -469,19 +475,22 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
   eventItemTemplateResolver: PropTypes.func
   eventItemTemplateResolver(schedulerData, event, bgColor, isStart, isEnd, mustAddCssClass, mustBeHeight)
   ```
-  Use this function, you can customize the event style.
+  Use this function, you can customize the event style. Refer to [this example](https://stephenchou1017.github.io/scheduler/#/customeventstyle).
   
   #### resourceClickedFunc
   ```
   resourceClickedFunc: PropTypes.func
   ```
-  If it's set, resources will be clickable, and will fire this function when a resource is clicked.
+  If it's set, resources will be clickable, and will fire this function when a resource is clicked. Refer 
+  to [this example](https://stephenchou1017.github.io/scheduler/#/resourceclickable).
   
   #### dndSources
   ```
   dndSources: PropTypes.array
   ```
-  DnDSource array that registered to Scheduler. Use [DnDSource](https://github.com/StephenChou1017/react-big-scheduler/blob/master/src/DnDSource.js), we can simplify the drag and drop coding in React-Big-Scheduler.
+  DnDSource array that registered to Scheduler. Use [DnDSource](https://github.com/StephenChou1017/react-big-scheduler/blob/master/src/DnDSource.js), 
+  we can simplify the drag and drop coding in React-Big-Scheduler. Refer 
+  to [this example](https://stephenchou1017.github.io/scheduler/#/draganddrop).
   
   #### onSetAddMoreState
   ```
@@ -489,7 +498,8 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
   onSetAddMoreState(newState)
   ```
   Callback function fired when a '+N more' is clicked, is used to control the visibility and the position of the `AddMorePopover`.
-  `newState` is a json such as {headerItem: headerItem, left: 20, top: 20, height: 100}.
+  `newState` is a json such as {headerItem: headerItem, left: 20, top: 20, height: 100}. Refer 
+  to [this example](https://stephenchou1017.github.io/scheduler/#/addmore).
   
   #### subtitleGetter
   ```
