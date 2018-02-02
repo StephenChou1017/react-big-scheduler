@@ -97,6 +97,7 @@ class DragAndDrop extends Component{
 
     onViewChange = (schedulerData, view) => {
         schedulerData.setViewType(view.viewType, view.showAgenda, view.isEventPerspective);
+        schedulerData.config.creatable = !view.isEventPerspective;
         schedulerData.setEvents(DemoData.eventsForTaskView);
         this.setState({
             viewModel: schedulerData

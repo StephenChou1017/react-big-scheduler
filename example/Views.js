@@ -71,6 +71,7 @@ class Basic extends Component{
 
     onViewChange = (schedulerData, view) => {
         schedulerData.setViewType(view.viewType, view.showAgenda, view.isEventPerspective);
+        schedulerData.config.creatable = !view.isEventPerspective;
         schedulerData.setEvents(DemoData.eventsForTaskView);
         this.setState({
             viewModel: schedulerData
@@ -101,7 +102,7 @@ class Basic extends Component{
         if(confirm(`Do you want to create a new event? {slotId: ${slotId}, slotName: ${slotName}, start: ${start}, end: ${end}, type: ${type}, item: ${item}}`)){
 
             let newFreshId = 0;
-            schedulerData.eventsForTaskView.forEach((item) => {
+            schedulerData.events.forEach((item) => {
                 if(item.id >= newFreshId)
                     newFreshId = item.id + 1;
             });
