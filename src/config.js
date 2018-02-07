@@ -46,6 +46,10 @@ export default {
     crossResourceMove: true,
     checkConflict: false,
     scrollToTodayEnabled: true,
+    eventItemPopoverEnabled: true,
+
+    resourceName: '资源名称',
+    taskName: '任务名称',
 
     views: [
         {viewName: '天', viewType: ViewTypes.Day, showAgenda: false, isEventPerspective: false},

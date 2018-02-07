@@ -54,7 +54,8 @@ class Scheduler extends Component {
         updateEventStart: PropTypes.func,
         updateEventEnd: PropTypes.func,
         moveEvent: PropTypes.func,
-        customHeader: PropTypes.object,
+        leftCustomHeader: PropTypes.object,
+        rightCustomHeader: PropTypes.object,
         newEvent: PropTypes.func,
         subtitleGetter: PropTypes.func,
         eventItemClick: PropTypes.func,
@@ -97,7 +98,7 @@ class Scheduler extends Component {
     }
 
     render() {
-        const { schedulerData, customHeader } = this.props;
+        const { schedulerData, leftCustomHeader, rightCustomHeader } = this.props;
         const {renderData, viewType, showAgenda, isEventPerspective, config} = schedulerData;
         const width = config.schedulerWidth;
 
@@ -145,7 +146,7 @@ class Scheduler extends Component {
                 };
             }
 
-            let resourceName = schedulerData.isEventPerspective ? '任务名称' : '资源名称';
+            let resourceName = schedulerData.isEventPerspective ? config.taskName : config.resourceName;
             tbodyContent = (
                 <tr>
                     <td style={{width: resourceTableWidth, verticalAlign: 'top'}}>
@@ -212,7 +213,7 @@ class Scheduler extends Component {
                 <tr>
                     <td colSpan="2">
                         <Row type="flex" align="middle" justify="space-between" style={{marginBottom: '24px'}}>
-                            {customHeader}
+                            {leftCustomHeader}
                             <Col>
                                 <div className='header2-text'>
                                     <Icon type="left" style={{marginRight: "8px"}} className="icon-nav"
@@ -231,6 +232,7 @@ class Scheduler extends Component {
                                     {radioButtonList}
                                 </RadioGroup>
                             </Col>
+                            {rightCustomHeader}
                         </Row>
                     </td>
                 </tr>

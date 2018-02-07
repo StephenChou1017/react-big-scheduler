@@ -20,6 +20,7 @@ class AgendaView extends Component {
     render() {
 
         const {schedulerData} = this.props;
+        const {config} = schedulerData;
         const {renderData} = schedulerData;
         let agendaResourceTableWidth = schedulerData.getResourceTableWidth(), tableHeaderHeight = schedulerData.getTableHeaderHeight();
         let resourceEventsList = renderData.map((item) => {
@@ -28,7 +29,7 @@ class AgendaView extends Component {
                 resourceEvents={item}
                 key={item.slotId} />
         });
-        let resourceName = schedulerData.isEventPerspective ? '任务名称' : '资源名称';
+        let resourceName = schedulerData.isEventPerspective ? config.taskName : config.resourceName;
 
         return (
             <tr>

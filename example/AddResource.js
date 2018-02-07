@@ -22,7 +22,7 @@ class AddResource extends Component{
     render(){
         const {viewModel} = this.state;
 
-        let customHeader = (
+        let leftCustomHeader = (
             <div><span style={{fontWeight: 'bold'}}><a onClick={this.addResource}>Add a resource</a></span></div>
         );
 
@@ -45,7 +45,7 @@ class AddResource extends Component{
                                updateEventEnd={this.updateEventEnd}
                                moveEvent={this.moveEvent}
                                newEvent={this.newEvent}
-                               customHeader={customHeader}
+                               leftCustomHeader={leftCustomHeader}
                     />
                 </div>
             </div>

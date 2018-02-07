@@ -24,7 +24,7 @@ class Summary extends Component{
     render(){
         const {viewModel} = this.state;
 
-        let customHeader = (
+        let leftCustomHeader = (
             <div><span style={{fontWeight: 'bold'}}><a onClick={this.changeSummaryPos}>Change summary position</a></span></div>
         );
 
@@ -47,7 +47,7 @@ class Summary extends Component{
                                updateEventEnd={this.updateEventEnd}
                                moveEvent={this.moveEvent}
                                newEvent={this.newEvent}
-                               customHeader={customHeader}
+                               leftCustomHeader={leftCustomHeader}
                     />
                 </div>
             </div>

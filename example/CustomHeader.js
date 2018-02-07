@@ -22,8 +22,11 @@ class CustomHeader extends Component{
     render(){
         const {viewModel} = this.state;
 
-        let customHeader = (
+        let leftCustomHeader = (
             <div><span style={{fontWeight: 'bold', color: 'red'}}>Put your content here</span></div>
+        );
+        let rightCustomHeader = (
+            <div><span style={{fontWeight: 'bold', color: 'red'}}>or here</span></div>
         );
 
         return (
@@ -45,7 +48,8 @@ class CustomHeader extends Component{
                                updateEventEnd={this.updateEventEnd}
                                moveEvent={this.moveEvent}
                                newEvent={this.newEvent}
-                               customHeader={customHeader}
+                               leftCustomHeader={leftCustomHeader}
+                               rightCustomHeader={rightCustomHeader}
                     />
                 </div>
             </div>
