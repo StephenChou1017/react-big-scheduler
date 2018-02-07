@@ -456,9 +456,10 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
   event. If it's a drag&drop operation, the `type` is the DnDType of DnDSource registered to Scheduler, and the `item` is the 
   external item.
   
-  #### customHeader
+  #### leftCustomHeader, rightCustomHeader
   ```
-  customHeader: PropTypes.object
+  leftCustomHeader: PropTypes.object
+  rightCustomHeader: PropTypes.object
   ```
   Component you need to put in the Scheduler header, it could be a div or a react component. Refer 
   to [this example](https://stephenchou1017.github.io/scheduler/#/customheader).
