@@ -103,7 +103,7 @@ const {schedulerData} = this.props;
 * Clone this repository
 * Retrieve dependencies: `npm install`
 * Start: `npm run example`
-* Open [http://localhost:8081/example/#/](http://localhost:8081/example/#/).
+* Open [http://localhost:8080/example/#/](http://localhost:8080/example/#/).
 
 ## API
 
