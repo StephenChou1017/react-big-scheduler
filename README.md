@@ -16,11 +16,14 @@ Inspired by [Full Calendar Scheduler](https://fullcalendar.io/scheduler/).
 import Scheduler, {SchedulerData, ViewTypes, DATE_FORMAT} from 'react-big-scheduler'
 //include `react-big-scheduler/lib/css/style.css` for styles, link it in html or import it here 
 import 'react-big-scheduler/lib/css/style.css'
-
+import moment from 'moment'
 ...
 
 //2. create the view model, put it in the props obj
 let schedulerData = new SchedulerData(new moment().format(DATE_FORMAT), ViewTypes.Week);
+//set locale moment to the schedulerData, if your locale isn't English. By default, Scheduler comes with English(en, United States).
+moment.locale('zh-cn');
+schedulerData.setLocaleMoment(moment);
 //set resources here or later
 let resources = [
                     {
@@ -116,7 +119,8 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
  ```
  constructor(date=moment().format(DATE_FORMAT), viewType = ViewTypes.Week,
                  showAgenda = false, isEventPerspective = false,
-                 newConfig = undefined, newBehaviors=undefined)
+                 newConfig = undefined, newBehaviors=undefined
+                 localeMoment = undefined)
  ```
  * `date` is a string in `YYYY-MM-DD` format, and is the initial date Scheduler will render. Take the date `2017-12-20`
  for example, Scheduler will render the time window of the week from `2017-12-18` to `2017-12-24` in `ViewTypes.Week`
@@ -139,6 +143,14 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
   fully or partly.
   * `newBehaviors` is a config object, used to override the [default behaviors](https://github.com/StephenChou1017/react-big-scheduler/blob/master/src/behaviors.js)
   fully or partly.
+  * `localeMoment` is a locale moment object, which is unified used in react-big-scheduler. If not provided, Scheduler will come 
+  with English(en, United States) locale strings.
+  
+  #### setLocaleMoment
+  ```
+  setLocaleMoment(localeMoment)
+  ```
+  Used to set locale moment to the schedulerData, if your locale isn't English. By default, Scheduler comes with English(en, United States)
   
   #### setResources
   ```
@@ -260,7 +272,33 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
   ```
   Returns the resource by `resourceId`, returns `undefined` if not found.
   
-  ### 2.SchedulerData.config(See the [config.js](https://github.com/StephenChou1017/react-big-scheduler/blob/master/src/config.js) for details.)
+  ### 2.Locale support(Refer to [this example](https://stephenchou1017.github.io/scheduler/#/locale) for details.)
+  
+  #### SchedulerData.config.resourceName
+  The locale string of resource name.
+  
+  #### SchedulerData.config.taskName
+  The locale string of task name.
+  
+  #### SchedulerData.config.agendaViewHeader
+  The locale string of agenda view header.
+  
+  #### SchedulerData.config.addMorePopoverHeaderFormat
+  The locale string of add more popover header format.
+  
+  #### SchedulerData.config.eventItemPopoverDateFormat
+  The locale string of event item popover date format.
+    
+  #### SchedulerData.config.nonAgendaDayCellHeaderFormat
+  The locale string of non-agenda view cell header format of day view type.
+      
+  #### SchedulerData.config.nonAgendaOtherCellHeaderFormat
+  The locale string of non-agenda view cell header format of other view types.
+  
+  #### SchedulerData.behaviors.getDateLabelFunc
+  Used to resolve the locale string of date label of Scheduler component.(Refer to the [getDateLabel](https://github.com/StephenChou1017/react-big-scheduler/blob/master/src/behaviors.js) func for example)
+  
+  ### 3.SchedulerData.config(See the [config.js](https://github.com/StephenChou1017/react-big-scheduler/blob/master/src/config.js) for details.)
   
   #### schedulerWidth
   The width of Scheduler.
@@ -358,7 +396,7 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
   #### views
   Array of view that Scheduler will support.
   
-  ### 3.SchedulerData.behaviors(See the [behaviors.js](https://github.com/StephenChou1017/react-big-scheduler/blob/master/src/behaviors.js) for details.)
+  ### 4.SchedulerData.behaviors(See the [behaviors.js](https://github.com/StephenChou1017/react-big-scheduler/blob/master/src/behaviors.js) for details.)
   
   #### getEventTextFunc
   ```
@@ -379,7 +417,7 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
   Method that defines the summary text displayed in the Scheduler cells.Refer 
   to [this example](https://stephenchou1017.github.io/scheduler/#/summary).
   
-  ### 4.Scheduler.propTypes
+  ### 5.Scheduler.propTypes
   
   #### schedulerData
   ```
