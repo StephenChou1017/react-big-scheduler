@@ -21,7 +21,7 @@ class AgendaEventItem extends Component {
     }
 
     render() {
-        const {eventItem, isStart, isEnd, eventItemClick, viewEventClick, viewEventText, viewEvent2Click, viewEvent2Text, schedulerData} = this.props;
+        const {eventItem, isStart, isEnd, eventItemClick, schedulerData} = this.props;
         const {config} = schedulerData;
         let roundCls = isStart ? (isEnd ? 'round-all' : 'round-head') : (isEnd ? 'round-tail' : 'round-none');
         let bgColor = config.defaultEventBgColor;

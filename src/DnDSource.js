@@ -1,8 +1,6 @@
 import { DragSource } from 'react-dnd'
 import {ViewTypes, DATETIME_FORMAT} from './index'
 import {DnDTypes} from './DnDTypes'
-import moment from 'moment'
-import 'moment/locale/zh-cn'
 
 export default class DnDSource {
     constructor(resolveDragObjFunc, DecoratedComponent, dndType = DnDTypes.EVENT) {
@@ -21,7 +19,7 @@ export default class DnDSource {
                 if(!monitor.didDrop()) return;
 
                 const {moveEvent, newEvent, schedulerData } = props;
-                const {events, config, viewType} = schedulerData;
+                const {events, config, viewType, localeMoment} = schedulerData;
                 const item = monitor.getItem();
                 const type = monitor.getItemType();
                 const dropResult = monitor.getDropResult();
@@ -32,21 +30,21 @@ export default class DnDSource {
                 if(isEvent) {
                     const event = item;
                     if(viewType !== ViewTypes.Day) {
-                        let tmpMoment = moment(newStart);
-                        newStart = moment(event.start).year(tmpMoment.year()).month(tmpMoment.month()).date(tmpMoment.date()).format(DATETIME_FORMAT);
+                        let tmpMoment = localeMoment(newStart);
+                        newStart = localeMoment(event.start).year(tmpMoment.year()).month(tmpMoment.month()).date(tmpMoment.date()).format(DATETIME_FORMAT);
                     }
-                    newEnd = moment(newStart).add(moment(event.end).diff(moment(event.start)), 'ms').format(DATETIME_FORMAT);
+                    newEnd = localeMoment(newStart).add(localeMoment(event.end).diff(localeMoment(event.start)), 'ms').format(DATETIME_FORMAT);
                 }
 
                 let hasConflict = false;
                 if(config.checkConflict) {
-                    let start = moment(newStart),
-                        end = moment(newEnd);
+                    let start = localeMoment(newStart),
+                        end = localeMoment(newEnd);
 
                     events.forEach((e) =>{
                         if(schedulerData._getEventSlotId(e) === slotId && (!isEvent || e.id !== item.id)) {
-                            let eStart = moment(e.start),
-                                eEnd = moment(e.end);
+                            let eStart = localeMoment(e.start),
+                                eEnd = localeMoment(e.end);
                             if((start >= eStart && start < eEnd) || (end > eStart && end <= eEnd) || (eStart >= start && eStart < end) || (eEnd > start && eEnd <= end))
                                 hasConflict = true;
                         }

@@ -1,10 +1,8 @@
 import React, {Component, PropTypes} from 'react'
-import moment from 'moment'
-import 'moment/locale/zh-cn';
 import {DragDropContext} from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 import {Row, Col} from 'antd'
-import Scheduler, {SchedulerData, ViewTypes, DnDSource, DATE_FORMAT, DemoData} from '../src/index'
+import Scheduler, {SchedulerData, ViewTypes, DnDSource, DemoData} from '../src/index'
 import {DnDTypes} from './DnDTypes'
 import TaskItem from './TaskItem'
 import TaskList from './TaskList'
@@ -17,7 +15,7 @@ class DragAndDrop extends Component{
     constructor(props){
         super(props);
 
-        let schedulerData = new SchedulerData(new moment("2017-12-18").format(DATE_FORMAT), ViewTypes.Month, false, false, {
+        let schedulerData = new SchedulerData('2017-12-18', ViewTypes.Month, false, false, {
             schedulerMaxHeight: 500,
             views: [
                 {viewName: 'Agenda View', viewType: ViewTypes.Month, showAgenda: true, isEventPerspective: false},
@@ -25,6 +23,7 @@ class DragAndDrop extends Component{
                 {viewName: 'Task View', viewType: ViewTypes.Month, showAgenda: false, isEventPerspective: true},
             ]
         });
+        schedulerData.localeMoment.locale('en');
         schedulerData.setResources(DemoData.resources);
         schedulerData.setEvents(DemoData.eventsForTaskView);
         this.state = {

@@ -1,7 +1,5 @@
 import React, {Component, PropTypes} from 'react'
 import {Row, Col} from 'antd'
-import moment from 'moment'
-import 'moment/locale/zh-cn'
 
 class EventItemPopover extends Component {
     constructor(props) {
@@ -24,7 +22,8 @@ class EventItemPopover extends Component {
 
     render(){
         const {schedulerData, eventItem, title, startTime, endTime, statusColor,subtitleGetter, viewEventClick, viewEventText, viewEvent2Click, viewEvent2Text} = this.props;
-        let start = moment(startTime), end = moment(endTime);
+        const {localeMoment, config} = schedulerData;
+        let start = localeMoment(startTime), end = localeMoment(endTime);
 
         let subtitleRow = <div />;
         if(subtitleGetter !== undefined){
@@ -82,6 +81,7 @@ class EventItemPopover extends Component {
             );
         }
 
+        let dateFormat = config.eventItemPopoverDateFormat;
         return (
             <div style={{width: '300px'}}>
                 <Row type="flex" align="middle">
@@ -98,7 +98,7 @@ class EventItemPopover extends Component {
                         <div />
                     </Col>
                     <Col span={22}>
-                        <span className="header1-text">{start.format('HH:mm')}</span><span className="help-text" style={{marginLeft: '8px'}}>{start.format('M月D日')}</span><span className="header2-text"  style={{marginLeft: '8px'}}>-</span><span className="header1-text" style={{marginLeft: '8px'}}>{end.format('HH:mm')}</span><span className="help-text" style={{marginLeft: '8px'}}>{end.format('M月D日')}</span>
+                        <span className="header1-text">{start.format('HH:mm')}</span><span className="help-text" style={{marginLeft: '8px'}}>{start.format(dateFormat)}</span><span className="header2-text"  style={{marginLeft: '8px'}}>-</span><span className="header1-text" style={{marginLeft: '8px'}}>{end.format('HH:mm')}</span><span className="help-text" style={{marginLeft: '8px'}}>{end.format(dateFormat)}</span>
                     </Col>
                 </Row>
                 {opsRow}

@@ -37,6 +37,12 @@ class Nav extends Component {
                     </li>
                     <li style={liStyle}>
                         <Link target="_self"
+                              to='/locale'>
+                            <span>Locale</span>
+                        </Link>
+                    </li>
+                    <li style={liStyle}>
+                        <Link target="_self"
                               to='/views'>
                             <span>Views</span>
                         </Link>

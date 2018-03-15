@@ -3,6 +3,7 @@ import {render} from 'react-dom'
 import {Router, Route, hashHistory} from 'react-router'
 import Basic from './Basic'
 import Readonly from './Readonly'
+import Locale from './Locale'
 import Views from './Views'
 import CustomHeader from './CustomHeader'
 import CustomEventStyle from './CustomEventStyle'
@@ -20,6 +21,7 @@ render((
     <Router history={hashHistory}>
         <Route path="/" component={Basic}/>
         <Route path="/readonly" component={Readonly}/>
+        <Route path="/locale" component={Locale}/>
         <Route path="/views" component={Views}/>
         <Route path="/customheader" component={CustomHeader}/>
         <Route path="/customeventstyle" component={CustomEventStyle} />

@@ -1,7 +1,5 @@
 import React, {Component, PropTypes} from 'react'
 import {Row, Col, Icon, Radio, Popover, DatePicker} from 'antd'
-import moment from 'moment'
-import 'moment/locale/zh-cn'
 import EventItem from './EventItem'
 import DnDSource from './DnDSource'
 import DnDContext from './DnDContext'
@@ -77,15 +75,16 @@ class Scheduler extends Component {
         this.resolveScrollbarSize();
 
         const { schedulerData } = this.props;
+        const { localeMoment} = schedulerData;
         if(schedulerData.getScrollToToday()){
             if(!!this.schedulerContent && this.schedulerContent.scrollWidth > this.schedulerContent.clientWidth){
-                let start = moment(schedulerData.startDate).startOf('day'),
-                    end = moment(schedulerData.endDate).endOf('day'),
-                    now = moment();
+                let start = localeMoment(schedulerData.startDate).startOf('day'),
+                    end = localeMoment(schedulerData.endDate).endOf('day'),
+                    now = localeMoment();
                 if(now>= start && now <= end){
                     let index = 0;
                     schedulerData.headers.forEach((item) => {
-                        let header = moment(item.time);
+                        let header = localeMoment(item.time);
                         if(now >= header)
                             index ++;
                     })

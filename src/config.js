@@ -48,13 +48,18 @@ export default {
     scrollToTodayEnabled: true,
     eventItemPopoverEnabled: true,
 
-    resourceName: '资源名称',
-    taskName: '任务名称',
+    resourceName: 'Resource Name',
+    taskName: 'Task Name',
+    agendaViewHeader: 'Agenda',
+    addMorePopoverHeaderFormat: 'MMM D, YYYY dddd',
+    eventItemPopoverDateFormat: 'MMM D',
+    nonAgendaDayCellHeaderFormat: 'ha',
+    nonAgendaOtherCellHeaderFormat: 'ddd M/D',
 
     views: [
-        {viewName: '天', viewType: ViewTypes.Day, showAgenda: false, isEventPerspective: false},
-        {viewName: '周', viewType: ViewTypes.Week, showAgenda: false, isEventPerspective: false},
-        {viewName: '月', viewType: ViewTypes.Month, showAgenda: false, isEventPerspective: false},
-        {viewName: '年', viewType: ViewTypes.Year, showAgenda: false, isEventPerspective: false},
+        {viewName: 'Day', viewType: ViewTypes.Day, showAgenda: false, isEventPerspective: false},
+        {viewName: 'Week', viewType: ViewTypes.Week, showAgenda: false, isEventPerspective: false},
+        {viewName: 'Month', viewType: ViewTypes.Month, showAgenda: false, isEventPerspective: false},
+        {viewName: 'Year', viewType: ViewTypes.Year, showAgenda: false, isEventPerspective: false},
     ],
 }

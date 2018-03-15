@@ -1,9 +1,7 @@
 import React, {Component, PropTypes} from 'react'
-import moment from 'moment'
-import 'moment/locale/zh-cn';
 import {DragDropContext} from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
-import Scheduler, {SchedulerData, ViewTypes, DATE_FORMAT, DemoData} from '../src/index'
+import Scheduler, {SchedulerData, ViewTypes, DemoData} from '../src/index'
 import Nav from './Nav'
 import ViewSrcCode from './ViewSrcCode'
 
@@ -11,13 +9,14 @@ class Basic extends Component{
     constructor(props){
         super(props);
 
-        let schedulerData = new SchedulerData(new moment("2017-12-18").format(DATE_FORMAT), ViewTypes.Month, false, false, {
+        let schedulerData = new SchedulerData('2017-12-18', ViewTypes.Month, false, false, {
             views: [
                 {viewName: 'Agenda View', viewType: ViewTypes.Month, showAgenda: true, isEventPerspective: false},
                 {viewName: 'Resource View', viewType: ViewTypes.Month, showAgenda: false, isEventPerspective: false},
                 {viewName: 'Task View', viewType: ViewTypes.Month, showAgenda: false, isEventPerspective: true},
             ]
         });
+        schedulerData.localeMoment.locale('en');
         schedulerData.setResources(DemoData.resources);
         schedulerData.setEvents(DemoData.eventsForTaskView);
         this.state = {

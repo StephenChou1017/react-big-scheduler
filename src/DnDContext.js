@@ -2,8 +2,6 @@ import { DropTarget } from 'react-dnd'
 import {getPos} from './Util'
 import {DnDTypes} from './DnDTypes'
 import {ViewTypes, DATETIME_FORMAT} from './index'
-import moment from 'moment'
-import 'moment/locale/zh-cn'
 
 export default class DnDContext {
     constructor(sources, DecoratedComponent) {
@@ -18,7 +16,7 @@ export default class DnDContext {
         return {
             drop: (props, monitor, component) =>{
                 const {schedulerData, resourceEvents} = props;
-                const {viewType} = schedulerData;
+                const {viewType, localeMoment} = schedulerData;
                 let cellWidth = schedulerData.getContentCellWidth();
                 let point = monitor.getClientOffset();
                 let pos = getPos(component.eventContainer);
@@ -26,7 +24,7 @@ export default class DnDContext {
                 let startTime = resourceEvents.headerItems[leftIndex].start;
                 let endTime = resourceEvents.headerItems[leftIndex].end;
                 if(viewType !== ViewTypes.Day)
-                    endTime = moment(resourceEvents.headerItems[leftIndex].start).hour(23).minute(59).second(59).format(DATETIME_FORMAT);
+                    endTime = localeMoment(resourceEvents.headerItems[leftIndex].start).hour(23).minute(59).second(59).format(DATETIME_FORMAT);
 
                 return {
                     slotId: resourceEvents.slotId,

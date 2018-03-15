@@ -1,5 +1,5 @@
 import moment from 'moment'
-import 'moment/locale/zh-cn'
+//import 'moment/locale/zh-cn'
 import config from './config'
 import behaviors from './behaviors'
 import {ViewTypes, DATE_FORMAT, DATETIME_FORMAT} from './index'
@@ -7,7 +7,8 @@ import {ViewTypes, DATE_FORMAT, DATETIME_FORMAT} from './index'
 export default class SchedulerData {
     constructor(date=moment().format(DATE_FORMAT), viewType = ViewTypes.Week,
                 showAgenda = false, isEventPerspective = false,
-                newConfig = undefined, newBehaviors=undefined) {
+                newConfig = undefined, newBehaviors = undefined,
+                localeMoment = undefined) {
         this.resources = [];
         this.events = [];
         this.eventGroups = [];
@@ -17,11 +18,23 @@ export default class SchedulerData {
         this.isEventPerspective = isEventPerspective;
         this.resizing = false;
         this.scrollToToday = false;
+
+        this.localeMoment = moment;
+        if(!!localeMoment)
+            this.localeMoment = localeMoment;
         this._resolveDate(0, date);
         this.config = newConfig == undefined ? config : {...config, ...newConfig};
         this.behaviors = newBehaviors == undefined ? behaviors : {...behaviors, ...newBehaviors};
         this._createHeaders();
         this._createRenderData();
+    }
+
+    setLocaleMoment(localeMoment){
+        if(!!localeMoment){
+            this.localeMoment = localeMoment;
+            this._createHeaders();
+            this._createRenderData();
+        }
     }
 
     setResources(resources) {
@@ -129,34 +142,34 @@ export default class SchedulerData {
 
             if(this.viewType < viewType){
                 if(viewType === ViewTypes.Week) {
-                    this.startDate = moment(date).startOf('week').format(DATE_FORMAT);
-                    this.endDate = moment(this.startDate).endOf('week').format(DATE_FORMAT);
+                    this.startDate = this.localeMoment(date).startOf('week').format(DATE_FORMAT);
+                    this.endDate = this.localeMoment(this.startDate).endOf('week').format(DATE_FORMAT);
                 }
                 else if(viewType === ViewTypes.Month){
-                    this.startDate = moment(date).startOf('month').format(DATE_FORMAT);
-                    this.endDate = moment(this.startDate).endOf('month').format(DATE_FORMAT);
+                    this.startDate = this.localeMoment(date).startOf('month').format(DATE_FORMAT);
+                    this.endDate = this.localeMoment(this.startDate).endOf('month').format(DATE_FORMAT);
                 }
                 else if(viewType === ViewTypes.Quarter){
-                    this.startDate = moment(date).startOf('quarter').format(DATE_FORMAT);
-                    this.endDate = moment(this.startDate).endOf('quarter').format(DATE_FORMAT);
+                    this.startDate = this.localeMoment(date).startOf('quarter').format(DATE_FORMAT);
+                    this.endDate = this.localeMoment(this.startDate).endOf('quarter').format(DATE_FORMAT);
                 }
                 else if(viewType === ViewTypes.Year) {
-                    this.startDate = moment(date).startOf('year').format(DATE_FORMAT);
-                    this.endDate = moment(this.startDate).endOf('year').format(DATE_FORMAT);
+                    this.startDate = this.localeMoment(date).startOf('year').format(DATE_FORMAT);
+                    this.endDate = this.localeMoment(this.startDate).endOf('year').format(DATE_FORMAT);
                 }
             }
             else{
-                let start = moment(this.startDate);
-                let end = moment(this.endDate).add(1, 'days');
+                let start = this.localeMoment(this.startDate);
+                let end = this.localeMoment(this.endDate).add(1, 'days');
 
                 if(this.selectDate !== undefined) {
-                    let selectDate = moment(this.selectDate);
+                    let selectDate = this.localeMoment(this.selectDate);
                     if(selectDate >= start && selectDate < end) {
                         date = this.selectDate;
                     }
                 }
 
-                let now = moment();
+                let now = this.localeMoment();
                 if(now >= start && now < end) {
                     date = now.format(DATE_FORMAT);
                 }
@@ -166,16 +179,16 @@ export default class SchedulerData {
                     this.endDate = this.startDate;
                 }
                 else if(viewType === ViewTypes.Week) {
-                    this.startDate = moment(date).startOf('week').format(DATE_FORMAT);
-                    this.endDate = moment(this.startDate).endOf('week').format(DATE_FORMAT);
+                    this.startDate = this.localeMoment(date).startOf('week').format(DATE_FORMAT);
+                    this.endDate = this.localeMoment(this.startDate).endOf('week').format(DATE_FORMAT);
                 }
                 else if(viewType === ViewTypes.Month){
-                    this.startDate = moment(date).startOf('month').format(DATE_FORMAT);
-                    this.endDate = moment(this.startDate).endOf('month').format(DATE_FORMAT);
+                    this.startDate = this.localeMoment(date).startOf('month').format(DATE_FORMAT);
+                    this.endDate = this.localeMoment(this.startDate).endOf('month').format(DATE_FORMAT);
                 }
                 else if(viewType === ViewTypes.Quarter){
-                    this.startDate = moment(date).startOf('quarter').format(DATE_FORMAT);
-                    this.endDate = moment(this.startDate).endOf('quarter').format(DATE_FORMAT);
+                    this.startDate = this.localeMoment(date).startOf('quarter').format(DATE_FORMAT);
+                    this.endDate = this.localeMoment(this.startDate).endOf('quarter').format(DATE_FORMAT);
                 }
             }
 
@@ -258,26 +271,15 @@ export default class SchedulerData {
     }
 
     getDateLabel(){
-        let start = moment(this.startDate);
-        let end = moment(this.endDate);
-        let dateLabel = start.format('YYYY年M月D日');
+        let start = this.localeMoment(this.startDate);
+        let end = this.localeMoment(this.endDate);
+        let dateLabel = start.format('LL');
 
-        if(this.viewType === ViewTypes.Week) {
-            dateLabel = `${start.format('YYYY年M月D日')}-${end.format('D日')}`;
-            if(start.month() !== end.month())
-                dateLabel = `${start.format('YYYY年M月D日')}-${end.format('M月D日')}`;
-            if(start.year() !== end.year())
-                dateLabel = `${start.format('YYYY年M月D日')}-${end.format('YYYY年M月D日')}`;
-        }
-        else if(this.viewType === ViewTypes.Month){
-            dateLabel = start.format('YYYY年M月');
-        }
-        else if(this.viewType === ViewTypes.Quarter){
-            dateLabel = `${start.format('YYYY年M月D日')}-${end.format('M月D日')}`;
-        }
-        else if(this.viewType === ViewTypes.Year) {
-            dateLabel = start.format('YYYY年');
-        }
+        if(this.viewType !== ViewTypes.Day)
+            dateLabel = `${start.format('LL')}-${end.format('LL')}`;
+
+        if(!!this.behaviors.getDateLabelFunc)
+            dateLabel = this.behaviors.getDateLabelFunc(this, this.viewType, this.startDate, this.endDate);
 
         return dateLabel;
     }
@@ -323,9 +325,9 @@ export default class SchedulerData {
 
     _attachEvent(event) {
         let pos = 0;
-        let eventStart = moment(event.start);
+        let eventStart = this.localeMoment(event.start);
         this.events.forEach((item, index) => {
-            let start = moment(item.start);
+            let start = this.localeMoment(item.start);
             if(eventStart >= start)
                 pos = index + 1;
         });
@@ -334,39 +336,39 @@ export default class SchedulerData {
 
     _resolveDate(num, date = undefined){
         if(date != undefined)
-            this.selectDate = moment(date).format(DATE_FORMAT);
+            this.selectDate = this.localeMoment(date).format(DATE_FORMAT);
 
         if(this.viewType === ViewTypes.Week) {
-            this.startDate = date != undefined ? moment(date).startOf('week').format(DATE_FORMAT)
-                : moment(this.startDate).add(num, 'weeks').format(DATE_FORMAT);
-            this.endDate = moment(this.startDate).endOf('week').format(DATE_FORMAT);
+            this.startDate = date != undefined ? this.localeMoment(date).startOf('week').format(DATE_FORMAT)
+                : this.localeMoment(this.startDate).add(num, 'weeks').format(DATE_FORMAT);
+            this.endDate = this.localeMoment(this.startDate).endOf('week').format(DATE_FORMAT);
         }
         else if(this.viewType === ViewTypes.Day) {
             this.startDate = date != undefined ? this.selectDate
-                : moment(this.startDate).add(num, 'days').format(DATE_FORMAT);
+                : this.localeMoment(this.startDate).add(num, 'days').format(DATE_FORMAT);
             this.endDate = this.startDate;
         }
         else if(this.viewType === ViewTypes.Month){
-            this.startDate = date != undefined ? moment(date).startOf('month').format(DATE_FORMAT)
-                : moment(this.startDate).add(num, 'months').format(DATE_FORMAT);
-            this.endDate = moment(this.startDate).endOf('month').format(DATE_FORMAT);
+            this.startDate = date != undefined ? this.localeMoment(date).startOf('month').format(DATE_FORMAT)
+                : this.localeMoment(this.startDate).add(num, 'months').format(DATE_FORMAT);
+            this.endDate = this.localeMoment(this.startDate).endOf('month').format(DATE_FORMAT);
         }
         else if(this.viewType === ViewTypes.Quarter){
-            this.startDate = date != undefined ? moment(date).startOf('quarter').format(DATE_FORMAT)
-                : moment(this.startDate).add(num, 'quarters').format(DATE_FORMAT);
-            this.endDate = moment(this.startDate).endOf('quarter').format(DATE_FORMAT);
+            this.startDate = date != undefined ? this.localeMoment(date).startOf('quarter').format(DATE_FORMAT)
+                : this.localeMoment(this.startDate).add(num, 'quarters').format(DATE_FORMAT);
+            this.endDate = this.localeMoment(this.startDate).endOf('quarter').format(DATE_FORMAT);
         }
         else if(this.viewType === ViewTypes.Year) {
-            this.startDate = date != undefined ? moment(date).startOf('year').format(DATE_FORMAT)
-                : moment(this.startDate).add(num, 'years').format(DATE_FORMAT);
-            this.endDate = moment(this.startDate).endOf('year').format(DATE_FORMAT);
+            this.startDate = date != undefined ? this.localeMoment(date).startOf('year').format(DATE_FORMAT)
+                : this.localeMoment(this.startDate).add(num, 'years').format(DATE_FORMAT);
+            this.endDate = this.localeMoment(this.startDate).endOf('year').format(DATE_FORMAT);
         }
     }
 
     _createHeaders() {
         let headers = [],
-            start = moment(this.startDate),
-            end = moment(this.endDate),
+            start = this.localeMoment(this.startDate),
+            end = this.localeMoment(this.endDate),
             header = start;
 
         if(this.showAgenda){
@@ -406,7 +408,7 @@ export default class SchedulerData {
     }
 
     _createInitHeaderEvents(header) {
-        let start = moment(header.time),
+        let start = this.localeMoment(header.time),
             startValue = start.format(DATETIME_FORMAT);
         let endValue = this.showAgenda ? (this.viewType === ViewTypes.Week ? start.add(1, 'weeks').format(DATETIME_FORMAT) : (
             this.viewType === ViewTypes.Day ? start.add(1, 'days').format(DATETIME_FORMAT) : (
@@ -498,11 +500,11 @@ export default class SchedulerData {
         if(this.showAgenda) return 1;
 
         let start = this.viewType === ViewTypes.Day ?
-                (moment(startTime).startOf('hour').add(30, 'minutes') <= moment(startTime) ? moment(startTime).startOf('hour').add(30, 'minutes') : moment(startTime).startOf('hour'))
-                : moment(startTime).startOf('day'),
-            end = moment(endTime),
-            spanStart = moment(startDate),
-            spanEnd = moment(endDate),
+                (this.localeMoment(startTime).startOf('hour').add(30, 'minutes') <= this.localeMoment(startTime) ? this.localeMoment(startTime).startOf('hour').add(30, 'minutes') : this.localeMoment(startTime).startOf('hour'))
+                : this.localeMoment(startTime).startOf('day'),
+            end = this.localeMoment(endTime),
+            spanStart = this.localeMoment(startDate),
+            spanEnd = this.localeMoment(endDate),
             time = start,
             span = 0;
 
@@ -572,10 +574,10 @@ export default class SchedulerData {
     }
 
     _compare(event1, event2){
-        let start1 = moment(event1.start), start2 = moment(event2.start);
+        let start1 = this.localeMoment(event1.start), start2 = this.localeMoment(event2.start);
         if(start1 !== start2) return start1 < start2 ? -1 : 1;
 
-        let end1 = moment(event1.end), end2 = moment(event2.end);
+        let end1 = this.localeMoment(event1.end), end2 = this.localeMoment(event2.end);
         if(end1 !== end2) return end1 < end2 ? -1 : 1;
 
         return event1.id < event2.id ? -1 : 1;
@@ -590,11 +592,11 @@ export default class SchedulerData {
             if(resourceEventsList.length > 0) {
                 let resourceEvents = resourceEventsList[0];
                 let span = this._getSpan(item.start, item.end, this.headers[0].time, this.headers[this.headers.length - 1].time);
-                let eventStart = moment(item.start), eventEnd = moment(item.end);
+                let eventStart = this.localeMoment(item.start), eventEnd = this.localeMoment(item.end);
                 let pos = -1;
 
                 resourceEvents.headerItems.forEach((header, index) => {
-                    let headerStart = moment(header.start), headerEnd = moment(header.end);
+                    let headerStart = this.localeMoment(header.start), headerEnd = this.localeMoment(header.end);
                     if(headerEnd > eventStart && headerStart < eventEnd) {
                         header.count = header.count + 1;
 

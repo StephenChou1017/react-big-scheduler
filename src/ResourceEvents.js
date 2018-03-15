@@ -1,6 +1,4 @@
 import React, {Component, PropTypes} from 'react'
-import moment from 'moment'
-import 'moment/locale/zh-cn'
 import AddMore from './AddMore'
 import Summary from './Summary'
 import SelectedArea from './SelectedArea'
@@ -107,7 +105,7 @@ class ResourceEvents extends Component {
     stopDrag = (ev) => {
         ev.stopPropagation();
         const {schedulerData, newEvent, resourceEvents} = this.props;
-        const {headers, events, config, viewType} = schedulerData;
+        const {headers, events, config, viewType, localeMoment} = schedulerData;
         const { leftIndex, rightIndex } = this.state;
         document.documentElement.removeEventListener('mousemove', this.doDrag, false);
         document.documentElement.removeEventListener('mouseup', this.stopDrag, false);
@@ -115,7 +113,7 @@ class ResourceEvents extends Component {
         let startTime = headers[leftIndex].time;
         let endTime = resourceEvents.headerItems[rightIndex - 1].end;
         if(viewType !== ViewTypes.Day)
-            endTime = moment(resourceEvents.headerItems[rightIndex - 1].start).hour(23).minute(59).second(59).format(DATETIME_FORMAT);
+            endTime = localeMoment(resourceEvents.headerItems[rightIndex - 1].start).hour(23).minute(59).second(59).format(DATETIME_FORMAT);
         let slotId = resourceEvents.slotId;
         let slotName = resourceEvents.slotName;
 
@@ -130,13 +128,13 @@ class ResourceEvents extends Component {
 
         let hasConflict = false;
         if(config.checkConflict){
-            let start = moment(startTime),
-                end = moment(endTime);
+            let start = localeMoment(startTime),
+                end = localeMoment(endTime);
 
             events.forEach((e) =>{
                 if(schedulerData._getEventSlotId(e) === slotId) {
-                    let eStart = moment(e.start),
-                        eEnd = moment(e.end);
+                    let eStart = localeMoment(e.start),
+                        eEnd = localeMoment(e.end);
                     if((start >= eStart && start < eEnd) || (end > eStart && end <= eEnd) || (eStart >= start && eStart < end) || (eEnd > start && eEnd <= end))
                         hasConflict = true;
                 }
@@ -167,7 +165,7 @@ class ResourceEvents extends Component {
 
     render() {
         const {resourceEvents, schedulerData, connectDropTarget, dndSource} = this.props;
-        const {viewType, startDate, endDate, config} = schedulerData;
+        const {viewType, startDate, endDate, config, localeMoment} = schedulerData;
         const {isSelecting, left, width} = this.state;
         let cellWidth = schedulerData.getContentCellWidth();
         let cellMaxEvents = schedulerData.getCellMaxEvents();
@@ -187,14 +185,14 @@ class ResourceEvents extends Component {
 
                 headerItem.events.forEach((evt, idx) => {
                     if(idx < renderEventsMaxIndex && evt !== undefined && evt.render) {
-                        let durationStart = moment(startDate);
-                        let durationEnd = moment(endDate).add(1, 'days');
+                        let durationStart = localeMoment(startDate);
+                        let durationEnd = localeMoment(endDate).add(1, 'days');
                         if(viewType === ViewTypes.Day){
-                            durationStart = moment(startDate).add(config.dayStartFrom, 'hours');
-                            durationEnd = moment(endDate).add(config.dayStopTo + 1, 'hours');
+                            durationStart = localeMoment(startDate).add(config.dayStartFrom, 'hours');
+                            durationEnd = localeMoment(endDate).add(config.dayStopTo + 1, 'hours');
                         }
-                        let eventStart = moment(evt.eventItem.start);
-                        let eventEnd = moment(evt.eventItem.end);
+                        let eventStart = localeMoment(evt.eventItem.start);
+                        let eventEnd = localeMoment(evt.eventItem.end);
                         let isStart = eventStart >= durationStart;
                         let isEnd = eventEnd <= durationEnd;
                         let left = index*cellWidth + (index > 0 ? 2 : 3);

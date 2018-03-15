@@ -30,6 +30,7 @@ class AgendaView extends Component {
                 key={item.slotId} />
         });
         let resourceName = schedulerData.isEventPerspective ? config.taskName : config.resourceName;
+        let agendaViewHeader = config.agendaViewHeader;
 
         return (
             <tr>
@@ -38,7 +39,7 @@ class AgendaView extends Component {
                         <thead>
                             <tr style={{height: tableHeaderHeight}}>
                                 <th style={{width: agendaResourceTableWidth}} className="header3-text">{resourceName}</th>
-                                <th className="header3-text">工作事项</th>
+                                <th className="header3-text">{agendaViewHeader}</th>
                             </tr>
                         </thead>
                         <tbody>

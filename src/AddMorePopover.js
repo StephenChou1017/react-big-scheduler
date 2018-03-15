@@ -1,7 +1,5 @@
 import React, {Component, PropTypes} from 'react'
 import {Row, Col, Icon} from 'antd'
-import moment from 'moment'
-import 'moment/locale/zh-cn'
 import EventItem from './EventItem'
 import DnDSource from './DnDSource'
 
@@ -33,19 +31,19 @@ class AddMorePopover extends Component {
 
     render() {
         const {headerItem, left, top, height, closeAction, schedulerData} = this.props;
-        const {config} = schedulerData;
+        const {config, localeMoment} = schedulerData;
         const {time, start, end, events} = headerItem;
-        let header = moment(time).format('YYYY年M月D日 dddd');
-        let durationStart = moment(start);
-        let durationEnd = moment(end);
+        let header = localeMoment(time).format(config.addMorePopoverHeaderFormat);
+        let durationStart = localeMoment(start);
+        let durationEnd = localeMoment(end);
         let eventList = [];
         let i = 0;
         let DnDEventItem = this.state.dndSource.getDragSource();
         events.forEach((evt) => {
             if(evt !== undefined) {
                 i++;
-                let eventStart = moment(evt.eventItem.start);
-                let eventEnd = moment(evt.eventItem.end);
+                let eventStart = localeMoment(evt.eventItem.start);
+                let eventEnd = localeMoment(evt.eventItem.end);
                 let isStart = eventStart >= durationStart;
                 let isEnd = eventEnd < durationEnd;
                 let eventItemLeft = 10;

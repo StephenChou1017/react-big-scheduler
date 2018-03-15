@@ -1,9 +1,7 @@
 import React, {Component, PropTypes} from 'react'
-import moment from 'moment'
-import 'moment/locale/zh-cn';
 import {DragDropContext} from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
-import Scheduler, {SchedulerData, ViewTypes, DATE_FORMAT, DemoData} from '../src/index'
+import Scheduler, {SchedulerData, ViewTypes, DemoData} from '../src/index'
 import Nav from './Nav'
 import ViewSrcCode from './ViewSrcCode'
 
@@ -11,7 +9,8 @@ class CustomEventStyle extends Component{
     constructor(props){
         super(props);
 
-        let schedulerData = new SchedulerData(new moment("2017-12-18").format(DATE_FORMAT), ViewTypes.Week);
+        let schedulerData = new SchedulerData('2017-12-18', ViewTypes.Week);
+        schedulerData.localeMoment.locale('en');
         schedulerData.setResources(DemoData.resources);
         schedulerData.setEvents(DemoData.eventsForCustomEventStyle);
         this.state = {

@@ -1,6 +1,4 @@
 import React, {Component, PropTypes} from 'react'
-import moment from 'moment'
-import 'moment/locale/zh-cn'
 import AgendaEventItem from './AgendaEventItem'
 import {DATE_FORMAT} from './index'
 
@@ -23,22 +21,22 @@ class AgendaResourceEvents extends Component {
 
     render(){
         const {schedulerData, resourceEvents, resourceClickedFunc} = this.props;
-        const {startDate, endDate, config} = schedulerData;
+        const {startDate, endDate, config, localeMoment} = schedulerData;
         let agendaResourceTableWidth = schedulerData.getResourceTableWidth();
 
         let events = [];
         resourceEvents.headerItems.forEach((item) => {
-            let start = moment(startDate).format(DATE_FORMAT),
-                end = moment(endDate).add(1, 'days').format(DATE_FORMAT),
-                headerStart = moment(item.start).format(DATE_FORMAT),
-                headerEnd = moment(item.end).format(DATE_FORMAT);
+            let start = localeMoment(startDate).format(DATE_FORMAT),
+                end = localeMoment(endDate).add(1, 'days').format(DATE_FORMAT),
+                headerStart = localeMoment(item.start).format(DATE_FORMAT),
+                headerEnd = localeMoment(item.end).format(DATE_FORMAT);
 
             if(start === headerStart && end === headerEnd) {
                 item.events.forEach((evt) => {
-                    let durationStart = moment(startDate);
-                    let durationEnd = moment(endDate).add(1, 'days');
-                    let eventStart = moment(evt.eventItem.start);
-                    let eventEnd = moment(evt.eventItem.end);
+                    let durationStart = localeMoment(startDate);
+                    let durationEnd = localeMoment(endDate).add(1, 'days');
+                    let eventStart = localeMoment(evt.eventItem.start);
+                    let eventEnd = localeMoment(evt.eventItem.end);
                     let isStart = eventStart >= durationStart;
                     let isEnd = eventEnd < durationEnd;
                     let eventItem = <AgendaEventItem

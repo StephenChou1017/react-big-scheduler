@@ -1,7 +1,5 @@
 import React, {Component, PropTypes} from 'react'
 import {Popover} from 'antd';
-import moment from 'moment'
-import 'moment/locale/zh-cn'
 import EventItemPopover from './EventItemPopover'
 import {ViewTypes, DATETIME_FORMAT} from './index'
 
@@ -52,23 +50,11 @@ class EventItem extends Component {
             width: width,
         });
 
-        if (this.refs.startResizer != undefined) {
-            this.refs.startResizer.removeEventListener('mousedown', this.initStartDrag, false);
-            if (this.startResizable(np))
-                this.refs.startResizer.addEventListener('mousedown', this.initStartDrag, false);
-        }
-        if (this.refs.endResizer != undefined) {
-            this.refs.endResizer.removeEventListener('mousedown', this.initEndDrag, false);
-            if (this.endResizable(np))
-                this.refs.endResizer.addEventListener('mousedown', this.initEndDrag, false);
-        }
+        this.subscribeResizeEvent(np);
     }
 
     componentDidMount() {
-        if (this.startResizable(this.props))
-            this.refs.startResizer.addEventListener('mousedown', this.initStartDrag, false);
-        if (this.endResizable(this.props))
-            this.refs.endResizer.addEventListener('mousedown', this.initEndDrag, false);
+        this.subscribeResizeEvent(this.props);
     }
 
     initStartDrag = (ev) => {
@@ -115,7 +101,7 @@ class EventItem extends Component {
 
         const {width, leftIndex, rightIndex, schedulerData, eventItem, updateEventStart} = this.props;
         schedulerData._stopResizing();
-        const {viewType, events, config} = schedulerData;
+        const {viewType, events, config, localeMoment} = schedulerData;
         let cellWidth = schedulerData.getContentCellWidth();
         let offset = leftIndex > 0 ? 5 : 6;
         let minWidth = cellWidth - offset;
@@ -129,18 +115,18 @@ class EventItem extends Component {
             count = rightIndex - leftIndex - 1;
         else if (newWidth > maxWidth)
             count = -leftIndex;
-        let newStart = moment(eventItem.start).add(viewType === ViewTypes.Day ? count * 30 : count, viewType === ViewTypes.Day ? 'minutes' : 'days').format(DATETIME_FORMAT);
+        let newStart = localeMoment(eventItem.start).add(viewType === ViewTypes.Day ? count * 30 : count, viewType === ViewTypes.Day ? 'minutes' : 'days').format(DATETIME_FORMAT);
 
         let hasConflict = false;
         if (config.checkConflict) {
-            let start = moment(newStart),
-                end = moment(eventItem.end),
+            let start = localeMoment(newStart),
+                end = localeMoment(eventItem.end),
                 slotId = schedulerData._getEventSlotId(eventItem);
 
             events.forEach((e) => {
                 if (schedulerData._getEventSlotId(e) === slotId && e.id !== eventItem.id) {
-                    let eStart = moment(e.start),
-                        eEnd = moment(e.end);
+                    let eStart = localeMoment(e.start),
+                        eEnd = localeMoment(e.end);
                     if ((start >= eStart && start < eEnd) || (end > eStart && end <= eEnd) || (eStart >= start && eStart < end) || (eEnd > start && eEnd <= end))
                         hasConflict = true;
                 }
@@ -161,6 +147,7 @@ class EventItem extends Component {
             else {
                 console.log('Conflict occurred, set conflictOccurred func in Scheduler to handle it');
             }
+            this.subscribeResizeEvent(this.props);
         }
         else {
             if (updateEventStart != undefined)
@@ -208,7 +195,7 @@ class EventItem extends Component {
 
         const {width, leftIndex, rightIndex, schedulerData, eventItem, updateEventEnd} = this.props;
         schedulerData._stopResizing();
-        const {headers, viewType, events, config} = schedulerData;
+        const {headers, viewType, events, config, localeMoment} = schedulerData;
         let cellWidth = schedulerData.getContentCellWidth();
         let offset = leftIndex > 0 ? 5 : 6;
         let minWidth = cellWidth - offset;
@@ -223,18 +210,18 @@ class EventItem extends Component {
             count = leftIndex - rightIndex + 1;
         else if (newWidth > maxWidth)
             count = headers.length - rightIndex;
-        let newEnd = moment(eventItem.end).add(viewType === ViewTypes.Day ? count * 30 : count, viewType === ViewTypes.Day ? 'minutes' : 'days').format(DATETIME_FORMAT);
+        let newEnd = localeMoment(eventItem.end).add(viewType === ViewTypes.Day ? count * 30 : count, viewType === ViewTypes.Day ? 'minutes' : 'days').format(DATETIME_FORMAT);
 
         let hasConflict = false;
         if (config.checkConflict) {
-            let start = moment(eventItem.start),
-                end = moment(newEnd),
+            let start = localeMoment(eventItem.start),
+                end = localeMoment(newEnd),
                 slotId = schedulerData._getEventSlotId(eventItem);
 
             events.forEach((e) => {
                 if (schedulerData._getEventSlotId(e) === slotId && e.id !== eventItem.id) {
-                    let eStart = moment(e.start),
-                        eEnd = moment(e.end);
+                    let eStart = localeMoment(e.start),
+                        eEnd = localeMoment(e.end);
                     if ((start >= eStart && start < eEnd) || (end > eStart && end <= eEnd) || (eStart >= start && eStart < end) || (eEnd > start && eEnd <= end))
                         hasConflict = true;
                 }
@@ -255,6 +242,7 @@ class EventItem extends Component {
             else {
                 console.log('Conflict occurred, set conflictOccurred func in Scheduler to handle it');
             }
+            this.subscribeResizeEvent(this.props);
         }
         else {
             if (updateEventEnd != undefined)
@@ -264,7 +252,7 @@ class EventItem extends Component {
 
     render() {
         const {eventItem, isStart, isEnd, isInPopover, eventItemClick, schedulerData, isDragging, connectDragSource, connectDragPreview, eventItemTemplateResolver} = this.props;
-        const {config} = schedulerData;
+        const {config, localeMoment} = schedulerData;
         const {left, width, top} = this.state;
         let roundCls = isStart ? (isEnd ? 'round-all' : 'round-head') : (isEnd ? 'round-tail' : 'round-none');
         let bgColor = config.defaultEventBgColor;
@@ -282,7 +270,7 @@ class EventItem extends Component {
                 statusColor={bgColor}/>
         );
 
-        let start = moment(eventItem.start);
+        let start = localeMoment(eventItem.start);
         let eventTitle = isInPopover ? `${start.format('HH:mm')} ${titleText}` : titleText;
         let startResizeDiv = <div />;
         if (this.startResizable(this.props))
@@ -340,6 +328,19 @@ class EventItem extends Component {
         return config.endResizable === true && isInPopover === false
             && (eventItem.resizable == undefined || eventItem.resizable !== false)
             && (eventItem.endResizable == undefined || eventItem.endResizable !== false);
+    }
+
+    subscribeResizeEvent = (props) => {
+        if (this.refs.startResizer != undefined) {
+            this.refs.startResizer.removeEventListener('mousedown', this.initStartDrag, false);
+            if (this.startResizable(props))
+                this.refs.startResizer.addEventListener('mousedown', this.initStartDrag, false);
+        }
+        if (this.refs.endResizer != undefined) {
+            this.refs.endResizer.removeEventListener('mousedown', this.initEndDrag, false);
+            if (this.endResizable(props))
+                this.refs.endResizer.addEventListener('mousedown', this.initEndDrag, false);
+        }
     }
 }
 

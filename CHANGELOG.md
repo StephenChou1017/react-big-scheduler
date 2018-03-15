@@ -1,13 +1,15 @@
 ## Coming npm version
 
 ### Some day
-* Locale 
 * ViewTypes.Quarter
 * Custom event style in agenda view
 * An add-more data bug 
 * Responsive layout
 * Higher react version support
 * Higher nodejs version support
+
+### 2018-03-15
+* Locale support
 
 ### 2018-02-07
 
