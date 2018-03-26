@@ -2,11 +2,14 @@
 
 ### Some day
 * ViewTypes.Quarter
-* Custom event style in agenda view
 * An add-more data bug 
 * Responsive layout
 * Higher react version support
 * Higher nodejs version support
+
+### 2018-03-26
+* Custom event style in agenda view
+* Add SchedulerData.config.eventItemPopoverEnabled
 
 ### 2018-03-15
 * Locale support

@@ -18,10 +18,11 @@ class AgendaEventItem extends Component {
         viewEventText:PropTypes.string,
         viewEvent2Click: PropTypes.func,
         viewEvent2Text: PropTypes.string,
+        eventItemTemplateResolver: PropTypes.func,
     }
 
     render() {
-        const {eventItem, isStart, isEnd, eventItemClick, schedulerData} = this.props;
+        const {eventItem, isStart, isEnd, eventItemClick, schedulerData, eventItemTemplateResolver} = this.props;
         const {config} = schedulerData;
         let roundCls = isStart ? (isEnd ? 'round-all' : 'round-head') : (isEnd ? 'round-tail' : 'round-none');
         let bgColor = config.defaultEventBgColor;
@@ -39,15 +40,26 @@ class AgendaEventItem extends Component {
             />
         );
 
-        return (
-            <Popover placement="bottomLeft" content={content} trigger="hover">
-                <a className="day-event" onClick={() => { if(!!eventItemClick) eventItemClick(schedulerData, eventItem);}}>
-                    <div className={roundCls + ' event-item'} key={eventItem.id}
-                         style={{height: config.eventItemHeight, maxWidth: config.agendaMaxEventWidth, backgroundColor: bgColor}}>
-                        <span style={{marginLeft: '10px', lineHeight: `${config.eventItemHeight}px`}}>{titleText}</span>
-                    </div>
-                </a>
-            </Popover>
+        let eventItemTemplate = (
+            <div className={roundCls + ' event-item'} key={eventItem.id}
+                 style={{height: config.eventItemHeight, maxWidth: config.agendaMaxEventWidth, backgroundColor: bgColor}}>
+                <span style={{marginLeft: '10px', lineHeight: `${config.eventItemHeight}px` }}>{titleText}</span>
+            </div>
+        );
+        if(eventItemTemplateResolver != undefined)
+            eventItemTemplate = eventItemTemplateResolver(schedulerData, eventItem, bgColor, isStart, isEnd, 'event-item', config.eventItemHeight, config.agendaMaxEventWidth);
+
+        return ( config.eventItemPopoverEnabled ?
+                <Popover placement="bottomLeft" content={content} trigger="hover">
+                    <a className="day-event" onClick={() => { if(!!eventItemClick) eventItemClick(schedulerData, eventItem);}}>
+                        {eventItemTemplate}
+                    </a>
+                </Popover> :
+                <div>
+                    <a className="day-event" onClick={() => { if(!!eventItemClick) eventItemClick(schedulerData, eventItem);}}>
+                        {eventItemTemplate}
+                    </a>
+                </div>
         );
     }
 }

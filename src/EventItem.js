@@ -286,7 +286,7 @@ class EventItem extends Component {
             </div>
         );
         if(eventItemTemplateResolver != undefined)
-            eventItemTemplate = eventItemTemplateResolver(schedulerData, eventItem, bgColor, isStart, isEnd, 'event-item', config.eventItemHeight);
+            eventItemTemplate = eventItemTemplateResolver(schedulerData, eventItem, bgColor, isStart, isEnd, 'event-item', config.eventItemHeight, undefined);
 
         let a = <a className="timeline-event" style={{left: left, width: width, top: top}} onClick={() => { if(!!eventItemClick) eventItemClick(schedulerData, eventItem);}}>
             {eventItemTemplate}
@@ -295,7 +295,7 @@ class EventItem extends Component {
         </a>;
 
         return (
-            isDragging ? null : ( schedulerData._isResizing() ?
+            isDragging ? null : ( schedulerData._isResizing() || config.eventItemPopoverEnabled == false ?
                     <div>
                         {
                             connectDragPreview(

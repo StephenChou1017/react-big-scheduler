@@ -9,7 +9,14 @@ class CustomEventStyle extends Component{
     constructor(props){
         super(props);
 
-        let schedulerData = new SchedulerData('2017-12-18', ViewTypes.Week);
+        let schedulerData = new SchedulerData('2017-12-18', ViewTypes.Week, false, false, {
+            views: [
+                {viewName: 'Day(Agenda)', viewType: ViewTypes.Day, showAgenda: true, isEventPerspective: false},
+                {viewName: 'Week', viewType: ViewTypes.Week, showAgenda: false, isEventPerspective: false},
+                {viewName: 'Month(TaskView)', viewType: ViewTypes.Month, showAgenda: false, isEventPerspective: true},
+                {viewName: 'Year', viewType: ViewTypes.Year, showAgenda: false, isEventPerspective: false},
+            ]
+        });
         schedulerData.localeMoment.locale('en');
         schedulerData.setResources(DemoData.resources);
         schedulerData.setEvents(DemoData.eventsForCustomEventStyle);
@@ -141,7 +148,7 @@ class CustomEventStyle extends Component{
         }
     }
 
-    eventItemTemplateResolver = (schedulerData, event, bgColor, isStart, isEnd, mustAddCssClass, mustBeHeight) => {
+    eventItemTemplateResolver = (schedulerData, event, bgColor, isStart, isEnd, mustAddCssClass, mustBeHeight, agendaMaxEventWidth) => {
         let borderWidth = isStart ? '4' : '0';
         let borderColor =  'rgba(0,139,236,1)', backgroundColor = '#80C5F6';
         let titleText = schedulerData.behaviors.getEventTextFunc(schedulerData, event);
@@ -149,8 +156,11 @@ class CustomEventStyle extends Component{
             borderColor = event.type == 1 ? 'rgba(0,139,236,1)' : (event.type == 3 ? 'rgba(245,60,43,1)' : '#999');
             backgroundColor = event.type == 1 ? '#80C5F6' : (event.type == 3 ? '#FA9E95' : '#D9D9D9');
         }
+        let divStyle = {borderLeft: borderWidth + 'px solid ' + borderColor, backgroundColor: backgroundColor, height: mustBeHeight };
+        if(!!agendaMaxEventWidth)
+            divStyle = {...divStyle, maxWidth: agendaMaxEventWidth};
 
-        return <div key={event.id} className={mustAddCssClass} style={{borderLeft: borderWidth + 'px solid ' + borderColor, backgroundColor: backgroundColor, height: mustBeHeight }}>
+        return <div key={event.id} className={mustAddCssClass} style={divStyle}>
             <span style={{marginLeft: '4px', lineHeight: `${mustBeHeight}px` }}>{titleText}</span>
         </div>;
     }

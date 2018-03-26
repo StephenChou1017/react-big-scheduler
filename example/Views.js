@@ -10,6 +10,7 @@ class Basic extends Component{
         super(props);
 
         let schedulerData = new SchedulerData('2017-12-18', ViewTypes.Month, false, false, {
+            eventItemPopoverEnabled: false,
             views: [
                 {viewName: 'Agenda View', viewType: ViewTypes.Month, showAgenda: true, isEventPerspective: false},
                 {viewName: 'Resource View', viewType: ViewTypes.Month, showAgenda: false, isEventPerspective: false},

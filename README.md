@@ -393,6 +393,9 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
   Controls Scheduler whether to scroll to today automatically when the time window contains today. If `true`, Scheduler 
   horizontal bar will scroll to today after calling `setScrollToToday(true)` to SchedulerData. 
   
+  #### eventItemPopoverEnabled
+  Controls Scheduler whether to display event item popover when moving mouse on an event item, default `true`.
+  
   #### views
   Array of view that Scheduler will support.
   
@@ -512,7 +515,7 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
   #### eventItemTemplateResolver
   ```
   eventItemTemplateResolver: PropTypes.func
-  eventItemTemplateResolver(schedulerData, event, bgColor, isStart, isEnd, mustAddCssClass, mustBeHeight)
+  eventItemTemplateResolver(schedulerData, event, bgColor, isStart, isEnd, mustAddCssClass, mustBeHeight, agendaMaxEventWidth)
   ```
   Use this function, you can customize the event style. Refer to [this example](https://stephenchou1017.github.io/scheduler/#/customeventstyle).
   
