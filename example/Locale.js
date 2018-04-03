@@ -27,6 +27,7 @@ class Locale extends Component{
                 {viewName: '天', viewType: ViewTypes.Day, showAgenda: false, isEventPerspective: false},
                 {viewName: '周', viewType: ViewTypes.Week, showAgenda: false, isEventPerspective: false},
                 {viewName: '月', viewType: ViewTypes.Month, showAgenda: false, isEventPerspective: false},
+                {viewName: '季', viewType: ViewTypes.Quarter, showAgenda: false, isEventPerspective: false},
                 {viewName: '年', viewType: ViewTypes.Year, showAgenda: false, isEventPerspective: false},
             ],
         }, {

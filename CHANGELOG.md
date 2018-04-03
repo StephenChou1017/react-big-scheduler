@@ -1,11 +1,13 @@
 ## Coming npm version
 
 ### Some day
-* ViewTypes.Quarter
 * An add-more data bug 
 * Responsive layout
 * Higher react version support
 * Higher nodejs version support
+
+### 2018-04-03
+* ViewTypes.Quarter
 
 ### 2018-03-26
 * Custom event style in agenda view

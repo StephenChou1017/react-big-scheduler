@@ -13,6 +13,7 @@ class AddMore extends Component{
             dayMaxEvents: 2,
             weekMaxEvents: 4,
             monthMaxEvents: 4,
+            quarterMaxEvents: 4,
             yearMaxEvents: 4,
         });
         schedulerData.localeMoment.locale('en');

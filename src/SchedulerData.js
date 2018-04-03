@@ -1,5 +1,4 @@
 import moment from 'moment'
-//import 'moment/locale/zh-cn'
 import config from './config'
 import behaviors from './behaviors'
 import {ViewTypes, DATE_FORMAT, DATETIME_FORMAT} from './index'

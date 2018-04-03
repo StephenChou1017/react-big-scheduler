@@ -125,11 +125,10 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
  * `date` is a string in `YYYY-MM-DD` format, and is the initial date Scheduler will render. Take the date `2017-12-20`
  for example, Scheduler will render the time window of the week from `2017-12-18` to `2017-12-24` in `ViewTypes.Week`
  view type, and will render the time window of the `2017-12` month in `ViewTypes.Month` view type. 
- * `viewType` is the initial view type, now Scheduler supports `Day`, `Week`, `Month`, `Year` 4 view types, and will 
- support `Quarter` later. `viewType`, `showAgenda` and `isEventPerspective` are a group which should be contained in 
- the SchedulerData.config.views array, and they together decide which view should be rendered. When `showAgenda` and 
- `isEventPerspective` are both `false`, Scheduler will render the resource view, refer 
- to [this example](https://stephenchou1017.github.io/scheduler/#/views).
+ * `viewType` is the initial view type, now Scheduler supports `Day`, `Week`, `Month`, `Quarter`, `Year` 5 view types. 
+ `viewType`, `showAgenda` and `isEventPerspective` are a group which should be contained in the SchedulerData.config.views 
+ array, and they together decide which view should be rendered. When `showAgenda` and `isEventPerspective` are both `false`, 
+ Scheduler will render the resource view, refer to [this example](https://stephenchou1017.github.io/scheduler/#/views).
  * `showAgenda` is a bool value, if true, Scheduler will display the agenda view of current view type. Agenda view is 
  read only.
  * `isEventPerspective` is a bool value, if true, Scheduler will display the task view of current view type. In 
