@@ -40,12 +40,13 @@
     "lint"
   ],
   "dependencies": {
-    "antd": "2.7.0",
+    "antd": "^3.2.3",
     "moment": "^2.18.1",
-    "react": "^15.4.1",
+    "react": "^16.0.0",
     "react-dnd": "^2.2.4",
     "react-dnd-html5-backend": "^2.4.1",
-    "react-dom": "^15.0.0"
+    "react-dom": "^15.0.0",
+    "prop-types": "^15.6.1"
   },
   "devDependencies": {
     "babel": "6.23.0",
