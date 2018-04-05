@@ -9,7 +9,7 @@ class TaskList extends Component{
     static propTypes = {
         schedulerData: PropTypes.object.isRequired,
         newEvent: PropTypes.func.isRequired,
-        taskDndSource: React.PropTypes.object.isRequired,
+        taskDndSource: PropTypes.object.isRequired,
     }
 
     render(){

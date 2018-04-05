@@ -1,10 +1,9 @@
 import React, {Component} from 'react'
 import {PropTypes} from 'prop-types'
-import {DragDropContext} from 'react-dnd'
-import HTML5Backend from 'react-dnd-html5-backend'
 import Scheduler, {SchedulerData, ViewTypes, DemoData} from '../src/index'
 import Nav from './Nav'
 import ViewSrcCode from './ViewSrcCode'
+import withDragDropContext from './withDnDContext'
 
 class Basic extends Component{
     constructor(props){
@@ -147,4 +146,4 @@ class Basic extends Component{
     }
 }
 
-export default DragDropContext(HTML5Backend)(Basic)
+export default withDragDropContext(Basic)

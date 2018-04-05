@@ -1,7 +1,5 @@
 import React, {Component} from 'react'
 import {PropTypes} from 'prop-types'
-import {DragDropContext} from 'react-dnd'
-import HTML5Backend from 'react-dnd-html5-backend'
 import {Row, Col} from 'antd'
 import Scheduler, {SchedulerData, ViewTypes, DnDSource, DemoData} from '../src/index'
 import {DnDTypes} from './DnDTypes'
@@ -11,6 +9,7 @@ import ResourceItem from './ResourceItem'
 import ResourceList from './ResourceList'
 import Nav from './Nav'
 import ViewSrcCode from './ViewSrcCode'
+import withDragDropContext from './withDnDContext'
 
 class DragAndDrop extends Component{
     constructor(props){
@@ -197,4 +196,4 @@ class DragAndDrop extends Component{
     }
 }
 
-export default DragDropContext(HTML5Backend)(DragAndDrop)
+export default withDragDropContext(DragAndDrop)

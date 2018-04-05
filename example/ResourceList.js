@@ -9,7 +9,7 @@ class ResourceList extends Component{
     static propTypes = {
         schedulerData: PropTypes.object.isRequired,
         newEvent: PropTypes.func.isRequired,
-        resourceDndSource: React.PropTypes.object.isRequired,
+        resourceDndSource: PropTypes.object.isRequired,
     }
 
     render(){
