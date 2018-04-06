@@ -1,9 +1,9 @@
-import React, {Component, PropTypes} from 'react'
-import {DragDropContext} from 'react-dnd'
-import HTML5Backend from 'react-dnd-html5-backend'
+import React, {Component} from 'react'
+import {PropTypes} from 'prop-types'
 import Scheduler, {SchedulerData, ViewTypes, DemoData} from '../src/index'
 import Nav from './Nav'
 import ViewSrcCode from './ViewSrcCode'
+import withDragDropContext from './withDnDContext'
 
 class CustomHeader extends Component{
     constructor(props){
@@ -151,4 +151,4 @@ class CustomHeader extends Component{
     }
 }
 
-export default DragDropContext(HTML5Backend)(CustomHeader)
+export default withDragDropContext(CustomHeader)

@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
+import {PropTypes} from 'prop-types'
 import {Popover} from 'antd';
 import EventItemPopover from './EventItemPopover'
 import {ViewTypes, DATETIME_FORMAT} from './index'

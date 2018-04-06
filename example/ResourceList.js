@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
+import {PropTypes} from 'prop-types'
 
 class ResourceList extends Component{
     constructor(props){
@@ -8,7 +9,7 @@ class ResourceList extends Component{
     static propTypes = {
         schedulerData: PropTypes.object.isRequired,
         newEvent: PropTypes.func.isRequired,
-        resourceDndSource: React.PropTypes.object.isRequired,
+        resourceDndSource: PropTypes.object.isRequired,
     }
 
     render(){

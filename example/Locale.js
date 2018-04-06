@@ -1,10 +1,10 @@
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
+import {PropTypes} from 'prop-types'
 import moment from 'moment'
-import {DragDropContext} from 'react-dnd'
-import HTML5Backend from 'react-dnd-html5-backend'
 import Scheduler, {SchedulerData, ViewTypes, AddMorePopover, DemoData} from '../src/index'
 import Nav from './Nav'
 import ViewSrcCode from './ViewSrcCode'
+import withDragDropContext from './withDnDContext'
 
 class Locale extends Component{
     constructor(props){
@@ -220,4 +220,4 @@ class Locale extends Component{
     }
 }
 
-export default DragDropContext(HTML5Backend)(Locale)
+export default withDragDropContext(Locale)

@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
+import {PropTypes} from 'prop-types'
 
 class TaskList extends Component{
     constructor(props){
@@ -8,7 +9,7 @@ class TaskList extends Component{
     static propTypes = {
         schedulerData: PropTypes.object.isRequired,
         newEvent: PropTypes.func.isRequired,
-        taskDndSource: React.PropTypes.object.isRequired,
+        taskDndSource: PropTypes.object.isRequired,
     }
 
     render(){

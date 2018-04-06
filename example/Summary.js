@@ -1,9 +1,9 @@
-import React, {Component, PropTypes} from 'react'
-import {DragDropContext} from 'react-dnd'
-import HTML5Backend from 'react-dnd-html5-backend'
+import React, {Component} from 'react'
+import {PropTypes} from 'prop-types'
 import Scheduler, {SchedulerData, ViewTypes, DemoData, SummaryPos} from '../src/index'
 import Nav from './Nav'
 import ViewSrcCode from './ViewSrcCode'
+import withDragDropContext from './withDnDContext'
 
 class Summary extends Component{
     constructor(props){
@@ -165,4 +165,4 @@ class Summary extends Component{
     }
 }
 
-export default DragDropContext(HTML5Backend)(Summary)
+export default withDragDropContext(Summary)

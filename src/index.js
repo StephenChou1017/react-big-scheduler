@@ -1,5 +1,6 @@
-import React, {Component, PropTypes} from 'react'
-import {Row, Col, Icon, Radio, Popover, DatePicker} from 'antd'
+import React, {Component} from 'react'
+import {PropTypes} from 'prop-types'
+import {Row, Col, Icon, Radio, Popover, Calendar} from 'antd'
 import EventItem from './EventItem'
 import DnDSource from './DnDSource'
 import DnDContext from './DnDContext'
@@ -15,7 +16,6 @@ import SchedulerData from './SchedulerData'
 import DemoData from './DemoData'
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
-const {Calendar} = DatePicker;
 
 class Scheduler extends Component {
 
@@ -204,7 +204,7 @@ class Scheduler extends Component {
             );
         };
 
-        let popover = <div className="popover-calendar"><Calendar onSelect={this.onSelect}/></div>;
+        let popover = <div className="popover-calendar"><Calendar fullscreen={false} onSelect={this.onSelect}/></div>;
 
         return (
             <table className="scheduler" style={{width: width}}>
