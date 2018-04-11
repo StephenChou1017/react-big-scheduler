@@ -1,6 +1,6 @@
 {
   "name": "react-big-scheduler",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A scheduler and resource planning component built for React and made for modern browsers (IE10+)",
   "keywords": [
     "scheduler",
@@ -25,7 +25,7 @@
   "bugs": {
     "url": "http://github.com/StephenChou1017/react-big-scheduler/issues"
   },
-  "licenses": "MIT",
+  "license": "MIT",
   "config": {},
   "scripts": {
     "clean": "rimraf ./lib && mkdir lib",

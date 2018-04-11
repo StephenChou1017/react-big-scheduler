@@ -31,8 +31,11 @@ class ResourceView extends Component {
                     {a}
                 </div>
             );
-            if(!!slotItemTemplateResolver)
-                slotItem = slotItemTemplateResolver(schedulerData, item, slotClickedFunc, width, "overflow-text header2-text");
+            if(!!slotItemTemplateResolver) {
+                let temp = slotItemTemplateResolver(schedulerData, item, slotClickedFunc, width, "overflow-text header2-text");
+                if(!!temp)
+                    slotItem = temp;
+            }
 
             return (
                 <tr key={item.slotId} style={{height: item.rowHeight}}>

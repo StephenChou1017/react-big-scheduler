@@ -63,8 +63,11 @@ class AgendaResourceEvents extends Component {
                 {a}
             </div>
         );
-        if(!!slotItemTemplateResolver)
-            slotItem = slotItemTemplateResolver(schedulerData, resourceEvents, slotClickedFunc, width, "overflow-text header2-text");
+        if(!!slotItemTemplateResolver) {
+            let temp = slotItemTemplateResolver(schedulerData, resourceEvents, slotClickedFunc, width, "overflow-text header2-text");
+            if(!!temp)
+                slotItem = temp;
+        }
 
         return (
             <tr style={{minHeight: config.eventItemLineHeight + 2}}>

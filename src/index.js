@@ -66,6 +66,7 @@ class Scheduler extends Component {
         eventItemTemplateResolver: PropTypes.func,
         dndSources: PropTypes.array,
         slotClickedFunc: PropTypes.func,
+        slotItemTemplateResolver: PropTypes.func,
     }
 
     componentDidMount(props, state){

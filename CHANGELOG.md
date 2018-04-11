@@ -3,8 +3,13 @@
 ### Some day
 * An add-more data bug 
 * Responsive layout
-* Higher react version support
-* Higher nodejs version support
+
+## npm v0.2.0
+
+### 2018-04-11
+* Migration to react 16(Thanks to [henryroach](https://github.com/henryroach))
+* Rename Scheduler.resourceClickedFunc to Scheduler.slotClickedFunc 
+* Add Scheduler.slotItemTemplateResolver func to customize slot item style
 
 ### 2018-04-03
 * ViewTypes.Quarter
@@ -17,7 +22,6 @@
 * Locale support
 
 ### 2018-02-07
-
 * Rename Scheduler.customHeader to Scheduler.leftCustomHeader 
 * Add Scheduler.rightCustomHeader
 * Add SchedulerData.config.resourceName, SchedulerData.config.taskName
