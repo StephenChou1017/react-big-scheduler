@@ -15,7 +15,7 @@ class AgendaView extends Component {
         viewEventText:PropTypes.string,
         viewEvent2Click: PropTypes.func,
         viewEvent2Text: PropTypes.string,
-        resourceClickedFunc: PropTypes.func,
+        slotClickedFunc: PropTypes.func,
     }
 
     render() {

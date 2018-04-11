@@ -32,7 +32,7 @@ class HeaderView extends Component {
                     let pList = pFormatList.map((item, index) => {
                         let time = datetime.format(item);
                         return (
-                            <p key={index}>{time}</p>
+                            <div key={index}>{time}</div>
                         );
                     });
 
@@ -59,7 +59,7 @@ class HeaderView extends Component {
                 let pList = pFormatList.map((item, index) => {
                     let time = datetime.format(item);
                     return (
-                        <p key={index}>{time}</p>
+                        <div key={index}>{time}</div>
                     );
                 });
 

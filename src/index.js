@@ -22,7 +22,7 @@ class Scheduler extends Component {
     constructor(props) {
         super(props);
 
-        const {dndSources} = props;
+        const {schedulerData, dndSources} = props;
         let sources = [];
         sources.push(new DnDSource((props) => {
             return props.eventItem;
@@ -37,6 +37,7 @@ class Scheduler extends Component {
         this.state = {
             visible: false,
             dndContext: dndContext,
+            contentHeight: schedulerData.getSchedulerContentDesiredHeight(),
             browserScrollbarHeight: 17,
             browserScrollbarWidth: 17,
         };
@@ -64,7 +65,7 @@ class Scheduler extends Component {
         conflictOccurred: PropTypes.func,
         eventItemTemplateResolver: PropTypes.func,
         dndSources: PropTypes.array,
-        resourceClickedFunc: PropTypes.func,
+        slotClickedFunc: PropTypes.func,
     }
 
     componentDidMount(props, state){
@@ -131,8 +132,10 @@ class Scheduler extends Component {
                 />
             });
 
-            let browserScrollbarHeight = this.state.browserScrollbarHeight, browserScrollbarWidth = this.state.browserScrollbarWidth;
-            let schedulerContentStyle = {overflow: 'auto', margin: "-1px, 0px, 0px, 0px", position: "relative"};
+            let browserScrollbarHeight = this.state.browserScrollbarHeight,
+                browserScrollbarWidth = this.state.browserScrollbarWidth,
+                contentHeight = this.state.contentHeight;
+            let schedulerContentStyle = {overflow: 'auto', margin: "0px, 0px, 0px, 0px", position: "relative"};
             let resourceContentStyle = {overflowX: "auto", overflowY: "auto", margin: `0px -${browserScrollbarWidth}px 0px 0px`};
             if (config.schedulerMaxHeight > 0) {
                 schedulerContentStyle = {
@@ -150,7 +153,7 @@ class Scheduler extends Component {
                 <tr>
                     <td style={{width: resourceTableWidth, verticalAlign: 'top'}}>
                         <div className="resource-view">
-                            <div style={{overflow: "hidden", height: config.tableHeaderHeight}}>
+                            <div style={{overflow: "hidden", borderBottom: "1px solid #cccccc", height: config.tableHeaderHeight}}>
                                 <div style={{overflowX: "scroll", overflowY: "hidden", margin: `0px 0px -${browserScrollbarHeight}px`}}>
                                     <table className="resource-table">
                                         <thead>
@@ -183,7 +186,7 @@ class Scheduler extends Component {
                                 </div>
                             </div>
                             <div style={schedulerContentStyle} ref={this.schedulerContentRef} onMouseOver={this.onSchedulerContentMouseOver} onMouseOut={this.onSchedulerContentMouseOut} onScroll={this.onSchedulerContentScroll} >
-                                <div style={{width: schedulerWidth}}>
+                                <div style={{width: schedulerWidth, height: contentHeight}}>
                                     <div className="scheduler-content">
                                         <table className="scheduler-content-table" >
                                             <tbody>
@@ -192,7 +195,7 @@ class Scheduler extends Component {
                                         </table>
                                     </div>
                                     <div className="scheduler-bg">
-                                        <table className="scheduler-bg-table" style={{width: schedulerWidth}}>
+                                        <table className="scheduler-bg-table" style={{width: schedulerWidth}} ref={this.schedulerContentBgTableRef} >
                                             <BodyView {...this.props}/>
                                         </table>
                                     </div>
@@ -244,10 +247,14 @@ class Scheduler extends Component {
     }
 
     resolveScrollbarSize = () => {
-        let browserScrollbarHeight = 17, browserScrollbarWidth = 17;
+        const { schedulerData } = this.props;
+        let browserScrollbarHeight = 17, browserScrollbarWidth = 17, contentHeight = schedulerData.getSchedulerContentDesiredHeight();
         if (!!this.schedulerContent) {
             browserScrollbarHeight = this.schedulerContent.offsetHeight - this.schedulerContent.clientHeight;
             browserScrollbarWidth = this.schedulerContent.offsetWidth - this.schedulerContent.clientWidth;
+        }
+        if(!!this.schedulerContentBgTable && !!this.schedulerContentBgTable.offsetHeight){
+            contentHeight = this.schedulerContentBgTable.offsetHeight;
         }
 
         let tmpState = {};
@@ -258,6 +265,10 @@ class Scheduler extends Component {
         }
         if (browserScrollbarWidth != this.state.browserScrollbarWidth) {
             tmpState = {...tmpState, browserScrollbarWidth: browserScrollbarWidth};
+            needSet = true;
+        }
+        if(contentHeight != this.state.contentHeight){
+            tmpState = {...tmpState, contentHeight: contentHeight};
             needSet = true;
         }
         if (needSet)
@@ -300,6 +311,10 @@ class Scheduler extends Component {
 
     schedulerContentRef = (element) => {
         this.schedulerContent = element;
+    }
+
+    schedulerContentBgTableRef = (element) => {
+        this.schedulerContentBgTable = element;
     }
 
     onSchedulerContentMouseOver = () => {
