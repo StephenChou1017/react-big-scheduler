@@ -88,7 +88,7 @@ schedulerData.setEvents(events);
 
 ...
 
-//3. render the scheduler component
+//3. render the scheduler component, mind that the Scheduler component should be placed in a DragDropContext(father or ancestor).
 ...
 const {schedulerData} = this.props;
 <Scheduler schedulerData={schedulerData}
@@ -518,11 +518,18 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
   ```
   Use this function, you can customize the event style. Refer to [this example](https://stephenchou1017.github.io/scheduler/#/customeventstyle).
   
-  #### resourceClickedFunc
+  #### slotItemTemplateResolver
   ```
-  resourceClickedFunc: PropTypes.func
+  slotItemTemplateResolver: PropTypes.func
+  slotItemTemplateResolver(schedulerData, slot, slotClickedFunc, width, clsName)
   ```
-  If it's set, resources will be clickable, and will fire this function when a resource is clicked. Refer 
+  Use this function, you can customize the left slot style. 
+  
+  #### slotClickedFunc
+  ```
+  slotClickedFunc: PropTypes.func
+  ```
+  If it's set, slots will be clickable, and will fire this function when a slot is clicked. Refer 
   to [this example](https://stephenchou1017.github.io/scheduler/#/resourceclickable).
   
   #### dndSources

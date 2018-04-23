@@ -10,27 +10,37 @@ class ResourceView extends Component {
     static propTypes = {
         schedulerData: PropTypes.object.isRequired,
         browserScrollbarHeight: PropTypes.number.isRequired,
-        resourceClickedFunc: PropTypes.func,
+        slotClickedFunc: PropTypes.func,
+        slotItemTemplateResolver: PropTypes.func
     }
 
     render() {
 
-        const {schedulerData, browserScrollbarHeight, resourceClickedFunc} = this.props;
+        const {schedulerData, browserScrollbarHeight, slotClickedFunc, slotItemTemplateResolver} = this.props;
         const {renderData} = schedulerData;
 
         let width = schedulerData.getResourceTableWidth() - 2;
         let paddingBottom = browserScrollbarHeight;
         let resourceList = renderData.map((item) => {
-            let a = resourceClickedFunc != undefined ? <a onClick={() => {
-                resourceClickedFunc(schedulerData, item);
+            let a = slotClickedFunc != undefined ? <a onClick={() => {
+                slotClickedFunc(schedulerData, item);
             }}>{item.slotName}</a>
                 : <span>{item.slotName}</span>;
+            let slotItem = (
+                <div style={{width: width}} title={item.slotName} className="overflow-text header2-text">
+                    {a}
+                </div>
+            );
+            if(!!slotItemTemplateResolver) {
+                let temp = slotItemTemplateResolver(schedulerData, item, slotClickedFunc, width, "overflow-text header2-text");
+                if(!!temp)
+                    slotItem = temp;
+            }
+
             return (
                 <tr key={item.slotId} style={{height: item.rowHeight}}>
-                    <td data-resource-id={item.slotId} className="header2-text">
-                        <div style={{width: width}} title={item.slotName} className="overflow-text">
-                            {a}
-                        </div>
+                    <td data-resource-id={item.slotId}>
+                        {slotItem}
                     </td>
                 </tr>
             );

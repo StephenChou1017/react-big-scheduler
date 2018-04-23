@@ -13,7 +13,8 @@ class Tips extends Component {
             width: "1000px"
         };
         let liStyle = {
-            margin: '10 0 10 20'
+            margin: '10 0 10 20',
+            listStyle: 'none'
         };
         return (
             <div style={divStyle}>

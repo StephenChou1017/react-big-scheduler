@@ -39,7 +39,7 @@ class Basic extends Component{
                                updateEventEnd={this.updateEventEnd}
                                moveEvent={this.moveEvent}
                                newEvent={this.newEvent}
-                               resourceClickedFunc={this.resourceClickedFunc}
+                               slotClickedFunc={this.slotClickedFunc}
                     />
                 </div>
             </div>
@@ -141,7 +141,7 @@ class Basic extends Component{
         }
     }
 
-    resourceClickedFunc = (schedulerData, slot) => {
+    slotClickedFunc = (schedulerData, slot) => {
         alert(`You just clicked a ${schedulerData.isEventPerspective ? 'task':'resource'}.{id: ${slot.slotId}, name: ${slot.slotName}}`);
     }
 }

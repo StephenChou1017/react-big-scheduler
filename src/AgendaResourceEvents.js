@@ -17,13 +17,15 @@ class AgendaResourceEvents extends Component {
         viewEventText:PropTypes.string,
         viewEvent2Click: PropTypes.func,
         viewEvent2Text: PropTypes.string,
-        resourceClickedFunc: PropTypes.func,
+        slotClickedFunc: PropTypes.func,
+        slotItemTemplateResolver: PropTypes.func
     }
 
     render(){
-        const {schedulerData, resourceEvents, resourceClickedFunc} = this.props;
+        const {schedulerData, resourceEvents, slotClickedFunc, slotItemTemplateResolver} = this.props;
         const {startDate, endDate, config, localeMoment} = schedulerData;
         let agendaResourceTableWidth = schedulerData.getResourceTableWidth();
+        let width = agendaResourceTableWidth - 2;
 
         let events = [];
         resourceEvents.headerItems.forEach((item) => {
@@ -52,17 +54,25 @@ class AgendaResourceEvents extends Component {
             }
         });
 
-        let a = resourceClickedFunc != undefined ? <a onClick={() => {
-            resourceClickedFunc(schedulerData, resourceEvents);
+        let a = slotClickedFunc != undefined ? <a onClick={() => {
+            slotClickedFunc(schedulerData, resourceEvents);
         }}>{resourceEvents.slotName}</a>
             : <span>{resourceEvents.slotName}</span>;
+        let slotItem = (
+            <div style={{width: width}} title={resourceEvents.slotName} className="overflow-text header2-text">
+                {a}
+            </div>
+        );
+        if(!!slotItemTemplateResolver) {
+            let temp = slotItemTemplateResolver(schedulerData, resourceEvents, slotClickedFunc, width, "overflow-text header2-text");
+            if(!!temp)
+                slotItem = temp;
+        }
 
         return (
             <tr style={{minHeight: config.eventItemLineHeight + 2}}>
-                <td data-resource-id={resourceEvents.slotId} className="header2-text">
-                    <div style={{width: agendaResourceTableWidth - 2}} title={resourceEvents.slotName} className="overflow-text">
-                        {a}
-                    </div>
+                <td data-resource-id={resourceEvents.slotId}>
+                    {slotItem}
                 </td>
                 <td>
                     <div className="day-event-container">

@@ -35,6 +35,10 @@
     border-spacing: 0;
 }
 
+.scheduler td {
+    padding: 0px;
+}
+
 .resource-view {
     border: 1px solid #cccccc;
     overflow: hidden;

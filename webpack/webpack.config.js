@@ -6,6 +6,7 @@ const path = require('path')
 
 const root = path.resolve(__dirname, '..')
 module.exports = {
+    mode:'production',
     entry: {
         bundle: [root + "/example/bundle.js"],
     },
@@ -23,8 +24,8 @@ module.exports = {
         'react-dom': 'ReactDOM'
     },
     module: {
-        loaders: [
-            { test: /\.jsx$|\.es6$|\.js$/, loaders: ['react-hot-loader/webpack', 'babel-loader'], exclude: /node_modules/ },
+        rules: [
+            { test: /\.jsx$|\.es6$|\.js$/, loaders: ['babel-loader'], exclude: /node_modules/ },
             { test: /\.scss$|\.css$/, loader: 'style-loader!style-loader!css-loader!sass-loader' },
             { test: /\.(jpe?g|png|gif)$/i, loader: 'url?limit=10000!img?progressive=true' },
             { test: /\.json/, loader: 'json-loader' }
@@ -48,14 +49,14 @@ module.exports = {
         //     manifest: require('../exampledist/static/vendors-manifest.json')
         // }),
         new webpack.optimize.OccurrenceOrderPlugin(),
-        new webpack.optimize.UglifyJsPlugin({
-            output: {
-                comments: false,  // remove all comments
-            },
-            compress: {
-                warnings: false
-            }
-        }),
+        // new webpack.optimize.UglifyJsPlugin({
+        //     output: {
+        //         comments: false,  // remove all comments
+        //     },
+        //     compress: {
+        //         warnings: false
+        //     }
+        // }),
         //new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.js' }),
         //new BundleAnalyzerPlugin()
         //new ExtractTextPlugin("bundle.css")
