@@ -116,7 +116,7 @@ class EventItem extends Component {
             count = rightIndex - leftIndex - 1;
         else if (newWidth > maxWidth)
             count = -leftIndex;
-        let newStart = localeMoment(eventItem.start).add(viewType === ViewTypes.Day ? count * 30 : count, viewType === ViewTypes.Day ? 'minutes' : 'days').format(DATETIME_FORMAT);
+        let newStart = localeMoment(eventItem.start).add(viewType === ViewTypes.Day ? count * config.minuteStep : count, viewType === ViewTypes.Day ? 'minutes' : 'days').format(DATETIME_FORMAT);
 
         let hasConflict = false;
         if (config.checkConflict) {
@@ -211,7 +211,7 @@ class EventItem extends Component {
             count = leftIndex - rightIndex + 1;
         else if (newWidth > maxWidth)
             count = headers.length - rightIndex;
-        let newEnd = localeMoment(eventItem.end).add(viewType === ViewTypes.Day ? count * 30 : count, viewType === ViewTypes.Day ? 'minutes' : 'days').format(DATETIME_FORMAT);
+        let newEnd = localeMoment(eventItem.end).add(viewType === ViewTypes.Day ? count * config.minuteStep : count, viewType === ViewTypes.Day ? 'minutes' : 'days').format(DATETIME_FORMAT);
 
         let hasConflict = false;
         if (config.checkConflict) {

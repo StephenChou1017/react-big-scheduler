@@ -197,7 +197,14 @@ class ResourceEvents extends Component {
                         let isStart = eventStart >= durationStart;
                         let isEnd = eventEnd <= durationEnd;
                         let left = index*cellWidth + (index > 0 ? 2 : 3);
-                        let width = (evt.span * cellWidth - (index > 0 ? 5 : 6)) > 0 ? (evt.span * cellWidth - (index > 0 ? 5 : 6)) : 0;
+                        let width = 0;
+                        // if (viewType === ViewTypes.Day) {
+                        //     width = ((evt.span - 1) * cellWidth - (index > 0 ? 5 : 6)) > 0 ? ((evt.span - 1) * cellWidth - (index > 0 ? 5 : 6)) : 0;
+                        // }
+                        // else {
+                            // width = (evt.span * cellWidth - (index > 0 ? 5 : 6)) > 0 ? (evt.span * cellWidth - (index > 0 ? 5 : 6)) : 0;
+                        // }
+                        width = (evt.span * cellWidth - (index > 0 ? 5 : 6)) > 0 ? (evt.span * cellWidth - (index > 0 ? 5 : 6)) : 0;
                         let top = marginTop + idx*config.eventItemLineHeight;
                         let eventItem = <DnDEventItem
                                                    {...this.props}

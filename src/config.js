@@ -17,9 +17,9 @@ export default {
 
     dayCellWidth: 30,
     weekCellWidth: 120,
-    monthCellWidth: 60,
-    quarterCellWidth: 60,
-    yearCellWidth: 60,
+    monthCellWidth: 80,
+    quarterCellWidth: 80,
+    yearCellWidth: 80,
 
     dayMaxEvents: 99,
     weekMaxEvents: 99,
@@ -53,8 +53,10 @@ export default {
     agendaViewHeader: 'Agenda',
     addMorePopoverHeaderFormat: 'MMM D, YYYY dddd',
     eventItemPopoverDateFormat: 'MMM D',
-    nonAgendaDayCellHeaderFormat: 'ha',
+    nonAgendaDayCellHeaderFormat: 'h:mm a',
     nonAgendaOtherCellHeaderFormat: 'ddd M/D',
+
+    minuteStep: 10,
 
     views: [
         {viewName: 'Day', viewType: ViewTypes.Day, showAgenda: false, isEventPerspective: false},

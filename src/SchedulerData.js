@@ -230,6 +230,14 @@ export default class SchedulerData {
         return this.config.tableHeaderHeight;
     }
 
+    getSchedulerContentDesiredHeight() {
+        var height = 0;
+        this.renderData.forEach((item) => {
+           height += item.rowHeight;
+        });
+        return height;
+    }
+
     getResourceTableWidth() {
         if(this.showAgenda) return this.config.agendaResourceTableWidth;
 
@@ -376,7 +384,7 @@ export default class SchedulerData {
         else {
             if (this.viewType === ViewTypes.Day) {
                 start = start.add(this.config.dayStartFrom, 'hours');
-                end = end.add(this.config.dayStopTo, 'hours');
+                end = end.add(this.config.dayStopTo, 'hours').add(60 - this.config.minuteStep, 'minutes');
                 header = start;
 
                 while (header >= start && header <= end) {
@@ -384,12 +392,12 @@ export default class SchedulerData {
                     let nonWorkingTime = this.behaviors.isNonWorkingTimeFunc(this, time);
                     headers.push({ time: time, nonWorkingTime: nonWorkingTime });
 
-                    header = header.add(30, 'minutes');
+                    header = header.add(this.config.minuteStep, 'minutes');
                     time = header.format(DATETIME_FORMAT);
                     nonWorkingTime = this.behaviors.isNonWorkingTimeFunc(this, time);
                     headers.push({ time: time, nonWorkingTime: nonWorkingTime });
 
-                    header = header.add(30, 'minutes');
+                    header = header.add(this.config.minuteStep, 'minutes');
                 }
             }
             else {
@@ -416,7 +424,7 @@ export default class SchedulerData {
                         start.add(1, 'quarters').format(DATETIME_FORMAT)
                 )
             )
-        )) : (this.viewType === ViewTypes.Day ?  start.add(30, 'minutes').format(DATETIME_FORMAT)
+        )) : (this.viewType === ViewTypes.Day ?  start.add(this.config.minuteStep, 'minutes').format(DATETIME_FORMAT)
             : start.add(1, 'days').format(DATETIME_FORMAT));
         return {
             time:  header.time,
@@ -499,7 +507,8 @@ export default class SchedulerData {
         if(this.showAgenda) return 1;
 
         let start = this.viewType === ViewTypes.Day ?
-                (this.localeMoment(startTime).startOf('hour').add(30, 'minutes') <= this.localeMoment(startTime) ? this.localeMoment(startTime).startOf('hour').add(30, 'minutes') : this.localeMoment(startTime).startOf('hour'))
+                // (this.localeMoment(startTime).startOf('hour').add(this.config.minuteStep, 'minutes') <= this.localeMoment(startTime) ? this.localeMoment(startTime).startOf('hour').add(this.config.minuteStep, 'minutes') : this.localeMoment(startTime).startOf('hour'))
+                (this.localeMoment(startTime))
                 : this.localeMoment(startTime).startOf('day'),
             end = this.localeMoment(endTime),
             spanStart = this.localeMoment(startDate),
@@ -512,7 +521,7 @@ export default class SchedulerData {
                 span++;
             }
 
-            time = this.viewType === ViewTypes.Day ? time.add(30, 'minutes') : time.add(1, 'days');
+            time = this.viewType === ViewTypes.Day ? time.add(this.config.minuteStep, 'minutes') : time.add(1, 'days');
         }
 
         return span;
