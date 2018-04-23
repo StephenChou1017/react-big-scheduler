@@ -17,9 +17,9 @@ export default {
 
     dayCellWidth: 30,
     weekCellWidth: 120,
-    monthCellWidth: 60,
-    quarterCellWidth: 60,
-    yearCellWidth: 60,
+    monthCellWidth: 80,
+    quarterCellWidth: 80,
+    yearCellWidth: 80,
 
     dayMaxEvents: 99,
     weekMaxEvents: 99,

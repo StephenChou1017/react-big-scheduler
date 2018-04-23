@@ -230,6 +230,14 @@ export default class SchedulerData {
         return this.config.tableHeaderHeight;
     }
 
+    getSchedulerContentDesiredHeight() {
+        var height = 0;
+        this.renderData.forEach((item) => {
+           height += item.rowHeight;
+        });
+        return height;
+    }
+
     getResourceTableWidth() {
         if(this.showAgenda) return this.config.agendaResourceTableWidth;
 
