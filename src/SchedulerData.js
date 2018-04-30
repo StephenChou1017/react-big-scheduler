@@ -17,7 +17,7 @@ export default class SchedulerData {
         this.isEventPerspective = isEventPerspective;
         this.resizing = false;
         this.scrollToToday = false;
-        this.minuteStep = 0;
+        this.minuteStep = 30;
 
         this.localeMoment = moment;
         if(!!localeMoment)
