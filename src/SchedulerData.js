@@ -718,7 +718,7 @@ export default class SchedulerData {
                             events.push(e.eventItem);
                     });
 
-                    headerItem.summary = this.behaviors.getSummaryFunc(theaderItems, events, resourceEvents.slotId, resourceEvents.slotName, headerItem.start, headerItem.end);
+                    headerItem.summary = this.behaviors.getSummaryFunc(this, events, resourceEvents.slotId, resourceEvents.slotName, headerItem.start, headerItem.end);
                     if(!!headerItem.summary && headerItem.summary.text != undefined)
                         hasSummary = true;
                 }
