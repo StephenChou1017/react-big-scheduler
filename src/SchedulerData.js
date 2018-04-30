@@ -17,6 +17,7 @@ export default class SchedulerData {
         this.isEventPerspective = isEventPerspective;
         this.resizing = false;
         this.scrollToToday = false;
+        this.minuteStep = 0;
 
         this.localeMoment = moment;
         if(!!localeMoment)
@@ -203,6 +204,11 @@ export default class SchedulerData {
         this.config.schedulerMaxHeight = newSchedulerMaxHeight;
     }
 
+    setMinuteStep(minuteStep) {
+        this._validateMinuteStep(minuteStep);
+        this.minuteStep = minuteStep;
+    }
+
     getSlots(){
         return this.isEventPerspective ? this.eventGroups : this.resources;
     }
@@ -253,7 +259,7 @@ export default class SchedulerData {
 
     getContentCellWidth(){
         return this.viewType === ViewTypes.Week ? this.config.weekCellWidth : (
-            this.viewType === ViewTypes.Day ? this.config.dayCellWidth : (
+            this.viewType === ViewTypes.Day ? this.getHeaderCellWidth() / (60 / this.minuteStep) + 1 : (
                 this.viewType === ViewTypes.Month ? this.config.monthCellWidth : (
                     this.viewType === ViewTypes.Year ? this.config.yearCellWidth :
                         this.config.quarterCellWidth
@@ -273,8 +279,23 @@ export default class SchedulerData {
         );
     }
 
+    getHeaderCellWidth(){
+        return this.viewType === ViewTypes.Week ? this.config.weekCellWidth : (
+            this.viewType === ViewTypes.Day ? 60 : (
+                this.viewType === ViewTypes.Month ? this.config.monthCellWidth : (
+                    this.viewType === ViewTypes.Year ? this.config.yearCellWidth :
+                        this.config.quarterCellWidth
+                )
+            )
+        );
+    }
+
     getContentTableWidth(){
-        return this.headers.length * (this.getContentCellWidth());
+        if (this.viewType === ViewTypes.Day) {
+            return this.headers.length * (this.getHeaderCellWidth()) + ((60 / this.minuteStep) * 24);
+        }
+
+        return this.headers.length * (this.getHeaderCellWidth());
     }
 
     getDateLabel(){
@@ -384,7 +405,7 @@ export default class SchedulerData {
         else {
             if (this.viewType === ViewTypes.Day) {
                 start = start.add(this.config.dayStartFrom, 'hours');
-                end = end.add(this.config.dayStopTo, 'hours').add(60 - this.config.minuteStep, 'minutes');
+                end = end.add(this.config.dayStopTo, 'hours');
                 header = start;
 
                 while (header >= start && header <= end) {
@@ -392,12 +413,7 @@ export default class SchedulerData {
                     let nonWorkingTime = this.behaviors.isNonWorkingTimeFunc(this, time);
                     headers.push({ time: time, nonWorkingTime: nonWorkingTime });
 
-                    header = header.add(this.config.minuteStep, 'minutes');
-                    time = header.format(DATETIME_FORMAT);
-                    nonWorkingTime = this.behaviors.isNonWorkingTimeFunc(this, time);
-                    headers.push({ time: time, nonWorkingTime: nonWorkingTime });
-
-                    header = header.add(this.config.minuteStep, 'minutes');
+                    header = header.add(60, 'minutes');
                 }
             }
             else {
@@ -424,18 +440,42 @@ export default class SchedulerData {
                         start.add(1, 'quarters').format(DATETIME_FORMAT)
                 )
             )
-        )) : (this.viewType === ViewTypes.Day ?  start.add(this.config.minuteStep, 'minutes').format(DATETIME_FORMAT)
+        )) : (this.viewType === ViewTypes.Day ? start.format(DATETIME_FORMAT)
             : start.add(1, 'days').format(DATETIME_FORMAT));
-        return {
-            time:  header.time,
-            nonWorkingTime: header.nonWorkingTime,
-            start: startValue,
-            end:   endValue,
-            count: 0,
-            addMore: 0,
-            addMoreIndex: 0,
-            events: [,,,],
-        };
+
+        const headerEvents = [];
+        if (this.viewType === ViewTypes.Day) {
+            for (let i = 0; i < (60 / this.minuteStep); i++) {
+                startValue = moment(start).add(this.minuteStep * i, 'minutes').format(DATETIME_FORMAT);
+                endValue = moment(endValue).add(this.minuteStep, 'minutes').format(DATETIME_FORMAT);
+
+                headerEvents.push({
+                    time:  header.time,
+                    nonWorkingTime: header.nonWorkingTime,
+                    start: startValue,
+                    end:   endValue,
+                    count: 0,
+                    addMore: 0,
+                    addMoreIndex: 0,
+                    events: [,,,]
+                });
+            }
+        }
+        else {
+            endValue = moment(endValue).add(this.minuteStep, 'minutes').format(DATETIME_FORMAT);
+            headerEvents.push({
+                time:  header.time,
+                nonWorkingTime: header.nonWorkingTime,
+                start: startValue,
+                end:   endValue,
+                count: 0,
+                addMore: 0,
+                addMoreIndex: 0,
+                events: [,,,]
+            });
+        }
+
+        return headerEvents;
     }
 
     _createHeaderEvent(render, span, eventItem) {
@@ -479,8 +519,9 @@ export default class SchedulerData {
 
     _createInitRenderData(isEventPerspective, eventGroups, resources, headers) {
         return isEventPerspective ? eventGroups.map((eventGroup) => {
-            let headerEvents = headers.map((header) => {
-                return this._createInitHeaderEvents(header);
+            let headerEvents = [];
+            headers.forEach((header) => {
+                this._createInitHeaderEvents(header).forEach((h => headerEvents.push(h)));
             });
 
             return {
@@ -490,8 +531,9 @@ export default class SchedulerData {
                 headerItems: headerEvents
             };
         }) : resources.map((resource) => {
-            let headerEvents = headers.map((header) => {
-                return this._createInitHeaderEvents(header);
+            let headerEvents = [];
+            headers.forEach((header) => {
+                this._createInitHeaderEvents(header).forEach((h => headerEvents.push(h)));
             });
 
             return {
@@ -507,7 +549,6 @@ export default class SchedulerData {
         if(this.showAgenda) return 1;
 
         let start = this.viewType === ViewTypes.Day ?
-                // (this.localeMoment(startTime).startOf('hour').add(this.config.minuteStep, 'minutes') <= this.localeMoment(startTime) ? this.localeMoment(startTime).startOf('hour').add(this.config.minuteStep, 'minutes') : this.localeMoment(startTime).startOf('hour'))
                 (this.localeMoment(startTime))
                 : this.localeMoment(startTime).startOf('day'),
             end = this.localeMoment(endTime),
@@ -516,12 +557,23 @@ export default class SchedulerData {
             time = start,
             span = 0;
 
-        while(time >= start && time < end) {
-            if(time >= spanStart && time <= spanEnd) {
-                span++;
-            }
+        if (this.viewType === ViewTypes.Day) {
+            while(time >= start && time < end) {
+                if(time >= spanStart && time < spanEnd) {
+                    span++;
+                }
 
-            time = this.viewType === ViewTypes.Day ? time.add(this.config.minuteStep, 'minutes') : time.add(1, 'days');
+                time.add(this.minuteStep, 'minutes');
+            }
+        }
+        else {
+            while(time >= start && time < end) {
+                if(time >= spanStart && time <= spanEnd) {
+                    span++;
+                }
+
+                time = time.add(1, 'days');
+            }
         }
 
         return span;
@@ -581,6 +633,13 @@ export default class SchedulerData {
         });
     }
 
+    _validateMinuteStep(minuteStep) {
+        if (60 % minuteStep != 0) {
+            console.error('Minute step is not set properly - 60 minutes must be divisible without remainder by this number');
+            throw new Error('Minute step is not set properly - 60 minutes must be divisible without remainder by this number');
+        }
+    }
+
     _compare(event1, event2){
         let start1 = this.localeMoment(event1.start), start2 = this.localeMoment(event2.start);
         if(start1 !== start2) return start1 < start2 ? -1 : 1;
@@ -599,7 +658,7 @@ export default class SchedulerData {
             let resourceEventsList = initRenderData.filter(x => x.slotId === this._getEventSlotId(item));
             if(resourceEventsList.length > 0) {
                 let resourceEvents = resourceEventsList[0];
-                let span = this._getSpan(item.start, item.end, this.headers[0].time, this.headers[this.headers.length - 1].time);
+                let span = this._getSpan(item.start, item.end, this.headers[0].time, this.viewType === ViewTypes.Day ? resourceEvents.headerItems[resourceEvents.headerItems.length - 1].end : this.headers[this.headers.length - 1].time);
                 let eventStart = this.localeMoment(item.start), eventEnd = this.localeMoment(item.end);
                 let pos = -1;
 
@@ -659,7 +718,7 @@ export default class SchedulerData {
                             events.push(e.eventItem);
                     });
 
-                    headerItem.summary = this.behaviors.getSummaryFunc(this, events, resourceEvents.slotId, resourceEvents.slotName, headerItem.start, headerItem.end);
+                    headerItem.summary = this.behaviors.getSummaryFunc(theaderItems, events, resourceEvents.slotId, resourceEvents.slotName, headerItem.start, headerItem.end);
                     if(!!headerItem.summary && headerItem.summary.text != undefined)
                         hasSummary = true;
                 }

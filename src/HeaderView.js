@@ -16,36 +16,32 @@ class HeaderView extends Component {
         const {schedulerData} = this.props;
         const {headers, viewType, config, localeMoment} = schedulerData;
         let headerHeight = schedulerData.getTableHeaderHeight();
-        let cellWidth = schedulerData.getContentCellWidth();
+        let cellWidth = schedulerData.getHeaderCellWidth();
 
         let headerList = [];
         let style = {};
         if(viewType === ViewTypes.Day){
             headers.forEach((item, index) => {
-                if(index % 2 === 0){
-                    let datetime = localeMoment(item.time);
-                    style = !!item.nonWorkingTime ? {width: cellWidth*2, color: config.nonWorkingTimeHeadColor, backgroundColor: config.nonWorkingTimeHeadBgColor} : {width: cellWidth*2};
-                    if(index === headers.length - 2)
-                        style = !!item.nonWorkingTime ? {color: config.nonWorkingTimeHeadColor, backgroundColor: config.nonWorkingTimeHeadBgColor} : {};
-
-                    let pFormatList = config.nonAgendaDayCellHeaderFormat.split('|');
-                    let pList = pFormatList.map((item, index) => {
-                        let time = datetime.format(item);
-                        return (
-                            <div key={index}>{time}</div>
-                        );
-                    });
-
-                    let element = (
-                        <th key={item.time} className="header3-text" style={style}>
-                            <div>
-                                {pList}
-                            </div>
-                        </th>
+                let datetime = localeMoment(item.time);
+                style = !!item.nonWorkingTime ? {width: cellWidth, color: config.nonWorkingTimeHeadColor, backgroundColor: config.nonWorkingTimeHeadBgColor} : {width: cellWidth};
+                let pFormatList = config.nonAgendaDayCellHeaderFormat.split('|');
+                let pList = pFormatList.map((item, index) => {
+                    let time = datetime.format(item);
+                    return (
+                        <div key={index}>{time}</div>
                     );
+                });
 
-                    headerList.push(element);
-                }
+                const divStyle={ width: cellWidth - 3 };
+                let element = (
+                    <th key={item.time} className="header3-text" style={style}>
+                        <div style={divStyle}>
+                            {pList}
+                        </div>
+                    </th>
+                );
+
+                headerList.push(element);
             })
         }
         else {

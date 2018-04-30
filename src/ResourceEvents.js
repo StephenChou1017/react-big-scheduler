@@ -82,8 +82,8 @@ class ResourceEvents extends Component {
         ev.stopPropagation();
 
         const { startX } = this.state;
-        const {schedulerData} = this.props;
-        const {headers} = schedulerData;
+        const {schedulerData, resourceEvents} = this.props;
+        
         let cellWidth = schedulerData.getContentCellWidth();
         let pos = getPos(this.eventContainer);
         let currentX = ev.clientX - pos.x;
@@ -91,7 +91,7 @@ class ResourceEvents extends Component {
         leftIndex = leftIndex < 0 ? 0 : leftIndex;
         let left = leftIndex*cellWidth;
         let rightIndex = Math.ceil(Math.max(startX, currentX)/cellWidth);
-        rightIndex = rightIndex > headers.length ? headers.length : rightIndex;
+        rightIndex = rightIndex > resourceEvents.headerItems.length ? resourceEvents.headerItems.length : rightIndex;
         let width = (rightIndex - leftIndex)*cellWidth;
 
         this.setState({
@@ -106,12 +106,12 @@ class ResourceEvents extends Component {
     stopDrag = (ev) => {
         ev.stopPropagation();
         const {schedulerData, newEvent, resourceEvents} = this.props;
-        const {headers, events, config, viewType, localeMoment} = schedulerData;
+        const {events, config, viewType, localeMoment} = schedulerData;
         const { leftIndex, rightIndex } = this.state;
         document.documentElement.removeEventListener('mousemove', this.doDrag, false);
         document.documentElement.removeEventListener('mouseup', this.stopDrag, false);
 
-        let startTime = headers[leftIndex].time;
+        let startTime = resourceEvents.headerItems[leftIndex].start;
         let endTime = resourceEvents.headerItems[rightIndex - 1].end;
         if(viewType !== ViewTypes.Day)
             endTime = localeMoment(resourceEvents.headerItems[rightIndex - 1].start).hour(23).minute(59).second(59).format(DATETIME_FORMAT);
@@ -177,7 +177,6 @@ class ResourceEvents extends Component {
 
         let eventList = [];
         resourceEvents.headerItems.forEach((headerItem, index) => {
-
             if (headerItem.count > 0 || headerItem.summary != undefined) {
 
                 let isTop = config.summaryPos === SummaryPos.TopRight || config.summaryPos === SummaryPos.Top || config.summaryPos === SummaryPos.TopLeft;
@@ -198,12 +197,6 @@ class ResourceEvents extends Component {
                         let isEnd = eventEnd <= durationEnd;
                         let left = index*cellWidth + (index > 0 ? 2 : 3);
                         let width = 0;
-                        // if (viewType === ViewTypes.Day) {
-                        //     width = ((evt.span - 1) * cellWidth - (index > 0 ? 5 : 6)) > 0 ? ((evt.span - 1) * cellWidth - (index > 0 ? 5 : 6)) : 0;
-                        // }
-                        // else {
-                            // width = (evt.span * cellWidth - (index > 0 ? 5 : 6)) > 0 ? (evt.span * cellWidth - (index > 0 ? 5 : 6)) : 0;
-                        // }
                         width = (evt.span * cellWidth - (index > 0 ? 5 : 6)) > 0 ? (evt.span * cellWidth - (index > 0 ? 5 : 6)) : 0;
                         let top = marginTop + idx*config.eventItemLineHeight;
                         let eventItem = <DnDEventItem

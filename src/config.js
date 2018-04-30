@@ -15,7 +15,6 @@ export default {
     quarterResourceTableWidth: 160,
     yearResourceTableWidth: 160,
 
-    dayCellWidth: 30,
     weekCellWidth: 120,
     monthCellWidth: 80,
     quarterCellWidth: 80,
@@ -55,8 +54,6 @@ export default {
     eventItemPopoverDateFormat: 'MMM D',
     nonAgendaDayCellHeaderFormat: 'h:mm a',
     nonAgendaOtherCellHeaderFormat: 'ddd M/D',
-
-    minuteStep: 10,
 
     views: [
         {viewName: 'Day', viewType: ViewTypes.Day, showAgenda: false, isEventPerspective: false},
