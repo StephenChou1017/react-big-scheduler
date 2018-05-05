@@ -102,7 +102,7 @@ class EventItem extends Component {
 
         const {width, leftIndex, rightIndex, schedulerData, eventItem, updateEventStart} = this.props;
         schedulerData._stopResizing();
-        const {viewType, events, config, localeMoment} = schedulerData;
+        const {viewType, events, config, localeMoment, minuteStep} = schedulerData;
         let cellWidth = schedulerData.getContentCellWidth();
         let offset = leftIndex > 0 ? 5 : 6;
         let minWidth = cellWidth - offset;
@@ -116,7 +116,7 @@ class EventItem extends Component {
             count = rightIndex - leftIndex - 1;
         else if (newWidth > maxWidth)
             count = -leftIndex;
-        let newStart = localeMoment(eventItem.start).add(viewType === ViewTypes.Day ? count * 30 : count, viewType === ViewTypes.Day ? 'minutes' : 'days').format(DATETIME_FORMAT);
+        let newStart = localeMoment(eventItem.start).add(viewType === ViewTypes.Day ? count * minuteStep : count, viewType === ViewTypes.Day ? 'minutes' : 'days').format(DATETIME_FORMAT);
 
         let hasConflict = false;
         if (config.checkConflict) {
@@ -172,12 +172,12 @@ class EventItem extends Component {
 
     doEndDrag = (ev) => {
         ev.stopPropagation();
-        const {width, leftIndex, schedulerData} = this.props;
+        const {width, leftIndex, schedulerData, resourceEvents} = this.props;
         const {headers} = schedulerData;
         let cellWidth = schedulerData.getContentCellWidth();
         let offset = leftIndex > 0 ? 5 : 6;
         let minWidth = cellWidth - offset;
-        let maxWidth = (headers.length - leftIndex) * cellWidth - offset;
+        let maxWidth = (resourceEvents.headerItems.length - leftIndex) * cellWidth - offset;
         const {endX} = this.state;
 
         let newWidth = (width + ev.clientX - endX);
@@ -194,13 +194,13 @@ class EventItem extends Component {
         document.documentElement.removeEventListener('mousemove', this.doEndDrag, false);
         document.documentElement.removeEventListener('mouseup', this.stopEndDrag, false);
 
-        const {width, leftIndex, rightIndex, schedulerData, eventItem, updateEventEnd} = this.props;
+        const {width, leftIndex, rightIndex, schedulerData, eventItem, updateEventEnd, resourceEvents} = this.props;
         schedulerData._stopResizing();
-        const {headers, viewType, events, config, localeMoment} = schedulerData;
+        const {headers, viewType, events, config, localeMoment, minuteStep} = schedulerData;
         let cellWidth = schedulerData.getContentCellWidth();
         let offset = leftIndex > 0 ? 5 : 6;
         let minWidth = cellWidth - offset;
-        let maxWidth = (headers.length - leftIndex) * cellWidth - offset;
+        let maxWidth = (resourceEvents.headerItems.length - leftIndex) * cellWidth - offset;
         const {endX} = this.state;
 
         let newWidth = (width + ev.clientX - endX);
@@ -210,8 +210,8 @@ class EventItem extends Component {
         if (newWidth < minWidth)
             count = leftIndex - rightIndex + 1;
         else if (newWidth > maxWidth)
-            count = headers.length - rightIndex;
-        let newEnd = localeMoment(eventItem.end).add(viewType === ViewTypes.Day ? count * 30 : count, viewType === ViewTypes.Day ? 'minutes' : 'days').format(DATETIME_FORMAT);
+            count = resourceEvents.headerItems.length - rightIndex;
+        let newEnd = localeMoment(eventItem.end).add(viewType === ViewTypes.Day ? count * minuteStep : count, viewType === ViewTypes.Day ? 'minutes' : 'days').format(DATETIME_FORMAT);
 
         let hasConflict = false;
         if (config.checkConflict) {

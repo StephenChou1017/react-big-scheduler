@@ -120,7 +120,7 @@ class Scheduler extends Component {
         else {
             let resourceTableWidth = schedulerData.getResourceTableWidth();
             let schedulerContainerWidth = width - resourceTableWidth + 1;
-            let schedulerWidth = schedulerData.getContentTableWidth() - 1;
+            let schedulerWidth = schedulerData.getContentTableWidth();
             let DndResourceEvents = this.state.dndContext.getDropTarget();
             let eventDndSource = this.state.dndContext.getDndSource();
 
@@ -196,7 +196,7 @@ class Scheduler extends Component {
                                         </table>
                                     </div>
                                     <div className="scheduler-bg">
-                                        <table className="scheduler-bg-table" style={{width: schedulerWidth}} ref={this.schedulerContentBgTableRef} >
+                                        <table className="scheduler-bg-table" style={{width: schedulerWidth}} ref={this.schedulerContentBgTableRef}>
                                             <BodyView {...this.props}/>
                                         </table>
                                     </div>

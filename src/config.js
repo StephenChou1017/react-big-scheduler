@@ -15,7 +15,6 @@ export default {
     quarterResourceTableWidth: 160,
     yearResourceTableWidth: 160,
 
-    dayCellWidth: 30,
     weekCellWidth: 120,
     monthCellWidth: 80,
     quarterCellWidth: 80,
@@ -53,7 +52,7 @@ export default {
     agendaViewHeader: 'Agenda',
     addMorePopoverHeaderFormat: 'MMM D, YYYY dddd',
     eventItemPopoverDateFormat: 'MMM D',
-    nonAgendaDayCellHeaderFormat: 'ha',
+    nonAgendaDayCellHeaderFormat: 'h:mm a',
     nonAgendaOtherCellHeaderFormat: 'ddd M/D',
 
     views: [
