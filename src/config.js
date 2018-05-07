@@ -56,6 +56,8 @@ export default {
     nonAgendaDayCellHeaderFormat: 'ha',
     nonAgendaOtherCellHeaderFormat: 'ddd M/D',
 
+    minuteStep: 30,
+
     views: [
         {viewName: 'Day', viewType: ViewTypes.Day, showAgenda: false, isEventPerspective: false},
         {viewName: 'Week', viewType: ViewTypes.Week, showAgenda: false, isEventPerspective: false},

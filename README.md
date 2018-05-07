@@ -209,6 +209,12 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
   Tell SchedulerData to generate `SchedulerData.eventGroups` automatically or not. If `true`, SchedulerData will generate the event 
   groups(slots) automatically according to the `event.groupId` and 'event.groupName' automatically. If `groupId` and 'groupName' are
   not provided, SchedulerData will take `event.id` and `event.title` instead.
+
+  #### setMinuteStep
+  ```
+  setMinuteStep(minuteStep)
+  ```
+  Used to set minute step for daily view and refresh the render data.
   
   #### addResource
   ```

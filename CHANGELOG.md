@@ -4,6 +4,9 @@
 * An add-more data bug 
 * Responsive layout
 
+### 2018-05-07
+* Add SchedulerData.config.minuteStep for daily view(Thanks to [henryroach](https://github.com/henryroach))
+
 ## npm v0.2.0
 
 ### 2018-04-11

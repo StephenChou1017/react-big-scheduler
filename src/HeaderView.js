@@ -17,15 +17,16 @@ class HeaderView extends Component {
         const {headers, viewType, config, localeMoment} = schedulerData;
         let headerHeight = schedulerData.getTableHeaderHeight();
         let cellWidth = schedulerData.getContentCellWidth();
+        let minuteStepsInHour = schedulerData.getMinuteStepsInHour();
 
         let headerList = [];
         let style = {};
         if(viewType === ViewTypes.Day){
             headers.forEach((item, index) => {
-                if(index % 2 === 0){
+                if(index % minuteStepsInHour === 0){
                     let datetime = localeMoment(item.time);
-                    style = !!item.nonWorkingTime ? {width: cellWidth*2, color: config.nonWorkingTimeHeadColor, backgroundColor: config.nonWorkingTimeHeadBgColor} : {width: cellWidth*2};
-                    if(index === headers.length - 2)
+                    style = !!item.nonWorkingTime ? {width: cellWidth*minuteStepsInHour, color: config.nonWorkingTimeHeadColor, backgroundColor: config.nonWorkingTimeHeadBgColor} : {width: cellWidth*minuteStepsInHour};
+                    if(index === headers.length - minuteStepsInHour)
                         style = !!item.nonWorkingTime ? {color: config.nonWorkingTimeHeadColor, backgroundColor: config.nonWorkingTimeHeadBgColor} : {};
 
                     let pFormatList = config.nonAgendaDayCellHeaderFormat.split('|');
