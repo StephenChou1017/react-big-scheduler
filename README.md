@@ -215,6 +215,12 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
   setMinuteStep(minuteStep)
   ```
   Used to set minute step for daily view and refresh the render data.
+
+  #### getMinuteStepsInHour
+  ```
+  getMinuteStepsInHour()
+  ```
+  Used to get minute steps in an hour, it equals 60 / SchedulerData.config.minuteStep.
   
   #### addResource
   ```
@@ -400,6 +406,9 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
   
   #### eventItemPopoverEnabled
   Controls Scheduler whether to display event item popover when moving mouse on an event item, default `true`.
+
+  #### minuteStep
+  Minute step for day view type in non-agenda view, can be 10, 12, 15, 20, 30, 60, etc, default 30.
   
   #### views
   Array of view that Scheduler will support.

@@ -5,12 +5,12 @@
 * Responsive layout
 
 ### 2018-05-07
-* Add SchedulerData.config.minuteStep for daily view(Thanks to [henryroach](https://github.com/henryroach))
+* Add SchedulerData.config.minuteStep for daily view([henryroach](https://github.com/henryroach))
 
 ## npm v0.2.0
 
 ### 2018-04-11
-* Migration to react 16(Thanks to [henryroach](https://github.com/henryroach))
+* Migration to react 16([henryroach](https://github.com/henryroach))
 * Rename Scheduler.resourceClickedFunc to Scheduler.slotClickedFunc 
 * Add Scheduler.slotItemTemplateResolver func to customize slot item style
 
