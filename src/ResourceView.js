@@ -38,8 +38,8 @@ class ResourceView extends Component {
             }
 
             return (
-                <tr key={item.slotId} style={{height: item.rowHeight}}>
-                    <td data-resource-id={item.slotId}>
+                <tr key={item.slotId}>
+                    <td data-resource-id={item.slotId} style={{height: item.rowHeight}}>
                         {slotItem}
                     </td>
                 </tr>

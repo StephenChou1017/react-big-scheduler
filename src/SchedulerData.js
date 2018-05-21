@@ -61,6 +61,7 @@ export default class SchedulerData {
         if(this.config.minuteStep !== minuteStep) {
             this._validateMinuteStep(minuteStep);
             this.config.minuteStep = minuteStep;
+            this._createHeaders();
             this._createRenderData();
         }
     }
