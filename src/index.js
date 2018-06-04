@@ -102,6 +102,7 @@ class Scheduler extends Component {
         const { schedulerData, leftCustomHeader, rightCustomHeader } = this.props;
         const {renderData, viewType, showAgenda, isEventPerspective, config} = schedulerData;
         const width = config.schedulerWidth;
+        const calendarPopoverEnabled = config.calendarPopoverEnabled;
 
         let dateLabel = schedulerData.getDateLabel();
         let defaultValue = `${viewType}${showAgenda ? 1 : 0}${isEventPerspective ? 1 : 0}`;
@@ -221,11 +222,16 @@ class Scheduler extends Component {
                                 <div className='header2-text'>
                                     <Icon type="left" style={{marginRight: "8px"}} className="icon-nav"
                                           onClick={this.goBack}/>
-                                    <Popover content={popover} placement="bottom" trigger="click"
-                                             visible={this.state.visible}
-                                             onVisibleChange={this.handleVisibleChange}>
-                                        <span style={{cursor: 'pointer'}}>{dateLabel}</span>
-                                    </Popover>
+                                  {
+                                    calendarPopoverEnabled
+                                      ?
+                                      <Popover content={popover} placement="bottom" trigger="click"
+                                               visible={this.state.visible}
+                                               onVisibleChange={this.handleVisibleChange}>
+                                        <span className={'header2-text-label'} style={{cursor: 'pointer'}}>{dateLabel}</span>
+                                      </Popover>
+                                      : <span className={'header2-text-label'}>{dateLabel}</span>
+                                  }
                                     <Icon type="right" style={{marginLeft: "8px"}} className="icon-nav"
                                           onClick={this.goNext}/>
                                 </div>
