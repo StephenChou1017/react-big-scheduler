@@ -18,6 +18,7 @@ class HeaderView extends Component {
         let headerHeight = schedulerData.getTableHeaderHeight();
         let cellWidth = schedulerData.getContentCellWidth();
         let minuteStepsInHour = schedulerData.getMinuteStepsInHour();
+        const {nonAgendaDayCellHeaderRenderer, nonAgendaOtherCellHeaderRenderer} = config;
 
         let headerList = [];
         let style = {};
@@ -25,20 +26,28 @@ class HeaderView extends Component {
             headers.forEach((item, index) => {
                 if(index % minuteStepsInHour === 0){
                     let datetime = localeMoment(item.time);
+                    const isCurrentTime = datetime.isSame(new Date(), 'hour');
+
                     style = !!item.nonWorkingTime ? {width: cellWidth*minuteStepsInHour, color: config.nonWorkingTimeHeadColor, backgroundColor: config.nonWorkingTimeHeadBgColor} : {width: cellWidth*minuteStepsInHour};
+
                     if(index === headers.length - minuteStepsInHour)
                         style = !!item.nonWorkingTime ? {color: config.nonWorkingTimeHeadColor, backgroundColor: config.nonWorkingTimeHeadBgColor} : {};
 
                     let pFormatList = config.nonAgendaDayCellHeaderFormat.split('|');
                     let pList = pFormatList.map((item, index) => {
                         let time = datetime.format(item);
+
+                        if (typeof nonAgendaDayCellHeaderRenderer === 'function') {
+                            time = nonAgendaDayCellHeaderRenderer(time);
+                        }
+
                         return (
                             <div key={index}>{time}</div>
                         );
                     });
 
                     let element = (
-                        <th key={item.time} className="header3-text" style={style}>
+                        <th key={item.time} className={`header3-text ${isCurrentTime?'current-date':''}`} style={style}>
                             <div>
                                 {pList}
                             </div>
@@ -52,6 +61,7 @@ class HeaderView extends Component {
         else {
             headerList = headers.map((item, index) => {
                 let datetime = localeMoment(item.time);
+                const isCurrentDate = datetime.isSame(new Date(), 'day');
                 style = !!item.nonWorkingTime ? {width: cellWidth, color: config.nonWorkingTimeHeadColor, backgroundColor: config.nonWorkingTimeHeadBgColor} : {width: cellWidth};
                 if(index === headers.length - 1)
                     style = !!item.nonWorkingTime ? {color: config.nonWorkingTimeHeadColor, backgroundColor: config.nonWorkingTimeHeadBgColor} : {};
@@ -59,13 +69,18 @@ class HeaderView extends Component {
                 let pFormatList = config.nonAgendaOtherCellHeaderFormat.split('|');
                 let pList = pFormatList.map((item, index) => {
                     let time = datetime.format(item);
+
+                    if (typeof nonAgendaOtherCellHeaderRenderer === 'function') {
+                        time = nonAgendaOtherCellHeaderRenderer(time);
+                    }
+
                     return (
                         <div key={index}>{time}</div>
                     );
                 });
 
                 return (
-                    <th key={item.time} className="header3-text" style={style}>
+                    <th key={item.time} className={`header3-text ${isCurrentDate?'current-date':''}`} style={style}>
                         <div>
                             {pList}
                         </div>
