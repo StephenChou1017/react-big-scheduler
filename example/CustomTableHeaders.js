@@ -11,14 +11,6 @@ class CustomHeaders extends Component {
 
     let schedulerData = new SchedulerData(Date.now(), ViewTypes.Week, false, false, {
       calendarPopoverEnabled: false,
-      nonAgendaDayCellHeaderRenderer: time =>
-        <React.Fragment>
-          <span dangerouslySetInnerHTML={{__html: time.replace(/[0-9]/g, '<b>$&</b>')}}/>
-        </React.Fragment>,
-      nonAgendaOtherCellHeaderRenderer: time =>
-        <React.Fragment>
-          <span dangerouslySetInnerHTML={{__html: time.replace(/[0-9]/g, '<b>$&</b>')}}/>
-        </React.Fragment>,
     });
     schedulerData.localeMoment.locale('en');
     schedulerData.setResources(DemoData.resources);
@@ -26,6 +18,34 @@ class CustomHeaders extends Component {
     this.state = {
       viewModel: schedulerData
     }
+  }
+
+    nonAgendaCellHeaderTemplateResolver = (schedulerData, item, formattedDateItems, style) => {
+      let datetime = schedulerData.localeMoment(item.time);
+      let isCurrentDate = false;
+
+      if (schedulerData.viewType === ViewTypes.Day) {
+          isCurrentDate = datetime.isSame(new Date(), 'hour');
+      }
+      else {
+          isCurrentDate = datetime.isSame(new Date(), 'day');
+      }
+
+      if (isCurrentDate) {
+          style.backgroundColor = '#118dea';
+          style.color = 'white';
+      }
+
+      return (
+          <th key={item.time} className={`header3-text`} style={style}>
+              {
+                  formattedDateItems.map((formattedItem, index) => (
+                      <div key={index}
+                           dangerouslySetInnerHTML={{__html: formattedItem.replace(/[0-9]/g, '<b>$&</b>')}}/>
+                  ))
+              }
+          </th>
+      );
   }
 
   render() {
@@ -42,7 +62,7 @@ class CustomHeaders extends Component {
       <div>
         <Nav/>
         <div>
-          <h3 style={{textAlign: 'center'}}>Custom header<ViewSrcCode
+          <h3 style={{textAlign: 'center'}}>Custom table headers (with disabled calendar popup)<ViewSrcCode
             srcCodeUrl="https://github.com/StephenChou1017/react-big-scheduler/blob/master/example/CustomHeader.js"/>
           </h3>
           <Scheduler schedulerData={viewModel}
@@ -61,6 +81,7 @@ class CustomHeaders extends Component {
                      newEvent={this.newEvent}
                      leftCustomHeader={leftCustomHeader}
                      rightCustomHeader={rightCustomHeader}
+                     nonAgendaCellHeaderTemplateResolver = {this.nonAgendaCellHeaderTemplateResolver}
           />
         </div>
       </div>

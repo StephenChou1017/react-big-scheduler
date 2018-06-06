@@ -67,6 +67,7 @@ class Scheduler extends Component {
         dndSources: PropTypes.array,
         slotClickedFunc: PropTypes.func,
         slotItemTemplateResolver: PropTypes.func,
+        nonAgendaCellHeaderTemplateResolver: PropTypes.func,
     }
 
     componentDidMount(props, state){

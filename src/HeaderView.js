@@ -10,15 +10,15 @@ class HeaderView extends Component {
 
     static propTypes = {
         schedulerData: PropTypes.object.isRequired,
+        nonAgendaCellHeaderTemplateResolver : PropTypes.func,
     }
 
     render() {
-        const {schedulerData} = this.props;
+        const {schedulerData, nonAgendaCellHeaderTemplateResolver} = this.props;
         const {headers, viewType, config, localeMoment} = schedulerData;
         let headerHeight = schedulerData.getTableHeaderHeight();
         let cellWidth = schedulerData.getContentCellWidth();
         let minuteStepsInHour = schedulerData.getMinuteStepsInHour();
-        const {nonAgendaDayCellHeaderRenderer, nonAgendaOtherCellHeaderRenderer} = config;
 
         let headerList = [];
         let style = {};
@@ -33,26 +33,25 @@ class HeaderView extends Component {
                     if(index === headers.length - minuteStepsInHour)
                         style = !!item.nonWorkingTime ? {color: config.nonWorkingTimeHeadColor, backgroundColor: config.nonWorkingTimeHeadBgColor} : {};
 
-                    let pFormatList = config.nonAgendaDayCellHeaderFormat.split('|');
-                    let pList = pFormatList.map((item, index) => {
-                        let time = datetime.format(item);
+                    let pFormattedList = config.nonAgendaDayCellHeaderFormat.split('|').map(item => datetime.format(item));
+                    let element;
 
-                        if (typeof nonAgendaDayCellHeaderRenderer === 'function') {
-                            time = nonAgendaDayCellHeaderRenderer(time);
-                        }
+                    if (typeof nonAgendaCellHeaderTemplateResolver === 'function') {
+                        element = nonAgendaCellHeaderTemplateResolver(schedulerData, item, pFormattedList, style)
+                    }
+                    else {
+                        const pList = pFormattedList.map((item, index) => (
+                            <div key={index}>{item}</div>
+                        ));
 
-                        return (
-                            <div key={index}>{time}</div>
+                        element = (
+                            <th key={item.time} className="header3-text" style={style}>
+                                <div>
+                                    {pList}
+                                </div>
+                            </th>
                         );
-                    });
-
-                    let element = (
-                        <th key={item.time} className={`header3-text ${isCurrentTime?'current-date':''}`} style={style}>
-                            <div>
-                                {pList}
-                            </div>
-                        </th>
-                    );
+                    }
 
                     headerList.push(element);
                 }
@@ -61,26 +60,22 @@ class HeaderView extends Component {
         else {
             headerList = headers.map((item, index) => {
                 let datetime = localeMoment(item.time);
-                const isCurrentDate = datetime.isSame(new Date(), 'day');
                 style = !!item.nonWorkingTime ? {width: cellWidth, color: config.nonWorkingTimeHeadColor, backgroundColor: config.nonWorkingTimeHeadBgColor} : {width: cellWidth};
                 if(index === headers.length - 1)
                     style = !!item.nonWorkingTime ? {color: config.nonWorkingTimeHeadColor, backgroundColor: config.nonWorkingTimeHeadBgColor} : {};
 
-                let pFormatList = config.nonAgendaOtherCellHeaderFormat.split('|');
-                let pList = pFormatList.map((item, index) => {
-                    let time = datetime.format(item);
+                let pFormattedList = config.nonAgendaOtherCellHeaderFormat.split('|').map(item => datetime.format(item));
 
-                    if (typeof nonAgendaOtherCellHeaderRenderer === 'function') {
-                        time = nonAgendaOtherCellHeaderRenderer(time);
-                    }
+                if (typeof nonAgendaCellHeaderTemplateResolver === 'function') {
+                    return nonAgendaCellHeaderTemplateResolver(schedulerData, item, pFormattedList, style)
+                }
 
-                    return (
-                        <div key={index}>{time}</div>
-                    );
-                });
+                const pList = pFormattedList.map((item, index) => (
+                    <div key={index}>{item}</div>
+                ));
 
                 return (
-                    <th key={item.time} className={`header3-text ${isCurrentDate?'current-date':''}`} style={style}>
+                    <th key={item.time} className="header3-text" style={style}>
                         <div>
                             {pList}
                         </div>

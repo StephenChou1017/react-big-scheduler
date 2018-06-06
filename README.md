@@ -306,12 +306,6 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
   #### SchedulerData.config.nonAgendaOtherCellHeaderFormat
   The locale string of non-agenda view cell header format of other view types.
   
-  #### SchedulerData.config.nonAgendaDayCellHeaderRenderer
-  The function to parse date in table header and return new JSX component. Use for Day ViewType
-  
-  #### SchedulerData.config.nonAgendaOtherCellHeaderRenderer
-  The function to parse date in table header and return new JSX component. Use for non-Day ViewType
-  
   #### SchedulerData.behaviors.getDateLabelFunc
   Used to resolve the locale string of date label of Scheduler component.(Refer to the [getDateLabel](https://github.com/StephenChou1017/react-big-scheduler/blob/master/src/behaviors.js) func for example)
   
@@ -548,6 +542,13 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
   slotItemTemplateResolver(schedulerData, slot, slotClickedFunc, width, clsName)
   ```
   Use this function, you can customize the left slot style. 
+  
+  #### nonAgendaCellHeaderTemplateResolver
+  ```
+  nonAgendaCellHeaderTemplateResolver: PropTypes.func
+  nonAgendaCellHeaderTemplateResolver(schedulerData, item, formattedDateItems, style)
+  ```
+  Use this function, you can customize the table header cell style.  Refer to [this example](https://stephenchou1017.github.io/scheduler/#/customtableheaders).
   
   #### slotClickedFunc
   ```

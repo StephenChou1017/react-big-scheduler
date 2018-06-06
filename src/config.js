@@ -56,9 +56,6 @@ export default {
     eventItemPopoverDateFormat: 'MMM D',
     nonAgendaDayCellHeaderFormat: 'ha',
     nonAgendaOtherCellHeaderFormat: 'ddd M/D',
-    nonAgendaDayCellHeaderRenderer: null,
-    nonAgendaOtherCellHeaderRenderer: null,
-
 
     minuteStep: 30,
 
