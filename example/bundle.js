@@ -6,6 +6,7 @@ import Readonly from './Readonly'
 import Locale from './Locale'
 import Views from './Views'
 import CustomHeader from './CustomHeader'
+import CustomTableHeaders from './CustomTableHeaders'
 import CustomEventStyle from './CustomEventStyle'
 import AddResource from './AddResource'
 import DragAndDrop from './DragAndDrop'
@@ -34,6 +35,7 @@ render((
         <Route path="/freezefirstrow" component={FreezeFirstRow} />
         <Route path="/resourceclickable" component={ResourceClickable} />
         <Route path="/comingsoon" component={ComingSoon}/>
+        <Route path="/customtableheaders" component={CustomTableHeaders}/>
     </Router>
 ), document.getElementById('root'))
 

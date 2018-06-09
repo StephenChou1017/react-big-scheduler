@@ -406,6 +406,9 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
   
   #### eventItemPopoverEnabled
   Controls Scheduler whether to display event item popover when moving mouse on an event item, default `true`.
+  
+  #### calendarPopoverEnabled
+  Controls Scheduler whether to display calendar popover when clicking on a date label in header, default `true`.
 
   #### minuteStep
   Minute step for day view type in non-agenda view, can be 10, 12, 15, 20, 30, 60, etc, default 30.
@@ -539,6 +542,13 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
   slotItemTemplateResolver(schedulerData, slot, slotClickedFunc, width, clsName)
   ```
   Use this function, you can customize the left slot style. 
+  
+  #### nonAgendaCellHeaderTemplateResolver
+  ```
+  nonAgendaCellHeaderTemplateResolver: PropTypes.func
+  nonAgendaCellHeaderTemplateResolver(schedulerData, item, formattedDateItems, style)
+  ```
+  Use this function, you can customize the table header cell style.  Refer to [this example](https://stephenchou1017.github.io/scheduler/#/customtableheaders).
   
   #### slotClickedFunc
   ```

@@ -47,6 +47,7 @@ export default {
     checkConflict: false,
     scrollToTodayEnabled: true,
     eventItemPopoverEnabled: true,
+    calendarPopoverEnabled: true,
 
     resourceName: 'Resource Name',
     taskName: 'Task Name',

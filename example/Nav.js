@@ -108,6 +108,12 @@ class Nav extends Component {
                             <span>Resource clickable</span>
                         </Link>
                     </li>
+                    <li style={liStyle}>
+                        <Link target="_self"
+                              to='/customtableheaders'>
+                            <span>Custom table headers</span>
+                        </Link>
+                    </li>
                 </ul>
                 <div style={{clear: "both", marginBottom: '24px'}}></div>
             </div>
