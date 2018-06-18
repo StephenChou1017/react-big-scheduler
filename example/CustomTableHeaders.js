@@ -51,13 +51,6 @@ class CustomHeaders extends Component {
   render() {
     const {viewModel} = this.state;
 
-    let leftCustomHeader = (
-      <div><span style={{fontWeight: 'bold', color: 'red'}}>Put your content here</span></div>
-    );
-    let rightCustomHeader = (
-      <div><span style={{fontWeight: 'bold', color: 'red'}}>or here</span></div>
-    );
-
     return (
       <div>
         <Nav/>
@@ -79,8 +72,6 @@ class CustomHeaders extends Component {
                      updateEventEnd={this.updateEventEnd}
                      moveEvent={this.moveEvent}
                      newEvent={this.newEvent}
-                     leftCustomHeader={leftCustomHeader}
-                     rightCustomHeader={rightCustomHeader}
                      nonAgendaCellHeaderTemplateResolver = {this.nonAgendaCellHeaderTemplateResolver}
           />
         </div>

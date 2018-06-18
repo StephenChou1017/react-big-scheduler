@@ -40,12 +40,12 @@
 }
 
 .resource-view {
-    border: 1px solid #cccccc;
+    border: 1px solid #e9e9e9;
     overflow: hidden;
 }
 
 .scheduler-view {
-    border: 1px solid #cccccc;
+    border: 1px solid #e9e9e9;
     margin: 0 0 0 -1px;
     padding: 0;
 }
@@ -75,27 +75,27 @@ table.resource-table, table.scheduler-bg-table, table.scheduler-table {
 }
 
 table.scheduler-table {
-    border: 1px solid #cccccc;
+    border: 1px solid #e9e9e9;
 }
 
 table.scheduler-content-table {
     margin: 0;
     padding: 0;
-    border: 0 solid #cccccc;
+    border: 0 solid #e9e9e9;
     cellspacing: 0px;
     cellpadding: 0px;
     border-spacing: 0;
 }
 
-table.resource-table tr, table.scheduler-bg-table tr, table.scheduler-table tr {border-bottom: 1px solid #cccccc}
+table.resource-table tr, table.scheduler-bg-table tr, table.scheduler-table tr {border-bottom: 1px solid #e9e9e9}
 
 table.resource-table th, table.scheduler-table th, table.resource-table td, table.scheduler-bg-table td, table.scheduler-table td{
-    border-right: 1px solid #cccccc;
-    border-bottom: 1px solid #cccccc;
+    border-right: 1px solid #e9e9e9;
+    border-bottom: 1px solid #e9e9e9;
 }
 
 table.scheduler-bg-table th {
-    border-right: 1px solid #cccccc;
+    border-right: 1px solid #e9e9e9;
 }
 
 table.resource-table tr th:last-child, /*table.scheduler-bg-table tr th:last-child, */table.scheduler-table tr th:last-child,

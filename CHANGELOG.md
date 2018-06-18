@@ -4,6 +4,14 @@
 * An add-more data bug 
 * Responsive layout
 
+### 2018-06-18
+* Change Scheduler table line color from '#cccccc' to '#e9e9e9'
+* Update the [Online demo](https://stephenchou1017.github.io/scheduler/#/)
+
+### 2018-06-09
+* Add SchedulerData.config.calendarPopoverEnabled([DadUndead](https://github.com/DadUndead))
+* Add Scheduler.nonAgendaCellHeaderTemplateResolver func to customize the table header cell style([DadUndead](https://github.com/DadUndead))
+
 ### 2018-05-07
 * Add SchedulerData.config.minuteStep for daily view([henryroach](https://github.com/henryroach))
 

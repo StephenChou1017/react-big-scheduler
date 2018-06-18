@@ -56,11 +56,11 @@ class AgendaEventItem extends Component {
                         {eventItemTemplate}
                     </a>
                 </Popover> :
-                <div>
+                <span>
                     <a className="day-event" onClick={() => { if(!!eventItemClick) eventItemClick(schedulerData, eventItem);}}>
                         {eventItemTemplate}
                     </a>
-                </div>
+                </span>
         );
     }
 }

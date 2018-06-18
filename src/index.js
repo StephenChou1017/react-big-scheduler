@@ -156,7 +156,7 @@ class Scheduler extends Component {
                 <tr>
                     <td style={{width: resourceTableWidth, verticalAlign: 'top'}}>
                         <div className="resource-view">
-                            <div style={{overflow: "hidden", borderBottom: "1px solid #cccccc", height: config.tableHeaderHeight}}>
+                            <div style={{overflow: "hidden", borderBottom: "1px solid #e9e9e9", height: config.tableHeaderHeight}}>
                                 <div style={{overflowX: "scroll", overflowY: "hidden", margin: `0px 0px -${browserScrollbarHeight}px`}}>
                                     <table className="resource-table">
                                         <thead>
@@ -179,7 +179,7 @@ class Scheduler extends Component {
                     </td>
                     <td>
                         <div className="scheduler-view" style={{width: schedulerContainerWidth, verticalAlign: 'top'}}>
-                            <div style={{overflow: "hidden", borderBottom: "1px solid #cccccc", height: config.tableHeaderHeight}}>
+                            <div style={{overflow: "hidden", borderBottom: "1px solid #e9e9e9", height: config.tableHeaderHeight}}>
                                 <div style={{overflowX: "scroll", overflowY: "hidden", margin: `0px 0px -${browserScrollbarHeight}px`}} ref={this.schedulerHeadRef} onMouseOver={this.onSchedulerHeadMouseOver} onMouseOut={this.onSchedulerHeadMouseOut} onScroll={this.onSchedulerHeadScroll}>
                                     <div style={{paddingRight: `${browserScrollbarWidth}px`, width: schedulerWidth + browserScrollbarWidth}}>
                                         <table className="scheduler-bg-table">
