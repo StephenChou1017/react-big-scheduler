@@ -282,6 +282,13 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
   getResourceById(resourceId)
   ```
   Returns the resource by `resourceId`, returns `undefined` if not found.
+
+  #### isEventInTimeWindow
+  ```js
+  isEventInTimeWindow(eventStart, eventEnd, windowStart, windowEnd)
+  ```
+  Returns whether an event is in the time window or not, remind that `eventStart`, `eventEnd`, `windowStart`, `windowEnd` 
+  are all moment objects.
   
   ### 2.Locale support(Refer to [this example](https://stephenchou1017.github.io/scheduler/#/locale) for details.)
   
@@ -409,6 +416,13 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
   
   #### calendarPopoverEnabled
   Controls Scheduler whether to display calendar popover when clicking on a date label in header, default `true`.
+
+  #### recurringEventsEnabled
+  Controls Scheduler whether to support recurring event, refer to [this feature request](https://github.com/StephenChou1017/react-big-scheduler/issues/8), default `true`.
+  If `true`, SchedulerData will filter out those template events who has a `rrule` string property in `setEvents` method, 
+  generate the recurring events in the time window, and insert them into the event array in the right orders. The recurring events 
+  generated from the same template event, all have a new id like ``${templateEvent.id}-${number}``, and have a `recurringEventId` 
+  property with the value `templateEvent.id`.
 
   #### minuteStep
   Minute step for day view type in non-agenda view, can be 10, 12, 15, 20, 30, 60, etc, default 30.

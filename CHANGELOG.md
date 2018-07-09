@@ -4,6 +4,10 @@
 * An add-more data bug 
 * Responsive layout
 
+### 2018-07-09
+* Add SchedulerData.config.recurringEventsEnabled
+* Support recurring events([Feature request by tgBryanBailes](https://github.com/StephenChou1017/react-big-scheduler/issues/8))
+
 ### 2018-06-18
 * Change Scheduler table line color from '#cccccc' to '#e9e9e9'
 * Update the [Online demo](https://stephenchou1017.github.io/scheduler/#/)

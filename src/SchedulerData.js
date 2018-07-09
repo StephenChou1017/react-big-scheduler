@@ -377,6 +377,7 @@ export default class SchedulerData {
                 rule = RRule.fromString(item.rrule);
             rule.origOptions.dtstart = oldStart.toDate();
             rule.origOptions.until = windowEnd.toDate();
+            //reload
             rule = RRule.fromString(rule.toString());
 
             let all = rule.all();

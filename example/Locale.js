@@ -31,7 +31,8 @@ class Locale extends Component{
                 {viewName: '年', viewType: ViewTypes.Year, showAgenda: false, isEventPerspective: false},
             ],
         }, {
-            getDateLabelFunc: this.getDateLabel
+            getDateLabelFunc: this.getDateLabel,
+            isNonWorkingTimeFunc: this.isNonWorkingTime
         }, moment);
         schedulerData.setResources(DemoData.resources);
         schedulerData.setEvents(DemoData.events);
@@ -201,6 +202,22 @@ class Locale extends Component{
         }
 
         return dateLabel;
+    }
+
+    isNonWorkingTime = (schedulerData, time) => {
+        const { localeMoment } = schedulerData;
+        if(schedulerData.viewType === ViewTypes.Day){
+            let hour = localeMoment(time).hour();
+            if(hour < 9 || hour > 18)
+                return true;
+        }
+        else {
+            let dayOfWeek = localeMoment(time).weekday();
+            if (dayOfWeek === 5 || dayOfWeek === 6)
+                return true;
+        }
+    
+        return false;
     }
 
     onSetAddMoreState = (newState) => {

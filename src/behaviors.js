@@ -53,7 +53,7 @@ export const isNonWorkingTime = (schedulerData, time) => {
     }
     else {
         let dayOfWeek = localeMoment(time).weekday();
-        if (dayOfWeek === 5 || dayOfWeek === 6)
+        if (dayOfWeek === 0 || dayOfWeek === 6)
             return true;
     }
 
