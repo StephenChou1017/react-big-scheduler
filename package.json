@@ -42,11 +42,12 @@
   "dependencies": {
     "antd": "^3.2.3",
     "moment": "^2.18.1",
+    "prop-types": "^15.6.1",
     "react": "^16.0.0",
     "react-dnd": "^2.6.0",
     "react-dnd-html5-backend": "^2.6.0",
     "react-dom": "^16.3.1",
-    "prop-types": "^15.6.1"
+    "rrule": "^2.2.9"
   },
   "devDependencies": {
     "babel": "6.23.0",

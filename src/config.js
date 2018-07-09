@@ -48,6 +48,7 @@ export default {
     scrollToTodayEnabled: true,
     eventItemPopoverEnabled: true,
     calendarPopoverEnabled: true,
+    recurringEventsEnabled: true,
 
     resourceName: 'Resource Name',
     taskName: 'Task Name',

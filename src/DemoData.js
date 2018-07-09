@@ -107,7 +107,9 @@ const DemoData = {
             start: '2017-12-19 17:30:00',
             end: '2017-12-19 23:30:00',
             resourceId: 'r1',
-            title: 'R1 has many tasks 2'
+            title: 'R1 has recurring tasks every week on Tuesday, Friday',
+            rrule: 'FREQ=WEEKLY;DTSTART=20171219T013000Z;WKST=MO;BYDAY=TU,FR',
+            bgColor: 'orange'
         },
         {
             id: 11,
