@@ -80,8 +80,9 @@ let events = [
                      start: '2017-12-19 15:30:00',
                      end: '2017-12-20 23:30:00',
                      resourceId: 'r2',
-                     title: 'I am not end-resizable',
-                     endResizable: false
+                     title: 'R2 has recurring tasks every week on Tuesday, Friday',
+                     rrule: 'FREQ=WEEKLY;DTSTART=20171219T013000Z;BYDAY=TU,FR',
+                     bgColor: '#f759ab'
                  }
              ];
 schedulerData.setEvents(events);
