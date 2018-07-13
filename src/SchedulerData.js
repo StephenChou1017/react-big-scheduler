@@ -376,7 +376,10 @@ export default class SchedulerData {
                 oldEnd = this.localeMoment(item.end),
                 rule = RRule.fromString(item.rrule);
             rule.origOptions.dtstart = oldStart.toDate();
-            rule.origOptions.until = windowEnd.toDate();
+            let untilMoment = this.localeMoment(rule.origOptions.until);
+            if(windowEnd < untilMoment)
+                rule.origOptions.until = windowEnd.toDate();
+
             //reload
             rule = RRule.fromString(rule.toString());
 
