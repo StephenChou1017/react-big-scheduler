@@ -49,6 +49,7 @@ export default {
     eventItemPopoverEnabled: true,
     calendarPopoverEnabled: true,
     recurringEventsEnabled: true,
+    headerEnabled: true,
 
     resourceName: 'Resource Name',
     taskName: 'Task Name',
