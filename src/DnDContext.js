@@ -17,9 +17,19 @@ export default class DnDContext {
             drop: (props, monitor, component) =>{
                 const {schedulerData, resourceEvents} = props;
                 const {viewType, localeMoment} = schedulerData;
+                const type = monitor.getItemType();
+                const pos = getPos(component.eventContainer);
                 let cellWidth = schedulerData.getContentCellWidth();
-                let point = monitor.getClientOffset();
-                let pos = getPos(component.eventContainer);
+                let initialStartTime = null, initialEndTime = null;
+                if(type === DnDTypes.EVENT) {
+                    const initialPoint = monitor.getInitialClientOffset();
+                    let initialLeftIndex = Math.floor((initialPoint.x - pos.x)/cellWidth);
+                    initialStartTime = resourceEvents.headerItems[initialLeftIndex].start;
+                    initialEndTime = resourceEvents.headerItems[initialLeftIndex].end;
+                    if(viewType !== ViewTypes.Day)
+                        initialEndTime = localeMoment(resourceEvents.headerItems[initialLeftIndex].start).hour(23).minute(59).second(59).format(DATETIME_FORMAT);
+                }
+                const point = monitor.getClientOffset();                
                 let leftIndex = Math.floor((point.x - pos.x)/cellWidth);
                 let startTime = resourceEvents.headerItems[leftIndex].start;
                 let endTime = resourceEvents.headerItems[leftIndex].end;
@@ -30,7 +40,9 @@ export default class DnDContext {
                     slotId: resourceEvents.slotId,
                     slotName: resourceEvents.slotName,
                     start: startTime,
-                    end: endTime
+                    end: endTime,
+                    initialStart: initialStartTime,
+                    initialEnd: initialEndTime
                 };
             },
 

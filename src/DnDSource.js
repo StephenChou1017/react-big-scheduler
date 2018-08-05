@@ -25,13 +25,13 @@ export default class DnDSource {
                 const dropResult = monitor.getDropResult();
                 let slotId = dropResult.slotId, slotName = dropResult.slotName;
                 let newStart = dropResult.start, newEnd = dropResult.end;
+                let initialStart = dropResult.initialStart, initialEnd = dropResult.initialEnd;
                 let isEvent = type === DnDTypes.EVENT;
 
                 if(isEvent) {
                     const event = item;
                     if(viewType !== ViewTypes.Day) {
-                        let tmpMoment = localeMoment(newStart);
-                        newStart = localeMoment(event.start).year(tmpMoment.year()).month(tmpMoment.month()).date(tmpMoment.date()).format(DATETIME_FORMAT);
+                        newStart = localeMoment(event.start).add(localeMoment(newStart).diff(localeMoment(initialStart)), 'ms').format(DATETIME_FORMAT);
                     }
                     newEnd = localeMoment(newStart).add(localeMoment(event.end).diff(localeMoment(event.start)), 'ms').format(DATETIME_FORMAT);
                 }
