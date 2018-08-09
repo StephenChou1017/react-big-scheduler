@@ -351,6 +351,9 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
   
   #### eventItemLineHeight
   Line height of an event item in 3 views.
+
+  #### nonAgendaSlotMinHeight
+  Min height of a slot in non-agenda views, default 0, means there is no min height.
   
   #### dayStartFrom
   Start hour rendered from in `ViewTypes.Day` in resource view and task view, default 0.
@@ -424,6 +427,9 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
   generate the recurring events in the time window, and insert them into the event array in the right orders. The recurring events 
   generated from the same template event, all have a new id like ``${templateEvent.id}-${number}``, and have a `recurringEventId` 
   property with the value `templateEvent.id`.
+
+  #### headerEnabled
+  Controls Scheduler whether to display header, default `true`.
 
   #### minuteStep
   Minute step for day view type in non-agenda view, can be 10, 12, 15, 20, 30, 60, etc, default 30.

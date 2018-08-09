@@ -29,6 +29,7 @@ export default {
 
     eventItemHeight: 22,
     eventItemLineHeight: 24,
+    nonAgendaSlotMinHeight: 0,
     dayStartFrom: 0,
     dayStopTo: 23,
     defaultEventBgColor: '#80C5F6',

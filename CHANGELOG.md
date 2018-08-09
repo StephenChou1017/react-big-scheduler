@@ -4,6 +4,16 @@
 * An add-more data bug 
 * Responsive layout
 
+### 2018-08-10
+* Add SchedulerData.config.nonAgendaSlotMinHeight
+* Remove Array.from, Set, which are not supported by IE
+
+### 2018-08-06
+* Optimize moving events behavior
+
+### 2018-07-22
+* Add SchedulerData.config.headerEnabled
+
 ### 2018-07-09
 * Add SchedulerData.config.recurringEventsEnabled
 * Support recurring events([Feature request by tgBryanBailes](https://github.com/StephenChou1017/react-big-scheduler/issues/8))
