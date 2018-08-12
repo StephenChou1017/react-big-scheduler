@@ -1,7 +1,7 @@
 react-big-scheduler
 ========================
 
-A scheduler and resource planning component built for React and made for modern browsers (IE10+) .
+A scheduler and resource planning component built for React and made for modern browsers (IE10+), IE needs babel-polyfill.
 
 [Online demo](https://stephenchou1017.github.io/scheduler/#/)
 
