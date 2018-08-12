@@ -4,9 +4,10 @@
 * An add-more data bug 
 * Responsive layout
 
+## npm v0.2.1
+
 ### 2018-08-10
 * Add SchedulerData.config.nonAgendaSlotMinHeight
-* Remove Array.from, Set, which are not supported by IE
 
 ### 2018-08-06
 * Optimize moving events behavior
