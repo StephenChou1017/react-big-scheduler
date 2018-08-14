@@ -14,6 +14,8 @@ class EventItem extends Component {
             top: top,
             width: width,
         };
+        this.startResizer = null;
+        this.endResizer = null;
     }
 
     static propTypes = {
@@ -275,10 +277,10 @@ class EventItem extends Component {
         let eventTitle = isInPopover ? `${start.format('HH:mm')} ${titleText}` : titleText;
         let startResizeDiv = <div />;
         if (this.startResizable(this.props))
-            startResizeDiv = <div className="event-resizer event-start-resizer" ref='startResizer'></div>;
+            startResizeDiv = <div className="event-resizer event-start-resizer" ref={(ref) => this.startResizer = ref}></div>;
         let endResizeDiv = <div />;
         if (this.endResizable(this.props))
-            endResizeDiv = <div className="event-resizer event-end-resizer" ref='endResizer'></div>;
+            endResizeDiv = <div className="event-resizer event-end-resizer" ref={(ref) => this.endResizer = ref}></div>;
 
         let eventItemTemplate = (
             <div className={roundCls + ' event-item'} key={eventItem.id}
