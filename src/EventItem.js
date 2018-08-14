@@ -334,15 +334,15 @@ class EventItem extends Component {
     }
 
     subscribeResizeEvent = (props) => {
-        if (this.refs.startResizer != undefined) {
-            this.refs.startResizer.removeEventListener('mousedown', this.initStartDrag, false);
+        if (this.startResizer != undefined) {
+            this.startResizer.removeEventListener('mousedown', this.initStartDrag, false);
             if (this.startResizable(props))
-                this.refs.startResizer.addEventListener('mousedown', this.initStartDrag, false);
+                this.startResizer.addEventListener('mousedown', this.initStartDrag, false);
         }
-        if (this.refs.endResizer != undefined) {
-            this.refs.endResizer.removeEventListener('mousedown', this.initEndDrag, false);
+        if (this.endResizer != undefined) {
+            this.endResizer.removeEventListener('mousedown', this.initEndDrag, false);
             if (this.endResizable(props))
-                this.refs.endResizer.addEventListener('mousedown', this.initEndDrag, false);
+                this.endResizer.addEventListener('mousedown', this.initEndDrag, false);
         }
     }
 }
