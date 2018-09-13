@@ -1,5 +1,5 @@
 import moment from 'moment'
-import RRule,RRuleSet,rrulestr from 'rrule'
+import {RRule,RRuleSet,rrulestr} from 'rrule'
 import config from './config'
 import behaviors from './behaviors'
 import {ViewTypes, DATE_FORMAT, DATETIME_FORMAT} from './index'
@@ -381,6 +381,18 @@ export default class SchedulerData {
                 
             //reload
             rule = rrulestr(rule.toString());
+            if (item.exdata || item.exrule)
+            {
+                const rruleSet = new RRuleSet()    
+                rruleSet.rrule(rule);   
+                rruleSet.exrule(rrulestr(item.exrule));
+                item.exdates.forEach((exdate) => 
+                {
+                    rruleSet.exdate(this.localeMoment(exdate).toDate())
+                })
+                rule = rruleSet;
+            }
+            
             let all = rule.all();
             let newEvents = all.map((time, index) => {
                 return {
