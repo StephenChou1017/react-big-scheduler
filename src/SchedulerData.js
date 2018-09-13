@@ -1,5 +1,5 @@
 import moment from 'moment'
-import RRule from 'rrule'
+import {RRule,RRuleSet,rrulestr} from 'rrule'
 import config from './config'
 import behaviors from './behaviors'
 import {ViewTypes, DATE_FORMAT, DATETIME_FORMAT} from './index'
@@ -373,14 +373,26 @@ export default class SchedulerData {
                 windowEnd = this.localeMoment(this.endDate),
                 oldStart = this.localeMoment(item.start),
                 oldEnd = this.localeMoment(item.end),
-                rule = RRule.fromString(item.rrule);
+                rule = rrulestr(item.rrule);
             rule.origOptions.dtstart = oldStart.toDate();
             if(!rule.origOptions.until || windowEnd < this.localeMoment(rule.origOptions.until)) {
                 rule.origOptions.until = windowEnd.toDate();
             }
                 
             //reload
-            rule = RRule.fromString(rule.toString());
+            rule = rrulestr(rule.toString());
+            if (item.exdata || item.exrule)
+            {
+                const rruleSet = new RRuleSet()    
+                rruleSet.rrule(rule);   
+                rruleSet.exrule(rrulestr(item.exrule));
+                item.exdates.forEach((exdate) => 
+                {
+                    rruleSet.exdate(this.localeMoment(exdate).toDate())
+                })
+                rule = rruleSet;
+            }
+            
             let all = rule.all();
             let newEvents = all.map((time, index) => {
                 return {
