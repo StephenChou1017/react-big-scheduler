@@ -384,12 +384,16 @@ export default class SchedulerData {
             if (item.exdates || item.exrule)
             {
                 const rruleSet = new RRuleSet()    
-                rruleSet.rrule(rule);   
-                rruleSet.exrule(rrulestr(item.exrule));
-                item.exdates.forEach((exdate) => 
-                {
-                    rruleSet.exdate(this.localeMoment(exdate).toDate())
-                })
+                rruleSet.rrule(rule); 
+                if(item.exrule) {
+                    rruleSet.exrule(rrulestr(item.exrule));
+                }
+                if(item.exdates) {
+                    item.exdates.forEach((exdate) => 
+                    {
+                        rruleSet.exdate(this.localeMoment(exdate).toDate());
+                    });
+                }
                 rule = rruleSet;
             }
             
