@@ -386,6 +386,8 @@ export default class SchedulerData {
                 return {
                     ...item,
                     recurringEventId: item.id,
+                    recurringEventStart: item.start,
+                    recurringEventEnd: item.end,
                     id: `${item.id}-${index}`,
                     start: this.localeMoment(time).format(DATETIME_FORMAT),
                     end: this.localeMoment(time).add(oldEnd.diff(oldStart), 'ms').format(DATETIME_FORMAT)
@@ -461,8 +463,12 @@ export default class SchedulerData {
             else {
                 while (header >= start && header <= end) {
                     let time = header.format(DATETIME_FORMAT);
-                    let nonWorkingTime = this.behaviors.isNonWorkingTimeFunc(this, time);
-                    headers.push({ time: time, nonWorkingTime: nonWorkingTime });
+                    let dayOfWeek = header.weekday();
+                    if( this.config.displayWeekend || (dayOfWeek !== 0 && dayOfWeek !== 6))
+                    {
+                        let nonWorkingTime = this.behaviors.isNonWorkingTimeFunc(this, time);
+                        headers.push({ time: time, nonWorkingTime: nonWorkingTime });
+                    }
 
                     header = header.add(1, 'days');
                 }
@@ -678,6 +684,12 @@ export default class SchedulerData {
                             pos = tmp;
                         }
                         let render = headerStart <= eventStart || index === 0;
+                        if(render === false){
+                            let previousHeader = resourceEvents.headerItems[index - 1];
+                            let previousHeaderStart = this.localeMoment(previousHeader.start), previousHeaderEnd = this.localeMoment(previousHeader.end);
+                            if(previousHeaderEnd <= eventStart || previousHeaderStart >= eventEnd)
+                                render = true;
+                        }
                         header.events[pos] = this._createHeaderEvent(render, span, item);
                     }
                 });

@@ -27,7 +27,7 @@ class AgendaEventItem extends Component {
         const {config} = schedulerData;
         let roundCls = isStart ? (isEnd ? 'round-all' : 'round-head') : (isEnd ? 'round-tail' : 'round-none');
         let bgColor = config.defaultEventBgColor;
-        if(eventItem.bgColor !== undefined)
+        if(!!eventItem.bgColor)
             bgColor = eventItem.bgColor;
 
         let titleText = schedulerData.behaviors.getEventTextFunc(schedulerData, eventItem);

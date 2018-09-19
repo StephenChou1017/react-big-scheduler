@@ -2,7 +2,7 @@ import ViewTypes from './ViewTypes'
 import SummaryPos from './SummaryPos'
 
 export default {
-    schedulerWidth: 1000,
+    schedulerWidth: '1000',
     schedulerMaxHeight: 0,
     tableHeaderHeight: 40,
 
@@ -51,6 +51,7 @@ export default {
     calendarPopoverEnabled: true,
     recurringEventsEnabled: true,
     headerEnabled: true,
+    displayWeekend: false,
 
     resourceName: 'Resource Name',
     taskName: 'Task Name',

@@ -119,6 +119,40 @@ class EventItem extends Component {
         else if (newWidth > maxWidth)
             count = -leftIndex;
         let newStart = localeMoment(eventItem.start).add(viewType === ViewTypes.Day ? count * config.minuteStep : count, viewType === ViewTypes.Day ? 'minutes' : 'days').format(DATETIME_FORMAT);
+        if(count !== 0 && viewType !== ViewTypes.Day && config.displayWeekend === false) {
+            if(count > 0) {
+                let tempCount = 0, i = 0;
+                while (true) {
+                    console.log(1, count);
+                    i++;
+                    let tempStart = localeMoment(eventItem.start).add(i, 'days');
+                    let dayOfWeek = tempStart.weekday();
+                    if(dayOfWeek !== 0 && dayOfWeek !== 6) {
+                        tempCount ++;
+                        if(tempCount === count) {
+                            newStart = tempStart.format(DATETIME_FORMAT);
+                            break;
+                        }
+                    }
+
+                }
+            } else {
+                let tempCount = 0, i = 0;
+                while (true) {
+                    console.log(2, count);
+                    i--;
+                    let tempStart = localeMoment(eventItem.start).add(i, 'days');
+                    let dayOfWeek = tempStart.weekday();
+                    if(dayOfWeek !== 0 && dayOfWeek !== 6) {
+                        tempCount --;
+                        if(tempCount === count) {
+                            newStart = tempStart.format(DATETIME_FORMAT);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
 
         let hasConflict = false;
         if (config.checkConflict) {
@@ -214,6 +248,38 @@ class EventItem extends Component {
         else if (newWidth > maxWidth)
             count = headers.length - rightIndex;
         let newEnd = localeMoment(eventItem.end).add(viewType === ViewTypes.Day ? count * config.minuteStep : count, viewType === ViewTypes.Day ? 'minutes' : 'days').format(DATETIME_FORMAT);
+        if(count !== 0 && viewType !== ViewTypes.Day && config.displayWeekend === false) {
+            if(count > 0) {
+                let tempCount = 0, i = 0;
+                while (true) {
+                    i++;
+                    let tempEnd = localeMoment(eventItem.end).add(i, 'days');
+                    let dayOfWeek = tempEnd.weekday();
+                    if(dayOfWeek !== 0 && dayOfWeek !== 6) {
+                        tempCount ++;
+                        if(tempCount === count) {
+                            newEnd = tempEnd.format(DATETIME_FORMAT);
+                            break;
+                        }
+                    }
+
+                }
+            } else {
+                let tempCount = 0, i = 0;
+                while (true) {
+                    i--;
+                    let tempEnd = localeMoment(eventItem.end).add(i, 'days');
+                    let dayOfWeek = tempEnd.weekday();
+                    if(dayOfWeek !== 0 && dayOfWeek !== 6) {
+                        tempCount --;
+                        if(tempCount === count) {
+                            newEnd = tempEnd.format(DATETIME_FORMAT);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
 
         let hasConflict = false;
         if (config.checkConflict) {
@@ -259,7 +325,7 @@ class EventItem extends Component {
         const {left, width, top} = this.state;
         let roundCls = isStart ? (isEnd ? 'round-all' : 'round-head') : (isEnd ? 'round-tail' : 'round-none');
         let bgColor = config.defaultEventBgColor;
-        if (eventItem.bgColor !== undefined)
+        if (!!eventItem.bgColor)
             bgColor = eventItem.bgColor;
 
         let titleText = schedulerData.behaviors.getEventTextFunc(schedulerData, eventItem);
