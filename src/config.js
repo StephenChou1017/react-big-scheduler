@@ -51,7 +51,7 @@ export default {
     calendarPopoverEnabled: true,
     recurringEventsEnabled: true,
     headerEnabled: true,
-    displayWeekend: false,
+    displayWeekend: true,
 
     resourceName: 'Resource Name',
     taskName: 'Task Name',

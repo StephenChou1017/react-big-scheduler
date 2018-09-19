@@ -114,6 +114,12 @@ class Nav extends Component {
                             <span>Custom table headers</span>
                         </Link>
                     </li>
+                    <li style={liStyle}>
+                        <Link target="_self"
+                              to='/hideweekends'>
+                            <span>Hide weekends</span>
+                        </Link>
+                    </li>
                 </ul>
                 <div style={{clear: "both", marginBottom: '24px'}}></div>
             </div>

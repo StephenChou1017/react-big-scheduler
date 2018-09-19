@@ -431,6 +431,9 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
   #### headerEnabled
   Controls Scheduler whether to display header, default `true`.
 
+  #### displayWeekend
+  Controls Scheduler whether to display weekends in non-agenda view, default `true`.
+
   #### minuteStep
   Minute step for day view type in non-agenda view, can be 10, 12, 15, 20, 30, 60, etc, default 30.
   

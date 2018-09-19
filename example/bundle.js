@@ -16,6 +16,7 @@ import OverlapCheck from './OverlapCheck'
 import NoCrossSlotMove from './NoCrossSlotMove'
 import FreezeFirstRow from './FreezeFirstRow'
 import ResourceClickable from './ResourceClickable'
+import HideWeekends from './HideWeekends'
 import ComingSoon from './ComingSoon'
 
 render((
@@ -36,6 +37,7 @@ render((
         <Route path="/resourceclickable" component={ResourceClickable} />
         <Route path="/comingsoon" component={ComingSoon}/>
         <Route path="/customtableheaders" component={CustomTableHeaders}/>
+        <Route path="/hideweekends" component={HideWeekends}/>
     </Router>
 ), document.getElementById('root'))
 

@@ -123,7 +123,6 @@ class EventItem extends Component {
             if(count > 0) {
                 let tempCount = 0, i = 0;
                 while (true) {
-                    console.log(1, count);
                     i++;
                     let tempStart = localeMoment(eventItem.start).add(i, 'days');
                     let dayOfWeek = tempStart.weekday();
@@ -139,7 +138,6 @@ class EventItem extends Component {
             } else {
                 let tempCount = 0, i = 0;
                 while (true) {
-                    console.log(2, count);
                     i--;
                     let tempStart = localeMoment(eventItem.start).add(i, 'days');
                     let dayOfWeek = tempStart.weekday();

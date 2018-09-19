@@ -4,6 +4,13 @@
 * An add-more data bug 
 * Responsive layout
 
+### 2018-09-18
+* Add SchedulerData.config.displayWeekend([Feature request by Subwater](https://github.com/StephenChou1017/react-big-scheduler/issues/21))
+* Update the [Online demo](https://stephenchou1017.github.io/scheduler/#/), add [Hide weekends example](https://stephenchou1017.github.io/scheduler/#/hideweekends)
+
+### 2018-09-13
+* Support for rruleset => exrule,exdate([mongrelx](https://github.com/mongrelx))
+
 ## npm v0.2.1
 
 ### 2018-08-10
