@@ -4,6 +4,10 @@
 * An add-more data bug 
 * Responsive layout
 
+### 2018-09-28
+* Add onScrollLeft, onScrollRight, onScrollTop and onScrollBottom of Scheduler([Feature request by wojcechgk](https://github.com/StephenChou1017/react-big-scheduler/issues/42))
+* Update the [Online demo](https://stephenchou1017.github.io/scheduler/#/), add [Infinite scroll example](https://stephenchou1017.github.io/scheduler/#/infinitescroll)
+
 ### 2018-09-18
 * Add SchedulerData.config.displayWeekend([Feature request by Subwater](https://github.com/StephenChou1017/react-big-scheduler/issues/21))
 * Update the [Online demo](https://stephenchou1017.github.io/scheduler/#/), add [Hide weekends example](https://stephenchou1017.github.io/scheduler/#/hideweekends)

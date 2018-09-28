@@ -43,6 +43,10 @@ class Basic extends Component{
                                updateEventEnd={this.updateEventEnd}
                                moveEvent={this.moveEvent}
                                newEvent={this.newEvent}
+                               onScrollLeft={this.onScrollLeft}
+                               onScrollRight={this.onScrollRight}
+                               onScrollTop={this.onScrollTop}
+                               onScrollBottom={this.onScrollBottom}
                     />
                 </div>
                 <Tips />
@@ -143,6 +147,38 @@ class Basic extends Component{
                 viewModel: schedulerData
             })
         }
+    }
+
+    onScrollRight = (schedulerData, schedulerContent, maxScrollLeft) => {
+        if(schedulerData.ViewTypes === ViewTypes.Day) {
+            schedulerData.next();
+            schedulerData.setEvents(DemoData.events);
+            this.setState({
+                viewModel: schedulerData
+            });
+    
+            schedulerContent.scrollLeft = maxScrollLeft - 10;
+        }
+    }
+
+    onScrollLeft = (schedulerData, schedulerContent, maxScrollLeft) => {
+        if(schedulerData.ViewTypes === ViewTypes.Day) {
+            schedulerData.prev();
+            schedulerData.setEvents(DemoData.events);
+            this.setState({
+                viewModel: schedulerData
+            });
+
+            schedulerContent.scrollLeft = 10;
+        }
+    }
+
+    onScrollTop = (schedulerData, schedulerContent, maxScrollTop) => {
+        console.log('onScrollTop');
+    }
+
+    onScrollBottom = (schedulerData, schedulerContent, maxScrollTop) => {
+        console.log('onScrollBottom');
     }
 }
 

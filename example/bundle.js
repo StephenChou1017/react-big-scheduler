@@ -17,6 +17,7 @@ import NoCrossSlotMove from './NoCrossSlotMove'
 import FreezeFirstRow from './FreezeFirstRow'
 import ResourceClickable from './ResourceClickable'
 import HideWeekends from './HideWeekends'
+import InfiniteScroll from './InfiniteScroll'
 import ComingSoon from './ComingSoon'
 
 render((
@@ -38,6 +39,7 @@ render((
         <Route path="/comingsoon" component={ComingSoon}/>
         <Route path="/customtableheaders" component={CustomTableHeaders}/>
         <Route path="/hideweekends" component={HideWeekends}/>
+        <Route path="/infinitescroll" component={InfiniteScroll}/>
     </Router>
 ), document.getElementById('root'))
 

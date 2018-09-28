@@ -120,6 +120,12 @@ class Nav extends Component {
                             <span>Hide weekends</span>
                         </Link>
                     </li>
+                    <li style={liStyle}>
+                        <Link target="_self"
+                              to='/infinitescroll'>
+                            <span>Infinite scroll</span>
+                        </Link>
+                    </li>
                 </ul>
                 <div style={{clear: "both", marginBottom: '24px'}}></div>
             </div>
