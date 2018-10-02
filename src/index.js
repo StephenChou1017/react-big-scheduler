@@ -1,414 +1,598 @@
-import React, {Component} from 'react'
-import {PropTypes} from 'prop-types'
-import {Row, Col, Icon, Radio, Popover, Calendar} from 'antd'
-import EventItem from './EventItem'
-import DnDSource from './DnDSource'
-import DnDContext from './DnDContext'
-import ResourceView from './ResourceView'
-import HeaderView from './HeaderView'
-import BodyView from './BodyView'
-import ResourceEvents from './ResourceEvents'
-import AgendaView from './AgendaView'
-import AddMorePopover from './AddMorePopover'
-import ViewTypes from './ViewTypes'
-import SummaryPos from './SummaryPos'
-import SchedulerData from './SchedulerData'
-import DemoData from './DemoData'
-const RadioButton = Radio.Button;
-const RadioGroup = Radio.Group;
+'use strict';
 
-class Scheduler extends Component {
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.DemoData = exports.AddMorePopover = exports.DnDContext = exports.DnDSource = exports.SummaryPos = exports.ViewTypes = exports.SchedulerData = exports.DATETIME_FORMAT = exports.DATE_FORMAT = undefined;
 
-    constructor(props) {
-        super(props);
+var _row = require('antd/es/row');
 
-        const {schedulerData, dndSources} = props;
-        let sources = [];
-        sources.push(new DnDSource((props) => {
+var _row2 = _interopRequireDefault(_row);
+
+var _col = require('antd/es/col');
+
+var _col2 = _interopRequireDefault(_col);
+
+var _popover = require('antd/es/popover');
+
+var _popover2 = _interopRequireDefault(_popover);
+
+var _icon = require('antd/es/icon');
+
+var _icon2 = _interopRequireDefault(_icon);
+
+var _calendar = require('antd/es/calendar');
+
+var _calendar2 = _interopRequireDefault(_calendar);
+
+var _radio = require('antd/es/radio');
+
+var _radio2 = _interopRequireDefault(_radio);
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _class, _temp, _initialiseProps;
+
+require('antd/es/row/style/css');
+
+require('antd/es/col/style/css');
+
+require('antd/es/popover/style/css');
+
+require('antd/es/icon/style/css');
+
+require('antd/es/calendar/style/css');
+
+require('antd/es/radio/style/css');
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = require('prop-types');
+
+var _EventItem = require('./EventItem');
+
+var _EventItem2 = _interopRequireDefault(_EventItem);
+
+var _DnDSource = require('./DnDSource');
+
+var _DnDSource2 = _interopRequireDefault(_DnDSource);
+
+var _DnDContext = require('./DnDContext');
+
+var _DnDContext2 = _interopRequireDefault(_DnDContext);
+
+var _ResourceView = require('./ResourceView');
+
+var _ResourceView2 = _interopRequireDefault(_ResourceView);
+
+var _HeaderView = require('./HeaderView');
+
+var _HeaderView2 = _interopRequireDefault(_HeaderView);
+
+var _BodyView = require('./BodyView');
+
+var _BodyView2 = _interopRequireDefault(_BodyView);
+
+var _ResourceEvents = require('./ResourceEvents');
+
+var _ResourceEvents2 = _interopRequireDefault(_ResourceEvents);
+
+var _AgendaView = require('./AgendaView');
+
+var _AgendaView2 = _interopRequireDefault(_AgendaView);
+
+var _AddMorePopover = require('./AddMorePopover');
+
+var _AddMorePopover2 = _interopRequireDefault(_AddMorePopover);
+
+var _ViewTypes = require('./ViewTypes');
+
+var _ViewTypes2 = _interopRequireDefault(_ViewTypes);
+
+var _SummaryPos = require('./SummaryPos');
+
+var _SummaryPos2 = _interopRequireDefault(_SummaryPos);
+
+var _SchedulerData = require('./SchedulerData');
+
+var _SchedulerData2 = _interopRequireDefault(_SchedulerData);
+
+var _DemoData = require('./DemoData');
+
+var _DemoData2 = _interopRequireDefault(_DemoData);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var RadioButton = _radio2.default.Button;
+var RadioGroup = _radio2.default.Group;
+
+var Scheduler = (_temp = _class = function (_Component) {
+    _inherits(Scheduler, _Component);
+
+    function Scheduler(props) {
+        _classCallCheck(this, Scheduler);
+
+        var _this = _possibleConstructorReturn(this, (Scheduler.__proto__ || Object.getPrototypeOf(Scheduler)).call(this, props));
+
+        _initialiseProps.call(_this);
+
+        var schedulerData = props.schedulerData,
+            dndSources = props.dndSources;
+
+        var sources = [];
+        sources.push(new _DnDSource2.default(function (props) {
             return props.eventItem;
-        }, EventItem));
+        }, _EventItem2.default));
         if (dndSources != undefined && dndSources.length > 0) {
-            sources = [...sources, ...dndSources];
+            sources = [].concat(_toConsumableArray(sources), _toConsumableArray(dndSources));
         }
-        let dndContext = new DnDContext(sources, ResourceEvents);
+        var dndContext = new _DnDContext2.default(sources, _ResourceEvents2.default);
 
-        this.currentArea = -1;
+        _this.currentArea = -1;
 
-        this.state = {
+        _this.state = {
             visible: false,
             dndContext: dndContext,
             contentHeight: schedulerData.getSchedulerContentDesiredHeight(),
             browserScrollbarHeight: 17,
-            browserScrollbarWidth: 17,
-            scrollLeft: 0,
-            scrollTop: 0,
+            browserScrollbarWidth: 17
         };
+        return _this;
     }
 
-    static propTypes = {
-        schedulerData: PropTypes.object.isRequired,
-        prevClick: PropTypes.func.isRequired,
-        nextClick: PropTypes.func.isRequired,
-        onViewChange: PropTypes.func.isRequired,
-        onSelectDate: PropTypes.func.isRequired,
-        onSetAddMoreState: PropTypes.func,
-        updateEventStart: PropTypes.func,
-        updateEventEnd: PropTypes.func,
-        moveEvent: PropTypes.func,
-        leftCustomHeader: PropTypes.object,
-        rightCustomHeader: PropTypes.object,
-        newEvent: PropTypes.func,
-        subtitleGetter: PropTypes.func,
-        eventItemClick: PropTypes.func,
-        viewEventClick: PropTypes.func,
-        viewEventText: PropTypes.string,
-        viewEvent2Click: PropTypes.func,
-        viewEvent2Text: PropTypes.string,
-        conflictOccurred: PropTypes.func,
-        eventItemTemplateResolver: PropTypes.func,
-        dndSources: PropTypes.array,
-        slotClickedFunc: PropTypes.func,
-        slotItemTemplateResolver: PropTypes.func,
-        nonAgendaCellHeaderTemplateResolver: PropTypes.func,
-        onScrollLeft: PropTypes.func,
-        onScrollRight: PropTypes.func,
-        onScrollTop: PropTypes.func,
-        onScrollBottom: PropTypes.func,
-    }
+    _createClass(Scheduler, [{
+        key: 'componentDidMount',
+        value: function componentDidMount(props, state) {
+            this.resolveScrollbarSize();
+        }
+    }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate(props, state) {
+            this.resolveScrollbarSize();
 
-    componentDidMount(props, state){
-        this.resolveScrollbarSize();
-    }
+            var schedulerData = this.props.schedulerData;
+            var localeMoment = schedulerData.localeMoment;
 
-    componentDidUpdate(props, state) {
-        this.resolveScrollbarSize();
+            if (schedulerData.getScrollToToday()) {
+                if (!!this.schedulerContent && this.schedulerContent.scrollWidth > this.schedulerContent.clientWidth) {
+                    var start = localeMoment(schedulerData.startDate).startOf('day'),
+                        end = localeMoment(schedulerData.endDate).endOf('day'),
+                        now = localeMoment();
+                    if (now >= start && now <= end) {
+                        var index = 0;
+                        schedulerData.headers.forEach(function (item) {
+                            var header = localeMoment(item.time);
+                            if (now >= header) index++;
+                        });
+                        index = index - 7      //this line is added by me
+                        this.schedulerContent.scrollLeft = (index - 1) * schedulerData.getContentCellWidth();
 
-        const { schedulerData } = this.props;
-        const { localeMoment} = schedulerData;
-        if(schedulerData.getScrollToToday()){
-            if(!!this.schedulerContent && this.schedulerContent.scrollWidth > this.schedulerContent.clientWidth){
-                let start = localeMoment(schedulerData.startDate).startOf('day'),
-                    end = localeMoment(schedulerData.endDate).endOf('day'),
-                    now = localeMoment();
-                if(now>= start && now <= end){
-                    let index = 0;
-                    schedulerData.headers.forEach((item) => {
-                        let header = localeMoment(item.time);
-                        if(now >= header)
-                            index ++;
-                    })
-                    this.schedulerContent.scrollLeft = (index - 1) * schedulerData.getContentCellWidth();
-
-                    schedulerData.setScrollToToday(false);
+                        schedulerData.setScrollToToday(false);
+                    }
                 }
             }
         }
-    }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
 
-    render() {
-        const { schedulerData, leftCustomHeader, rightCustomHeader } = this.props;
-        const {renderData, viewType, showAgenda, isEventPerspective, config} = schedulerData;
-        const width = config.schedulerWidth;
-        const calendarPopoverEnabled = config.calendarPopoverEnabled;
+            var _props = this.props,
+                schedulerData = _props.schedulerData,
+                leftCustomHeader = _props.leftCustomHeader,
+                rightCustomHeader = _props.rightCustomHeader;
+            var renderData = schedulerData.renderData,
+                viewType = schedulerData.viewType,
+                showAgenda = schedulerData.showAgenda,
+                isEventPerspective = schedulerData.isEventPerspective,
+                config = schedulerData.config;
 
-        let dateLabel = schedulerData.getDateLabel();
-        let defaultValue = `${viewType}${showAgenda ? 1 : 0}${isEventPerspective ? 1 : 0}`;
-        let radioButtonList = config.views.map(item => {
-            return <RadioButton key={`${item.viewType}${item.showAgenda ? 1 : 0}${item.isEventPerspective ? 1 : 0}`}
-                                value={`${item.viewType}${item.showAgenda ? 1 : 0}${item.isEventPerspective ? 1 : 0}`}><span
-                style={{margin: "0px 8px"}}>{item.viewName}</span></RadioButton>
-        })
+            var width = config.schedulerWidth;
+            var calendarPopoverEnabled = config.calendarPopoverEnabled;
 
-        let tbodyContent = <tr />;
-        if (showAgenda) {
-            tbodyContent = <AgendaView
-                                {...this.props}
-                            />
-        }
-        else {
-            let resourceTableWidth = schedulerData.getResourceTableWidth();
-            let schedulerContainerWidth = width - resourceTableWidth + 1;
-            let schedulerWidth = schedulerData.getContentTableWidth() - 1;
-            let DndResourceEvents = this.state.dndContext.getDropTarget();
-            let eventDndSource = this.state.dndContext.getDndSource();
-
-            let resourceEventsList = renderData.map((item) => {
-                return <DndResourceEvents
-                                {...this.props}
-                                key={item.slotId}
-                                resourceEvents={item}
-                                dndSource={eventDndSource}
-                />
+            var dateLabel = schedulerData.getDateLabel();
+            var defaultValue = '' + viewType + (showAgenda ? 1 : 0) + (isEventPerspective ? 1 : 0);
+            var radioButtonList = config.views.map(function (item) {
+                return _react2.default.createElement(
+                    RadioButton,
+                    { key: '' + item.viewType + (item.showAgenda ? 1 : 0) + (item.isEventPerspective ? 1 : 0),
+                        value: '' + item.viewType + (item.showAgenda ? 1 : 0) + (item.isEventPerspective ? 1 : 0) },
+                    _react2.default.createElement(
+                        'span',
+                        {
+                            style: { margin: "0px 8px" } },
+                        item.viewName
+                    )
+                );
             });
 
-            let browserScrollbarHeight = this.state.browserScrollbarHeight,
-                browserScrollbarWidth = this.state.browserScrollbarWidth,
-                contentHeight = this.state.contentHeight;
-            let schedulerContentStyle = {overflow: 'auto', margin: "0px, 0px, 0px, 0px", position: "relative"};
-            let resourceContentStyle = {overflowX: "auto", overflowY: "auto", margin: `0px -${browserScrollbarWidth}px 0px 0px`};
-            if (config.schedulerMaxHeight > 0) {
-                schedulerContentStyle = {
-                    ...schedulerContentStyle,
-                    maxHeight: config.schedulerMaxHeight - config.tableHeaderHeight
-                };
-                resourceContentStyle = {
-                    ...resourceContentStyle,
-                    maxHeight: config.schedulerMaxHeight - config.tableHeaderHeight
-                };
-            }
+            var tbodyContent = _react2.default.createElement('tr', null);
+            if (showAgenda) {
+                tbodyContent = _react2.default.createElement(_AgendaView2.default, this.props);
+            } else {
+                var resourceTableWidth = schedulerData.getResourceTableWidth();
+                var schedulerContainerWidth = width - resourceTableWidth + 1;
+                var schedulerWidth = schedulerData.getContentTableWidth() - 1;
+                var DndResourceEvents = this.state.dndContext.getDropTarget();
+                var eventDndSource = this.state.dndContext.getDndSource();
 
-            let resourceName = schedulerData.isEventPerspective ? config.taskName : config.resourceName;
-            tbodyContent = (
-                <tr>
-                    <td style={{width: resourceTableWidth, verticalAlign: 'top'}}>
-                        <div className="resource-view">
-                            <div style={{overflow: "hidden", borderBottom: "1px solid #e9e9e9", height: config.tableHeaderHeight}}>
-                                <div style={{overflowX: "scroll", overflowY: "hidden", margin: `0px 0px -${browserScrollbarHeight}px`}}>
-                                    <table className="resource-table">
-                                        <thead>
-                                        <tr style={{height: config.tableHeaderHeight}}>
-                                            <th className="header3-text">
-                                                {resourceName}
-                                            </th>
-                                        </tr>
-                                        </thead>
-                                    </table>
-                                </div>
-                            </div>
-                            <div style={resourceContentStyle} ref={this.schedulerResourceRef} onMouseOver={this.onSchedulerResourceMouseOver} onMouseOut={this.onSchedulerResourceMouseOut} onScroll={this.onSchedulerResourceScroll}>
-                                <ResourceView
-                                    {...this.props}
-                                    browserScrollbarHeight={browserScrollbarHeight}
-                                />
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="scheduler-view" style={{width: schedulerContainerWidth, verticalAlign: 'top'}}>
-                            <div style={{overflow: "hidden", borderBottom: "1px solid #e9e9e9", height: config.tableHeaderHeight}}>
-                                <div style={{overflowX: "scroll", overflowY: "hidden", margin: `0px 0px -${browserScrollbarHeight}px`}} ref={this.schedulerHeadRef} onMouseOver={this.onSchedulerHeadMouseOver} onMouseOut={this.onSchedulerHeadMouseOut} onScroll={this.onSchedulerHeadScroll}>
-                                    <div style={{paddingRight: `${browserScrollbarWidth}px`, width: schedulerWidth + browserScrollbarWidth}}>
-                                        <table className="scheduler-bg-table">
-                                            <HeaderView {...this.props}/>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div style={schedulerContentStyle} ref={this.schedulerContentRef} onMouseOver={this.onSchedulerContentMouseOver} onMouseOut={this.onSchedulerContentMouseOut} onScroll={this.onSchedulerContentScroll} >
-                                <div style={{width: schedulerWidth, height: contentHeight}}>
-                                    <div className="scheduler-content">
-                                        <table className="scheduler-content-table" >
-                                            <tbody>
-                                                {resourceEventsList}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div className="scheduler-bg">
-                                        <table className="scheduler-bg-table" style={{width: schedulerWidth}} ref={this.schedulerContentBgTableRef} >
-                                            <BodyView {...this.props}/>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
+                var resourceEventsList = renderData.map(function (item) {
+                    return _react2.default.createElement(DndResourceEvents, _extends({}, _this2.props, {
+                        key: item.slotId,
+                        resourceEvents: item,
+                        dndSource: eventDndSource
+                    }));
+                });
+
+                var browserScrollbarHeight = this.state.browserScrollbarHeight,
+                    browserScrollbarWidth = this.state.browserScrollbarWidth,
+                    contentHeight = this.state.contentHeight;
+                var schedulerContentStyle = { overflow: 'auto', margin: "0px, 0px, 0px, 0px", position: "relative" };
+                var resourceContentStyle = { overflowX: "auto", overflowY: "auto", margin: '0px -' + browserScrollbarWidth + 'px 0px 0px' };
+                if (config.schedulerMaxHeight > 0) {
+                    schedulerContentStyle = _extends({}, schedulerContentStyle, {
+                        maxHeight: config.schedulerMaxHeight - config.tableHeaderHeight
+                    });
+                    resourceContentStyle = _extends({}, resourceContentStyle, {
+                        maxHeight: config.schedulerMaxHeight - config.tableHeaderHeight
+                    });
+                }
+
+                var resourceName = schedulerData.isEventPerspective ? config.taskName : config.resourceName;
+                tbodyContent = _react2.default.createElement(
+                    'tr',
+                    null,
+                    _react2.default.createElement(
+                        'td',
+                        { style: { width: resourceTableWidth, verticalAlign: 'top' } },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'resource-view' },
+                            _react2.default.createElement(
+                                'div',
+                                { style: { overflow: "hidden", borderBottom: "1px solid #e9e9e9", height: config.tableHeaderHeight } },
+                                _react2.default.createElement(
+                                    'div',
+                                    { style: { overflowX: "scroll", overflowY: "hidden", margin: '0px 0px -' + browserScrollbarHeight + 'px' } },
+                                    _react2.default.createElement(
+                                        'table',
+                                        { className: 'resource-table' },
+                                        _react2.default.createElement(
+                                            'thead',
+                                            null,
+                                            _react2.default.createElement(
+                                                'tr',
+                                                { style: { height: config.tableHeaderHeight } },
+                                                _react2.default.createElement(
+                                                    'th',
+                                                    { className: 'header3-text' },
+                                                    resourceName
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { style: resourceContentStyle, ref: this.schedulerResourceRef, onMouseOver: this.onSchedulerResourceMouseOver, onMouseOut: this.onSchedulerResourceMouseOut, onScroll: this.onSchedulerResourceScroll },
+                                _react2.default.createElement(_ResourceView2.default, _extends({}, this.props, {
+                                    browserScrollbarHeight: browserScrollbarHeight
+                                }))
+                            )
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'td',
+                        null,
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'scheduler-view', style: { width: schedulerContainerWidth, verticalAlign: 'top' } },
+                            _react2.default.createElement(
+                                'div',
+                                { style: { overflow: "hidden", borderBottom: "1px solid #e9e9e9", height: config.tableHeaderHeight } },
+                                _react2.default.createElement(
+                                    'div',
+                                    { style: { overflowX: "scroll", overflowY: "hidden", margin: '0px 0px -' + browserScrollbarHeight + 'px' }, ref: this.schedulerHeadRef, onMouseOver: this.onSchedulerHeadMouseOver, onMouseOut: this.onSchedulerHeadMouseOut, onScroll: this.onSchedulerHeadScroll },
+                                    _react2.default.createElement(
+                                        'div',
+                                        { style: { paddingRight: browserScrollbarWidth + 'px', width: schedulerWidth + browserScrollbarWidth } },
+                                        _react2.default.createElement(
+                                            'table',
+                                            { className: 'scheduler-bg-table' },
+                                            _react2.default.createElement(_HeaderView2.default, this.props)
+                                        )
+                                    )
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { style: schedulerContentStyle, ref: this.schedulerContentRef, onMouseOver: this.onSchedulerContentMouseOver, onMouseOut: this.onSchedulerContentMouseOut, onScroll: this.onSchedulerContentScroll },
+                                _react2.default.createElement(
+                                    'div',
+                                    { style: { width: schedulerWidth, height: contentHeight } },
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'scheduler-content' },
+                                        _react2.default.createElement(
+                                            'table',
+                                            { className: 'scheduler-content-table' },
+                                            _react2.default.createElement(
+                                                'tbody',
+                                                null,
+                                                resourceEventsList
+                                            )
+                                        )
+                                    ),
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'scheduler-bg' },
+                                        _react2.default.createElement(
+                                            'table',
+                                            { className: 'scheduler-bg-table', style: { width: schedulerWidth }, ref: this.schedulerContentBgTableRef },
+                                            _react2.default.createElement(_BodyView2.default, this.props)
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                );
+            };
+
+            var popover = _react2.default.createElement(
+                'div',
+                { className: 'popover-calendar' },
+                _react2.default.createElement(_calendar2.default, { fullscreen: false, onSelect: this.onSelect })
             );
-        };
+            var schedulerHeader = _react2.default.createElement('div', null);
+            if (config.headerEnabled) {
+                schedulerHeader = _react2.default.createElement(
+                    _row2.default,
+                    { type: 'flex', align: 'middle', justify: 'space-between', style: { marginBottom: '24px' } },
+                    leftCustomHeader,
+                    _react2.default.createElement(
+                        _col2.default,
+                        null,
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'header2-text' },
+                            _react2.default.createElement(_icon2.default, { type: 'left', style: { marginRight: "8px" }, className: 'icon-nav',
+                                onClick: this.goBack }),
+                            calendarPopoverEnabled ? _react2.default.createElement(
+                                _popover2.default,
+                                { content: popover, placement: 'bottom', trigger: 'click',
+                                    visible: this.state.visible,
+                                    onVisibleChange: this.handleVisibleChange },
+                                _react2.default.createElement(
+                                    'span',
+                                    { className: 'header2-text-label', style: { cursor: 'pointer' } },
+                                    dateLabel
+                                )
+                            ) : _react2.default.createElement(
+                                'span',
+                                { className: 'header2-text-label' },
+                                dateLabel
+                            ),
+                            _react2.default.createElement(_icon2.default, { type: 'right', style: { marginLeft: "8px" }, className: 'icon-nav',
+                                onClick: this.goNext })
+                        )
+                    ),
+                    _react2.default.createElement(
+                        _col2.default,
+                        null,
+                        _react2.default.createElement(
+                            RadioGroup,
+                            { defaultValue: defaultValue, size: 'default', onChange: this.onViewChange },
+                            radioButtonList
+                        )
+                    ),
+                    rightCustomHeader
+                );
+            }
 
-        let popover = <div className="popover-calendar"><Calendar fullscreen={false} onSelect={this.onSelect}/></div>;
-        let schedulerHeader = <div />;
-        if(config.headerEnabled) {
-            schedulerHeader = (
-                <Row type="flex" align="middle" justify="space-between" style={{marginBottom: '24px'}}>
-                    {leftCustomHeader}
-                    <Col>
-                        <div className='header2-text'>
-                            <Icon type="left" style={{marginRight: "8px"}} className="icon-nav"
-                                    onClick={this.goBack}/>
-                            {
-                            calendarPopoverEnabled
-                                ?
-                                <Popover content={popover} placement="bottom" trigger="click"
-                                        visible={this.state.visible}
-                                        onVisibleChange={this.handleVisibleChange}>
-                                <span className={'header2-text-label'} style={{cursor: 'pointer'}}>{dateLabel}</span>
-                                </Popover>
-                                : <span className={'header2-text-label'}>{dateLabel}</span>
-                            }
-                            <Icon type="right" style={{marginLeft: "8px"}} className="icon-nav"
-                                    onClick={this.goNext}/>
-                        </div>
-                    </Col>
-                    <Col>
-                        <RadioGroup defaultValue={defaultValue} size="default" onChange={this.onViewChange}>
-                            {radioButtonList}
-                        </RadioGroup>
-                    </Col>
-                    {rightCustomHeader}
-                </Row>
+            return _react2.default.createElement(
+                'table',
+                { className: 'scheduler', style: { width: width } },
+                _react2.default.createElement(
+                    'thead',
+                    null,
+                    _react2.default.createElement(
+                        'tr',
+                        null,
+                        _react2.default.createElement(
+                            'td',
+                            { colSpan: '2' },
+                            schedulerHeader
+                        )
+                    )
+                ),
+                _react2.default.createElement(
+                    'tbody',
+                    null,
+                    tbodyContent
+                )
             );
         }
+    }]);
 
-        return (
-            <table className="scheduler" style={{width: width}}>
-                <thead>
-                <tr>
-                    <td colSpan="2">
-                        {schedulerHeader}
-                    </td>
-                </tr>
-                </thead>
-                <tbody>
-                {tbodyContent}
-                </tbody>
-            </table>
-        )
-    }
+    return Scheduler;
+}(_react.Component), _class.propTypes = {
+    schedulerData: _propTypes.PropTypes.object.isRequired,
+    prevClick: _propTypes.PropTypes.func.isRequired,
+    nextClick: _propTypes.PropTypes.func.isRequired,
+    onViewChange: _propTypes.PropTypes.func.isRequired,
+    onSelectDate: _propTypes.PropTypes.func.isRequired,
+    onSetAddMoreState: _propTypes.PropTypes.func,
+    updateEventStart: _propTypes.PropTypes.func,
+    updateEventEnd: _propTypes.PropTypes.func,
+    moveEvent: _propTypes.PropTypes.func,
+    leftCustomHeader: _propTypes.PropTypes.object,
+    rightCustomHeader: _propTypes.PropTypes.object,
+    newEvent: _propTypes.PropTypes.func,
+    subtitleGetter: _propTypes.PropTypes.func,
+    eventItemClick: _propTypes.PropTypes.func,
+    viewEventClick: _propTypes.PropTypes.func,
+    viewEventText: _propTypes.PropTypes.string,
+    viewEvent2Click: _propTypes.PropTypes.func,
+    viewEvent2Text: _propTypes.PropTypes.string,
+    conflictOccurred: _propTypes.PropTypes.func,
+    eventItemTemplateResolver: _propTypes.PropTypes.func,
+    dndSources: _propTypes.PropTypes.array,
+    slotClickedFunc: _propTypes.PropTypes.func,
+    slotItemTemplateResolver: _propTypes.PropTypes.func,
+    nonAgendaCellHeaderTemplateResolver: _propTypes.PropTypes.func
+}, _initialiseProps = function _initialiseProps() {
+    var _this3 = this;
 
-    resolveScrollbarSize = () => {
-        const { schedulerData } = this.props;
-        let browserScrollbarHeight = 17, browserScrollbarWidth = 17, contentHeight = schedulerData.getSchedulerContentDesiredHeight();
-        if (!!this.schedulerContent) {
-            browserScrollbarHeight = this.schedulerContent.offsetHeight - this.schedulerContent.clientHeight;
-            browserScrollbarWidth = this.schedulerContent.offsetWidth - this.schedulerContent.clientWidth;
+    this.resolveScrollbarSize = function () {
+        var schedulerData = _this3.props.schedulerData;
+
+        var browserScrollbarHeight = 17,
+            browserScrollbarWidth = 17,
+            contentHeight = schedulerData.getSchedulerContentDesiredHeight();
+        if (!!_this3.schedulerContent) {
+            browserScrollbarHeight = _this3.schedulerContent.offsetHeight - _this3.schedulerContent.clientHeight;
+            browserScrollbarWidth = _this3.schedulerContent.offsetWidth - _this3.schedulerContent.clientWidth;
         }
-        if(!!this.schedulerContentBgTable && !!this.schedulerContentBgTable.offsetHeight){
-            contentHeight = this.schedulerContentBgTable.offsetHeight;
+        if (!!_this3.schedulerContentBgTable && !!_this3.schedulerContentBgTable.offsetHeight) {
+            contentHeight = _this3.schedulerContentBgTable.offsetHeight;
         }
 
-        let tmpState = {};
-        let needSet = false;
-        if (browserScrollbarHeight != this.state.browserScrollbarHeight) {
-            tmpState = {...tmpState, browserScrollbarHeight: browserScrollbarHeight};
+        var tmpState = {};
+        var needSet = false;
+        if (browserScrollbarHeight != _this3.state.browserScrollbarHeight) {
+            tmpState = _extends({}, tmpState, { browserScrollbarHeight: browserScrollbarHeight });
             needSet = true;
         }
-        if (browserScrollbarWidth != this.state.browserScrollbarWidth) {
-            tmpState = {...tmpState, browserScrollbarWidth: browserScrollbarWidth};
+        if (browserScrollbarWidth != _this3.state.browserScrollbarWidth) {
+            tmpState = _extends({}, tmpState, { browserScrollbarWidth: browserScrollbarWidth });
             needSet = true;
         }
-        if(contentHeight != this.state.contentHeight){
-            tmpState = {...tmpState, contentHeight: contentHeight};
+        if (contentHeight != _this3.state.contentHeight) {
+            tmpState = _extends({}, tmpState, { contentHeight: contentHeight });
             needSet = true;
         }
-        if (needSet)
-            this.setState(tmpState);
-    }
+        if (needSet) _this3.setState(tmpState);
+    };
 
-    schedulerHeadRef = (element) => {
-        this.schedulerHead = element;
-    }
+    this.schedulerHeadRef = function (element) {
+        _this3.schedulerHead = element;
+    };
 
-    onSchedulerHeadMouseOver = () => {
-        this.currentArea = 2;
-    }
+    this.onSchedulerHeadMouseOver = function () {
+        _this3.currentArea = 2;
+    };
 
-    onSchedulerHeadMouseOut = () => {
-        this.currentArea = -1;
-    }
+    this.onSchedulerHeadMouseOut = function () {
+        _this3.currentArea = -1;
+    };
 
-    onSchedulerHeadScroll = (proxy, event) => {
-         if((this.currentArea === 2 || this.currentArea === -1) && this.schedulerContent.scrollLeft != this.schedulerHead.scrollLeft)
-             this.schedulerContent.scrollLeft = this.schedulerHead.scrollLeft;
-    }
+    this.onSchedulerHeadScroll = function (proxy, event) {
+        if ((_this3.currentArea === 2 || _this3.currentArea === -1) && _this3.schedulerContent.scrollLeft != _this3.schedulerHead.scrollLeft) _this3.schedulerContent.scrollLeft = _this3.schedulerHead.scrollLeft;
+    };
 
-    schedulerResourceRef = (element) => {
-        this.schedulerResource = element;
-    }
+    this.schedulerResourceRef = function (element) {
+        _this3.schedulerResource = element;
+    };
 
-    onSchedulerResourceMouseOver = () => {
-        this.currentArea = 1;
-    }
+    this.onSchedulerResourceMouseOver = function () {
+        _this3.currentArea = 1;
+    };
 
-    onSchedulerResourceMouseOut = () => {
-        this.currentArea = -1;
-    }
+    this.onSchedulerResourceMouseOut = function () {
+        _this3.currentArea = -1;
+    };
 
-    onSchedulerResourceScroll = (proxy, event) => {
-         if((this.currentArea === 1 || this.currentArea === -1) && this.schedulerContent.scrollTop != this.schedulerResource.scrollTop)
-             this.schedulerContent.scrollTop = this.schedulerResource.scrollTop;
-    }
+    this.onSchedulerResourceScroll = function (proxy, event) {
+        if ((_this3.currentArea === 1 || _this3.currentArea === -1) && _this3.schedulerContent.scrollTop != _this3.schedulerResource.scrollTop) _this3.schedulerContent.scrollTop = _this3.schedulerResource.scrollTop;
+    };
 
-    schedulerContentRef = (element) => {
-        this.schedulerContent = element;
-    }
+    this.schedulerContentRef = function (element) {
+        _this3.schedulerContent = element;
+    };
 
-    schedulerContentBgTableRef = (element) => {
-        this.schedulerContentBgTable = element;
-    }
+    this.schedulerContentBgTableRef = function (element) {
+        _this3.schedulerContentBgTable = element;
+    };
 
-    onSchedulerContentMouseOver = () => {
-        this.currentArea = 0;
-    }
+    this.onSchedulerContentMouseOver = function () {
+        _this3.currentArea = 0;
+    };
 
-    onSchedulerContentMouseOut = () => {
-        this.currentArea = -1;
-    }
+    this.onSchedulerContentMouseOut = function () {
+        _this3.currentArea = -1;
+    };
 
-    onSchedulerContentScroll = (proxy, event) => {
-        if(this.currentArea === 0 || this.currentArea === -1) {
-            if (this.schedulerHead.scrollLeft != this.schedulerContent.scrollLeft)
-                this.schedulerHead.scrollLeft = this.schedulerContent.scrollLeft;
-            if (this.schedulerResource.scrollTop != this.schedulerContent.scrollTop)
-                this.schedulerResource.scrollTop = this.schedulerContent.scrollTop;
+    this.onSchedulerContentScroll = function (proxy, event) {
+        if (_this3.currentArea === 0 || _this3.currentArea === -1) {
+            if (_this3.schedulerHead.scrollLeft != _this3.schedulerContent.scrollLeft) _this3.schedulerHead.scrollLeft = _this3.schedulerContent.scrollLeft;
+            if (_this3.schedulerResource.scrollTop != _this3.schedulerContent.scrollTop) _this3.schedulerResource.scrollTop = _this3.schedulerContent.scrollTop;
         }
+    };
 
-        const {schedulerData, onScrollLeft, onScrollRight, onScrollTop, onScrollBottom } = this.props;
-        const {scrollLeft, scrollTop} = this.state;
-        if(this.schedulerContent.scrollLeft !== scrollLeft) {
-            if(this.schedulerContent.scrollLeft === 0 && onScrollLeft != undefined) {
-                onScrollLeft(schedulerData, this.schedulerContent, this.schedulerContent.scrollWidth - this.schedulerContent.clientWidth);
-            }
-            if(this.schedulerContent.scrollLeft === this.schedulerContent.scrollWidth - this.schedulerContent.clientWidth && onScrollRight != undefined) {
-                onScrollRight(schedulerData, this.schedulerContent, this.schedulerContent.scrollWidth - this.schedulerContent.clientWidth);
-            }
-        } else if(this.schedulerContent.scrollTop !== scrollTop) {
-            if(this.schedulerContent.scrollTop === 0 && onScrollTop != undefined) {
-                onScrollTop(schedulerData, this.schedulerContent, this.schedulerContent.scrollHeight - this.schedulerContent.clientHeight);
-            }
-            if(this.schedulerContent.scrollTop === this.schedulerContent.scrollHeight - this.schedulerContent.clientHeight && onScrollBottom != undefined) {
-                onScrollBottom(schedulerData, this.schedulerContent, this.schedulerContent.scrollHeight - this.schedulerContent.clientHeight);
-            }
-        }
-        this.setState({
-            scrollLeft: this.schedulerContent.scrollLeft,
-            scrollTop: this.schedulerContent.scrollTop
-        });
-    }
+    this.onViewChange = function (e) {
+        var _props2 = _this3.props,
+            onViewChange = _props2.onViewChange,
+            schedulerData = _props2.schedulerData;
 
-    onViewChange = (e) => {
-        const {onViewChange, schedulerData} = this.props;
-        let viewType = parseInt(e.target.value.charAt(0));
-        let showAgenda = e.target.value.charAt(1) === '1';
-        let isEventPerspective = e.target.value.charAt(2) === '1';
-        onViewChange(schedulerData, {viewType: viewType, showAgenda: showAgenda, isEventPerspective: isEventPerspective});
-    }
+        var viewType = parseInt(e.target.value.charAt(0));
+        var showAgenda = e.target.value.charAt(1) === '1';
+        var isEventPerspective = e.target.value.charAt(2) === '1';
+        onViewChange(schedulerData, { viewType: viewType, showAgenda: showAgenda, isEventPerspective: isEventPerspective });
+    };
 
-    goNext = () => {
-        const {nextClick, schedulerData} = this.props;
+    this.goNext = function () {
+        var _props3 = _this3.props,
+            nextClick = _props3.nextClick,
+            schedulerData = _props3.schedulerData;
+
         nextClick(schedulerData);
-    }
+    };
 
-    goBack = () => {
-        const {prevClick, schedulerData} = this.props;
+    this.goBack = function () {
+        var _props4 = _this3.props,
+            prevClick = _props4.prevClick,
+            schedulerData = _props4.schedulerData;
+
         prevClick(schedulerData);
-    }
+    };
 
-    handleVisibleChange = (visible) => {
-        this.setState({visible});
-    }
+    this.handleVisibleChange = function (visible) {
+        _this3.setState({ visible: visible });
+    };
 
-    onSelect = (date) => {
-        this.setState({
-            visible: false,
+    this.onSelect = function (date) {
+        _this3.setState({
+            visible: false
         });
 
-        const {onSelectDate, schedulerData} = this.props;
-        onSelectDate(schedulerData, date);
-    }
-}
+        var _props5 = _this3.props,
+            onSelectDate = _props5.onSelectDate,
+            schedulerData = _props5.schedulerData;
 
-export const DATE_FORMAT = 'YYYY-MM-DD';
-export const DATETIME_FORMAT = 'YYYY-MM-DD HH:mm:ss';
-export {SchedulerData, ViewTypes, SummaryPos, DnDSource, DnDContext, AddMorePopover, DemoData}
-export default Scheduler
+        onSelectDate(schedulerData, date);
+    };
+}, _temp);
+var DATE_FORMAT = exports.DATE_FORMAT = 'YYYY-MM-DD';
+var DATETIME_FORMAT = exports.DATETIME_FORMAT = 'YYYY-MM-DD HH:mm:ss';
+exports.SchedulerData = _SchedulerData2.default;
+exports.ViewTypes = _ViewTypes2.default;
+exports.SummaryPos = _SummaryPos2.default;
+exports.DnDSource = _DnDSource2.default;
+exports.DnDContext = _DnDContext2.default;
+exports.AddMorePopover = _AddMorePopover2.default;
+exports.DemoData = _DemoData2.default;
+exports.default = Scheduler;
