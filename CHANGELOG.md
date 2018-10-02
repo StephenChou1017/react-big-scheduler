@@ -4,13 +4,18 @@
 * An add-more data bug 
 * Responsive layout
 
+### 2018-10-02
+* Add Custom, Custom1, Custom2 view types in [ViewTypes.js](https://github.com/StephenChou1017/react-big-scheduler/blob/master/src/ViewTypes.js) to support custom time window(most 3 custom view types in the same scheduler)
+* Add [Custom time window example](https://stephenchou1017.github.io/scheduler/#/customtimewindow)
+* Add [Infinite scroll 2 example](https://stephenchou1017.github.io/scheduler/#/infinitescroll2)
+
 ### 2018-09-28
 * Add onScrollLeft, onScrollRight, onScrollTop and onScrollBottom of Scheduler([Feature request by wojcechgk](https://github.com/StephenChou1017/react-big-scheduler/issues/42))
-* Update the [Online demo](https://stephenchou1017.github.io/scheduler/#/), add [Infinite scroll example](https://stephenchou1017.github.io/scheduler/#/infinitescroll)
+* Add [Infinite scroll example](https://stephenchou1017.github.io/scheduler/#/infinitescroll)
 
 ### 2018-09-18
 * Add SchedulerData.config.displayWeekend([Feature request by Subwater](https://github.com/StephenChou1017/react-big-scheduler/issues/21))
-* Update the [Online demo](https://stephenchou1017.github.io/scheduler/#/), add [Hide weekends example](https://stephenchou1017.github.io/scheduler/#/hideweekends)
+* Add [Hide weekends example](https://stephenchou1017.github.io/scheduler/#/hideweekends)
 
 ### 2018-09-13
 * Support for rruleset => exrule,exdate([mongrelx](https://github.com/mongrelx))

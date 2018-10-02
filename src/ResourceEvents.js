@@ -3,7 +3,7 @@ import {PropTypes} from 'prop-types'
 import AddMore from './AddMore'
 import Summary from './Summary'
 import SelectedArea from './SelectedArea'
-import {ViewTypes, DATETIME_FORMAT, SummaryPos} from './index'
+import {CellUnits, DATETIME_FORMAT, SummaryPos} from './index'
 import {getPos} from './Util'
 
 class ResourceEvents extends Component {
@@ -106,14 +106,14 @@ class ResourceEvents extends Component {
     stopDrag = (ev) => {
         ev.stopPropagation();
         const {schedulerData, newEvent, resourceEvents} = this.props;
-        const {headers, events, config, viewType, localeMoment} = schedulerData;
+        const {headers, events, config, cellUnit, localeMoment} = schedulerData;
         const { leftIndex, rightIndex } = this.state;
         document.documentElement.removeEventListener('mousemove', this.doDrag, false);
         document.documentElement.removeEventListener('mouseup', this.stopDrag, false);
 
         let startTime = headers[leftIndex].time;
         let endTime = resourceEvents.headerItems[rightIndex - 1].end;
-        if(viewType !== ViewTypes.Day)
+        if(cellUnit !== CellUnits.Hour)
             endTime = localeMoment(resourceEvents.headerItems[rightIndex - 1].start).hour(23).minute(59).second(59).format(DATETIME_FORMAT);
         let slotId = resourceEvents.slotId;
         let slotName = resourceEvents.slotName;
@@ -166,7 +166,7 @@ class ResourceEvents extends Component {
 
     render() {
         const {resourceEvents, schedulerData, connectDropTarget, dndSource} = this.props;
-        const {viewType, startDate, endDate, config, localeMoment} = schedulerData;
+        const {cellUnit, startDate, endDate, config, localeMoment} = schedulerData;
         const {isSelecting, left, width} = this.state;
         let cellWidth = schedulerData.getContentCellWidth();
         let cellMaxEvents = schedulerData.getCellMaxEvents();
@@ -188,7 +188,7 @@ class ResourceEvents extends Component {
                     if(idx < renderEventsMaxIndex && evt !== undefined && evt.render) {
                         let durationStart = localeMoment(startDate);
                         let durationEnd = localeMoment(endDate).add(1, 'days');
-                        if(viewType === ViewTypes.Day){
+                        if(cellUnit === CellUnits.Hour){
                             durationStart = localeMoment(startDate).add(config.dayStartFrom, 'hours');
                             durationEnd = localeMoment(endDate).add(config.dayStopTo + 1, 'hours');
                         }

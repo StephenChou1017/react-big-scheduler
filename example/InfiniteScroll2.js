@@ -2,20 +2,25 @@ import React, {Component} from 'react'
 import {PropTypes} from 'prop-types' 
 import moment from 'moment'
 //import 'moment/locale/zh-cn';
-import Scheduler, {SchedulerData, ViewTypes, DATE_FORMAT, DemoData} from '../src/index'
+import Scheduler, {SchedulerData, ViewTypes, CellUnits, DATE_FORMAT, DemoData} from '../src/index'
 import Nav from './Nav'
 import ViewSrcCode from './ViewSrcCode'
 import withDragDropContext from './withDnDContext'
 
-class InfiniteScroll extends Component{
+class InfiniteScroll2 extends Component{
     constructor(props){
         super(props);
 
-        let schedulerData = new SchedulerData(new moment().format(DATE_FORMAT), ViewTypes.Day, false, false, {
-          views: [
-            {viewName: 'Day', viewType: ViewTypes.Day, showAgenda: false, isEventPerspective: false},
-            {viewName: 'Month', viewType: ViewTypes.Month, showAgenda: false, isEventPerspective: false},
-          ]
+        let schedulerData = new SchedulerData(new moment().format(DATE_FORMAT), ViewTypes.Custom, false, false, {
+            headerEnabled: false,
+            customCellWidth: 30,
+            nonAgendaDayCellHeaderFormat: 'M/D|HH:mm',
+            views: [
+                {viewName: 'Day', viewType: ViewTypes.Custom, showAgenda: false, isEventPerspective: false},
+            ]
+        }, {
+            getCustomDateFunc: this.getCustomDate,
+            isNonWorkingTimeFunc: this.isNonWorkingTime
         });
         schedulerData.localeMoment.locale('en');
         schedulerData.setResources(DemoData.resources);
@@ -31,7 +36,7 @@ class InfiniteScroll extends Component{
             <div>
                 <Nav />
                 <div>
-                    <h3 style={{textAlign: 'center'}}>Infinite scroll<ViewSrcCode srcCodeUrl="https://github.com/StephenChou1017/react-big-scheduler/blob/master/example/InfiniteScroll.js" /></h3>
+                    <h3 style={{textAlign: 'center'}}>Infinite scroll 2<ViewSrcCode srcCodeUrl="https://github.com/StephenChou1017/react-big-scheduler/blob/master/example/InfiniteScroll2.js" /></h3>
                     <Scheduler schedulerData={viewModel}
                                prevClick={this.prevClick}
                                nextClick={this.nextClick}
@@ -178,6 +183,45 @@ class InfiniteScroll extends Component{
     onScrollBottom = (schedulerData, schedulerContent, maxScrollTop) => {
         console.log('onScrollBottom');
     }
+
+    getCustomDate = (schedulerData, num, date = undefined) => {
+        let selectDate = schedulerData.startDate;
+        if(date != undefined)
+            selectDate = date; 
+        
+        let startDate = selectDate,
+            endDate = schedulerData.localeMoment(startDate).add(1, 'days').format(DATE_FORMAT),
+            cellUnit = CellUnits.Hour;
+        if(num === 1) {
+            startDate = schedulerData.startDate;
+            endDate = schedulerData.localeMoment(schedulerData.endDate).add(1, 'days').format(DATE_FORMAT);
+        } else if(num === -1) {
+            startDate = schedulerData.localeMoment(schedulerData.startDate).add(-1, 'days').format(DATE_FORMAT);
+            endDate = schedulerData.endDate;
+        }
+
+        return {
+            startDate,
+            endDate,
+            cellUnit
+        };
+    }
+
+    isNonWorkingTime = (schedulerData, time) => {
+        const { localeMoment } = schedulerData;
+        if(schedulerData.cellUnit === CellUnits.Hour){
+            let hour = localeMoment(time).hour();
+            if(hour < 1)
+                return true;
+        }
+        else {
+            let dayOfWeek = localeMoment(time).weekday();
+            if (dayOfWeek === 0 || dayOfWeek === 6)
+                return true;
+        }
+    
+        return false;
+    }
 }
 
-export default withDragDropContext(InfiniteScroll)
+export default withDragDropContext(InfiniteScroll2)

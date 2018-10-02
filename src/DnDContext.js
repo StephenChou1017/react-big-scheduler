@@ -1,7 +1,7 @@
 import { DropTarget } from 'react-dnd'
 import {getPos} from './Util'
 import {DnDTypes} from './DnDTypes'
-import {ViewTypes, DATETIME_FORMAT} from './index'
+import {CellUnits, DATETIME_FORMAT} from './index'
 
 export default class DnDContext {
     constructor(sources, DecoratedComponent) {
@@ -16,7 +16,7 @@ export default class DnDContext {
         return {
             drop: (props, monitor, component) =>{
                 const {schedulerData, resourceEvents} = props;
-                const {viewType, localeMoment} = schedulerData;
+                const {cellUnit, localeMoment} = schedulerData;
                 const type = monitor.getItemType();
                 const pos = getPos(component.eventContainer);
                 let cellWidth = schedulerData.getContentCellWidth();
@@ -26,14 +26,14 @@ export default class DnDContext {
                     let initialLeftIndex = Math.floor((initialPoint.x - pos.x)/cellWidth);
                     initialStartTime = resourceEvents.headerItems[initialLeftIndex].start;
                     initialEndTime = resourceEvents.headerItems[initialLeftIndex].end;
-                    if(viewType !== ViewTypes.Day)
+                    if(cellUnit !== CellUnits.Hour)
                         initialEndTime = localeMoment(resourceEvents.headerItems[initialLeftIndex].start).hour(23).minute(59).second(59).format(DATETIME_FORMAT);
                 }
                 const point = monitor.getClientOffset();                
                 let leftIndex = Math.floor((point.x - pos.x)/cellWidth);
                 let startTime = resourceEvents.headerItems[leftIndex].start;
                 let endTime = resourceEvents.headerItems[leftIndex].end;
-                if(viewType !== ViewTypes.Day)
+                if(cellUnit !== CellUnits.Hour)
                     endTime = localeMoment(resourceEvents.headerItems[leftIndex].start).hour(23).minute(59).second(59).format(DATETIME_FORMAT);
 
                 return {

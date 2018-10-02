@@ -1,8 +1,38 @@
-import {ViewTypes} from './index'
+import {ViewTypes, CellUnits, DATE_FORMAT} from './index'
 
 //getSummaryFuncExample
 export const getSummary = (schedulerData, headerEvents, slotId, slotName, headerStart, headerEnd) => {
     return {text: 'Summary', color: 'red', fontSize: '1.2rem'};
+}
+
+//getCustomDateExample
+export const getCustomDate = (schedulerData, num, date = undefined) => {
+    const {viewType} = schedulerData;
+    let selectDate = schedulerData.startDate;
+    if(date != undefined)
+        selectDate = date;    
+    
+    let startDate = num === 0 ? selectDate : 
+        schedulerData.localeMoment(selectDate).add(2*num, 'days').format(DATE_FORMAT),
+        endDate = schedulerData.localeMoment(startDate).add(1, 'days').format(DATE_FORMAT),
+        cellUnit = CellUnits.Hour;
+    if(viewType === ViewTypes.Custom1) {
+        let monday = schedulerData.localeMoment(selectDate).startOf('week').format(DATE_FORMAT);
+        startDate = num === 0 ? monday : schedulerData.localeMoment(monday).add(2*num, 'weeks').format(DATE_FORMAT);
+        endDate = schedulerData.localeMoment(startDate).add(1, 'weeks').endOf('week').format(DATE_FORMAT);
+        cellUnit = CellUnits.Day;
+    } else if(viewType === ViewTypes.Custom2) {
+        let firstDayOfMonth = schedulerData.localeMoment(selectDate).startOf('month').format(DATE_FORMAT);
+        startDate = num === 0 ? firstDayOfMonth : schedulerData.localeMoment(firstDayOfMonth).add(2*num, 'months').format(DATE_FORMAT);
+        endDate = schedulerData.localeMoment(startDate).add(1, 'months').endOf('month').format(DATE_FORMAT);
+        cellUnit = CellUnits.Day;
+    }
+        
+    return {
+        startDate,
+        endDate,
+        cellUnit
+    };
 }
 
 //getDateLabelFuncExample
@@ -11,7 +41,9 @@ export const getDateLabel = (schedulerData, viewType, startDate, endDate) => {
     let end = schedulerData.localeMoment(endDate);
     let dateLabel = start.format('MMM D, YYYY');
 
-    if(viewType === ViewTypes.Week) {
+    if(viewType === ViewTypes.Week || (start != end && (
+        viewType === ViewTypes.Custom || viewType === ViewTypes.Custom1 || viewType === ViewTypes.Custom2
+    ))) {
         dateLabel = `${start.format('MMM D')}-${end.format('D, YYYY')}`;
         if(start.month() !== end.month())
             dateLabel = `${start.format('MMM D')}-${end.format('MMM D, YYYY')}`;
@@ -46,7 +78,7 @@ export const getEventText = (schedulerData, event) => {
 
 export const isNonWorkingTime = (schedulerData, time) => {
     const { localeMoment } = schedulerData;
-    if(schedulerData.viewType === ViewTypes.Day){
+    if(schedulerData.cellUnit === CellUnits.Hour){
         let hour = localeMoment(time).hour();
         if(hour < 9 || hour > 18)
             return true;
@@ -63,6 +95,8 @@ export const isNonWorkingTime = (schedulerData, time) => {
 export default {
     //getSummaryFunc: getSummary,
     getSummaryFunc: undefined,
+    //getCustomDateFunc: getCustomDate,
+    getCustomDateFunc: undefined,
     getDateLabelFunc: getDateLabel,
     getEventTextFunc: getEventText,
     isNonWorkingTimeFunc: isNonWorkingTime,

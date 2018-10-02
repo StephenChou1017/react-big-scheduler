@@ -11,6 +11,7 @@ import ResourceEvents from './ResourceEvents'
 import AgendaView from './AgendaView'
 import AddMorePopover from './AddMorePopover'
 import ViewTypes from './ViewTypes'
+import CellUnits from './CellUnits'
 import SummaryPos from './SummaryPos'
 import SchedulerData from './SchedulerData'
 import DemoData from './DemoData'
@@ -410,5 +411,5 @@ class Scheduler extends Component {
 
 export const DATE_FORMAT = 'YYYY-MM-DD';
 export const DATETIME_FORMAT = 'YYYY-MM-DD HH:mm:ss';
-export {SchedulerData, ViewTypes, SummaryPos, DnDSource, DnDContext, AddMorePopover, DemoData}
+export {SchedulerData, ViewTypes, CellUnits, SummaryPos, DnDSource, DnDContext, AddMorePopover, DemoData}
 export default Scheduler

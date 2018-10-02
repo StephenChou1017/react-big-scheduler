@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {PropTypes} from 'prop-types'
-import {ViewTypes} from './index'
+import {CellUnits} from './index'
 
 class HeaderView extends Component {
 
@@ -15,14 +15,14 @@ class HeaderView extends Component {
 
     render() {
         const {schedulerData, nonAgendaCellHeaderTemplateResolver} = this.props;
-        const {headers, viewType, config, localeMoment} = schedulerData;
+        const {headers, cellUnit, config, localeMoment} = schedulerData;
         let headerHeight = schedulerData.getTableHeaderHeight();
         let cellWidth = schedulerData.getContentCellWidth();
         let minuteStepsInHour = schedulerData.getMinuteStepsInHour();
 
         let headerList = [];
         let style = {};
-        if(viewType === ViewTypes.Day){
+        if(cellUnit === CellUnits.Hour){
             headers.forEach((item, index) => {
                 if(index % minuteStepsInHour === 0){
                     let datetime = localeMoment(item.time);

@@ -122,8 +122,20 @@ class Nav extends Component {
                     </li>
                     <li style={liStyle}>
                         <Link target="_self"
+                              to='/customtimewindow'>
+                            <span>Custom time window</span>
+                        </Link>
+                    </li>
+                    <li style={liStyle}>
+                        <Link target="_self"
                               to='/infinitescroll'>
                             <span>Infinite scroll</span>
+                        </Link>
+                    </li>
+                    <li style={liStyle}>
+                        <Link target="_self"
+                              to='/infinitescroll2'>
+                            <span>Infinite scroll 2</span>
                         </Link>
                     </li>
                 </ul>

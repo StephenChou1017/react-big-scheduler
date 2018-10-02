@@ -1,5 +1,5 @@
 import { DragSource } from 'react-dnd'
-import {ViewTypes, DATETIME_FORMAT} from './index'
+import {DATETIME_FORMAT} from './index'
 import {DnDTypes} from './DnDTypes'
 
 export default class DnDSource {
@@ -30,9 +30,7 @@ export default class DnDSource {
 
                 if(isEvent) {
                     const event = item;
-                    if(viewType !== ViewTypes.Day) {
-                        newStart = localeMoment(event.start).add(localeMoment(newStart).diff(localeMoment(initialStart)), 'ms').format(DATETIME_FORMAT);
-                    }
+                    newStart = localeMoment(event.start).add(localeMoment(newStart).diff(localeMoment(initialStart)), 'ms').format(DATETIME_FORMAT);
                     newEnd = localeMoment(newStart).add(localeMoment(event.end).diff(localeMoment(event.start)), 'ms').format(DATETIME_FORMAT);
                 }
 

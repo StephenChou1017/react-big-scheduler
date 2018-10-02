@@ -14,18 +14,21 @@ export default {
     monthResourceTableWidth: 160,
     quarterResourceTableWidth: 160,
     yearResourceTableWidth: 160,
+    customResourceTableWidth: 160,
 
     dayCellWidth: 30,
     weekCellWidth: 120,
     monthCellWidth: 80,
     quarterCellWidth: 80,
     yearCellWidth: 80,
+    customCellWidth: 80,
 
     dayMaxEvents: 99,
     weekMaxEvents: 99,
     monthMaxEvents: 99,
     quarterMaxEvents: 99,
     yearMaxEvents: 99,
+    customMaxEvents: 99,
 
     eventItemHeight: 22,
     eventItemLineHeight: 24,

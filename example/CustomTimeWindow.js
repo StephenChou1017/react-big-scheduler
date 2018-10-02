@@ -1,27 +1,32 @@
 import React, {Component} from 'react'
-import {PropTypes} from 'prop-types' 
+import {PropTypes} from 'prop-types'
 import moment from 'moment'
-//import 'moment/locale/zh-cn';
-import Scheduler, {SchedulerData, ViewTypes, DATE_FORMAT, DemoData} from '../src/index'
+import Scheduler, {SchedulerData, ViewTypes, CellUnits, DemoData, DATE_FORMAT} from '../src/index'
 import Nav from './Nav'
 import ViewSrcCode from './ViewSrcCode'
 import withDragDropContext from './withDnDContext'
 
-class InfiniteScroll extends Component{
+class CustomTimeWindow extends Component{
     constructor(props){
         super(props);
 
-        let schedulerData = new SchedulerData(new moment().format(DATE_FORMAT), ViewTypes.Day, false, false, {
-          views: [
-            {viewName: 'Day', viewType: ViewTypes.Day, showAgenda: false, isEventPerspective: false},
-            {viewName: 'Month', viewType: ViewTypes.Month, showAgenda: false, isEventPerspective: false},
-          ]
+        let schedulerData = new SchedulerData(moment().format(DATE_FORMAT), ViewTypes.Custom, false, false, {
+            customCellWidth: 30,
+            nonAgendaDayCellHeaderFormat: 'M/D|HH:mm',
+            views: [
+                {viewName: 'Two days', viewType: ViewTypes.Custom, showAgenda: false, isEventPerspective: false},
+                {viewName: 'Two weeks', viewType: ViewTypes.Custom1, showAgenda: false, isEventPerspective: false},
+                {viewName: 'Two months', viewType: ViewTypes.Custom2, showAgenda: false, isEventPerspective: false},
+            ],
+        }, {
+            getCustomDateFunc: this.getCustomDate,
+            isNonWorkingTimeFunc: this.isNonWorkingTime
         });
         schedulerData.localeMoment.locale('en');
         schedulerData.setResources(DemoData.resources);
         schedulerData.setEvents(DemoData.events);
         this.state = {
-            viewModel: schedulerData
+            viewModel: schedulerData,
         }
     }
 
@@ -31,7 +36,7 @@ class InfiniteScroll extends Component{
             <div>
                 <Nav />
                 <div>
-                    <h3 style={{textAlign: 'center'}}>Infinite scroll<ViewSrcCode srcCodeUrl="https://github.com/StephenChou1017/react-big-scheduler/blob/master/example/InfiniteScroll.js" /></h3>
+                    <h3 style={{textAlign: 'center'}}>Custom time window<ViewSrcCode srcCodeUrl="https://github.com/StephenChou1017/react-big-scheduler/blob/master/example/CustomTimeWindow.js" /></h3>
                     <Scheduler schedulerData={viewModel}
                                prevClick={this.prevClick}
                                nextClick={this.nextClick}
@@ -46,10 +51,6 @@ class InfiniteScroll extends Component{
                                updateEventEnd={this.updateEventEnd}
                                moveEvent={this.moveEvent}
                                newEvent={this.newEvent}
-                               onScrollLeft={this.onScrollLeft}
-                               onScrollRight={this.onScrollRight}
-                               onScrollTop={this.onScrollTop}
-                               onScrollBottom={this.onScrollBottom}
                     />
                 </div>
             </div>
@@ -74,6 +75,7 @@ class InfiniteScroll extends Component{
 
     onViewChange = (schedulerData, view) => {
         schedulerData.setViewType(view.viewType, view.showAgenda, view.isEventPerspective);
+        schedulerData.config.customCellWidth = view.viewType === ViewTypes.Custom ? 30 : 80;
         schedulerData.setEvents(DemoData.events);
         this.setState({
             viewModel: schedulerData
@@ -151,33 +153,50 @@ class InfiniteScroll extends Component{
         }
     }
 
-    onScrollRight = (schedulerData, schedulerContent, maxScrollLeft) => {
-      schedulerData.next();
-      schedulerData.setEvents(DemoData.events);
-      this.setState({
-          viewModel: schedulerData
-      });
+    getCustomDate = (schedulerData, num, date = undefined) => {
+        const {viewType} = schedulerData;
+        let selectDate = schedulerData.startDate;
+        if(date != undefined)
+            selectDate = date;   
 
-      schedulerContent.scrollLeft = maxScrollLeft - 10;
+        let startDate = num === 0 ? selectDate : 
+            schedulerData.localeMoment(selectDate).add(2*num, 'days').format(DATE_FORMAT),
+            endDate = schedulerData.localeMoment(startDate).add(1, 'days').format(DATE_FORMAT),
+            cellUnit = CellUnits.Hour;
+        if(viewType === ViewTypes.Custom1) {
+            let monday = schedulerData.localeMoment(selectDate).startOf('week').format(DATE_FORMAT);
+            startDate = num === 0 ? monday : schedulerData.localeMoment(monday).add(2*num, 'weeks').format(DATE_FORMAT);
+            endDate = schedulerData.localeMoment(startDate).add(1, 'weeks').endOf('week').format(DATE_FORMAT);
+            cellUnit = CellUnits.Day;
+        } else if(viewType === ViewTypes.Custom2) {
+            let firstDayOfMonth = schedulerData.localeMoment(selectDate).startOf('month').format(DATE_FORMAT);
+            startDate = num === 0 ? firstDayOfMonth : schedulerData.localeMoment(firstDayOfMonth).add(2*num, 'months').format(DATE_FORMAT);
+            endDate = schedulerData.localeMoment(startDate).add(1, 'months').endOf('month').format(DATE_FORMAT);
+            cellUnit = CellUnits.Day;
+        }
+            
+        return {
+            startDate,
+            endDate,
+            cellUnit
+        };
     }
 
-    onScrollLeft = (schedulerData, schedulerContent, maxScrollLeft) => {
-      schedulerData.prev();
-      schedulerData.setEvents(DemoData.events);
-      this.setState({
-          viewModel: schedulerData
-      });
-
-      schedulerContent.scrollLeft = 10;
-    }
-
-    onScrollTop = (schedulerData, schedulerContent, maxScrollTop) => {
-        console.log('onScrollTop');
-    }
-
-    onScrollBottom = (schedulerData, schedulerContent, maxScrollTop) => {
-        console.log('onScrollBottom');
+    isNonWorkingTime = (schedulerData, time) => {
+        const { localeMoment } = schedulerData;
+        if(schedulerData.cellUnit === CellUnits.Hour){
+            let hour = localeMoment(time).hour();
+            if(hour < 1)
+                return true;
+        }
+        else {
+            let dayOfWeek = localeMoment(time).weekday();
+            if (dayOfWeek === 0 || dayOfWeek === 6)
+                return true;
+        }
+    
+        return false;
     }
 }
 
-export default withDragDropContext(InfiniteScroll)
+export default withDragDropContext(CustomTimeWindow)
