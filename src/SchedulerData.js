@@ -385,10 +385,14 @@ export default class SchedulerData {
         
         recurringEvents.forEach((item) => {
             let windowStart = this.localeMoment(this.startDate),
-                windowEnd = this.localeMoment(this.endDate),
+                windowEnd = this.localeMoment(this.endDate).add(1, 'days'),
                 oldStart = this.localeMoment(item.start),
                 oldEnd = this.localeMoment(item.end),
-                rule = rrulestr(item.rrule);
+                rule = rrulestr(item.rrule),
+                oldDtstart = undefined;
+            if(!!rule.origOptions.dtstart) {
+                oldDtstart = this.localeMoment(rule.origOptions.dtstart);
+            }
             rule.origOptions.dtstart = oldStart.toDate();
             if(!rule.origOptions.until || windowEnd < this.localeMoment(rule.origOptions.until)) {
                 rule.origOptions.until = windowEnd.toDate();
@@ -427,7 +431,7 @@ export default class SchedulerData {
             newEvents.forEach((newEvent) => {
                 let eventStart = this.localeMoment(newEvent.start),
                     eventEnd = this.localeMoment(newEvent.end);
-                if(this.isEventInTimeWindow(eventStart, eventEnd, windowStart, windowEnd)){
+                if(this.isEventInTimeWindow(eventStart, eventEnd, windowStart, windowEnd) && (!oldDtstart || eventStart >= oldDtstart)) {
                     this._attachEvent(newEvent);
                 }
             });
