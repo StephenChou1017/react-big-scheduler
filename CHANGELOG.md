@@ -4,6 +4,9 @@
 * An add-more data bug 
 * Responsive layout
 
+### 2018-10-19
+* Add SchedulerData.config.relativeMove
+
 ### 2018-10-02
 * Add Custom, Custom1, Custom2 view types in [ViewTypes.js](https://github.com/StephenChou1017/react-big-scheduler/blob/master/src/ViewTypes.js) to support custom time window(most 3 custom view types in the same scheduler)
 * Add [Custom time window example](https://stephenchou1017.github.io/scheduler/#/customtimewindow)

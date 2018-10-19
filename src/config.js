@@ -55,6 +55,7 @@ export default {
     recurringEventsEnabled: true,
     headerEnabled: true,
     displayWeekend: true,
+    relativeMove: true,
 
     resourceName: 'Resource Name',
     taskName: 'Task Name',

@@ -252,7 +252,7 @@ class Scheduler extends Component {
         }
 
         return (
-            <table className="scheduler" style={{width: width}}>
+            <table className="scheduler" style={{width: `${width}px`}}>
                 <thead>
                 <tr>
                     <td colSpan="2">
