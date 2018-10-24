@@ -4,6 +4,11 @@
 * An add-more data bug 
 * Responsive layout
 
+## npm v0.2.2
+
+### 2018-10-24
+* Resource view scrollable
+
 ### 2018-10-19
 * Add SchedulerData.config.relativeMove
 
