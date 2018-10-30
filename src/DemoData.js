@@ -26,7 +26,7 @@ const DemoData = {
         },
         {
             id: 'r7',
-            name: 'Resource7',
+            name: 'Resource7Resource7Resource7Resource7Resource7',
         }
     ],
     events: [
@@ -128,7 +128,7 @@ const DemoData = {
         {
             id: 13,
             start: '2017-12-21 18:30:00',
-            end: '2017-12-22 23:30:00',
+            end: '2017-12-24 23:30:00',
             resourceId: 'r1',
             title: 'R1 has many tasks 5'
         },

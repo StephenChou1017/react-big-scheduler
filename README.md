@@ -126,9 +126,11 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
  * `date` is a string in `YYYY-MM-DD` format, and is the initial date Scheduler will render. Take the date `2017-12-20`
  for example, Scheduler will render the time window of the week from `2017-12-18` to `2017-12-24` in `ViewTypes.Week`
  view type, and will render the time window of the `2017-12` month in `ViewTypes.Month` view type. 
- * `viewType` is the initial view type, now Scheduler supports `Day`, `Week`, `Month`, `Quarter`, `Year` 5 view types. 
- `viewType`, `showAgenda` and `isEventPerspective` are a group which should be contained in the SchedulerData.config.views 
- array, and they together decide which view should be rendered. When `showAgenda` and `isEventPerspective` are both `false`, 
+ * `viewType` is the initial view type, now Scheduler supports `Day`, `Week`, `Month`, `Quarter`, `Year` 5 built-in view types,
+ in addition Scheduler now supports `Custom`, `Custom1`, `Custom2` 3 custom view types at the same time, in which you can control 
+ the time window yourself, refer to [this example](https://stephenchou1017.github.io/scheduler/#/customtimewindow). `viewType`, 
+ `showAgenda` and `isEventPerspective` are a group which should be contained in the SchedulerData.config.views array, 
+ and they together decide which view should be rendered. When `showAgenda` and `isEventPerspective` are both `false`, 
  Scheduler will render the resource view, refer to [this example](https://stephenchou1017.github.io/scheduler/#/views).
  * `showAgenda` is a bool value, if true, Scheduler will display the agenda view of current view type. Agenda view is 
  read only.
@@ -431,6 +433,12 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
   #### headerEnabled
   Controls Scheduler whether to display header, default `true`.
 
+  #### displayWeekend
+  Controls Scheduler whether to display weekends in non-agenda view, default `true`.
+
+  #### relativeMove
+  Controls Scheduler whether to move events(only DnDTypes.EVENT type) relatively or absolutely, default `true`, means relatively.
+
   #### minuteStep
   Minute step for day view type in non-agenda view, can be 10, 12, 15, 20, 30, 60, etc, default 30.
   
@@ -570,6 +578,24 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
   nonAgendaCellHeaderTemplateResolver(schedulerData, item, formattedDateItems, style)
   ```
   Use this function, you can customize the table header cell style.  Refer to [this example](https://stephenchou1017.github.io/scheduler/#/customtableheaders).
+
+  #### onScrollLeft, onScrollRight
+  ```js
+  onScrollLeft: PropTypes.func
+  onScrollLeft(schedulerData, schedulerContent, maxScrollLeft)
+  onScrollRight: PropTypes.func
+  onScrollRight(schedulerData, schedulerContent, maxScrollLeft)
+  ```
+  Callback function fired when the scheduler content div scrolls to leftmost or rightmost. Refer to [this example](https://stephenchou1017.github.io/scheduler/#/infinitescroll).
+
+  #### onScrollTop, onScrollBottom
+  ```js
+  onScrollTop: PropTypes.func
+  onScrollTop(schedulerData, schedulerContent, maxScrollTop)
+  onScrollBottom: PropTypes.func
+  onScrollBottom(schedulerData, schedulerContent, maxScrollTop)
+  ```
+  Callback function fired when the scheduler content div scrolls to topmost or bottommost. Refer to [this example](https://stephenchou1017.github.io/scheduler/#/infinitescroll).
   
   #### slotClickedFunc
   ```js

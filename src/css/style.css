@@ -30,13 +30,22 @@
 
 .scheduler {
     margin: 20px auto;
-    cellspacing: 0px;
-    cellpadding: 0px;
     border-spacing: 0;
 }
 
 .scheduler td {
     padding: 0px;
+}
+
+.expander-space {
+    overflow: hidden;
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    line-height: 1em;
+    font-size: .9em;
+    vertical-align: middle;
+    margin-top: -1%;
 }
 
 .resource-view {
@@ -68,8 +77,6 @@ table.resource-table, table.scheduler-bg-table, table.scheduler-table {
     width: 100%;
     margin: 0;
     padding: 0;
-    cellspacing: 0px;
-    cellpadding: 0px;
     border-spacing: 0;
     text-align: center;
 }
@@ -82,8 +89,6 @@ table.scheduler-content-table {
     margin: 0;
     padding: 0;
     border: 0 solid #e9e9e9;
-    cellspacing: 0px;
-    cellpadding: 0px;
     border-spacing: 0;
 }
 

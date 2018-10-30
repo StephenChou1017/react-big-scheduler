@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {PropTypes} from 'prop-types'
 import {Popover} from 'antd';
 import EventItemPopover from './EventItemPopover'
-import {ViewTypes, DATETIME_FORMAT} from './index'
+import {CellUnits, DATETIME_FORMAT} from './index'
 
 class EventItem extends Component {
     constructor(props) {
@@ -104,7 +104,7 @@ class EventItem extends Component {
 
         const {width, leftIndex, rightIndex, schedulerData, eventItem, updateEventStart} = this.props;
         schedulerData._stopResizing();
-        const {viewType, events, config, localeMoment} = schedulerData;
+        const {cellUnit, events, config, localeMoment} = schedulerData;
         let cellWidth = schedulerData.getContentCellWidth();
         let offset = leftIndex > 0 ? 5 : 6;
         let minWidth = cellWidth - offset;
@@ -118,7 +118,39 @@ class EventItem extends Component {
             count = rightIndex - leftIndex - 1;
         else if (newWidth > maxWidth)
             count = -leftIndex;
-        let newStart = localeMoment(eventItem.start).add(viewType === ViewTypes.Day ? count * config.minuteStep : count, viewType === ViewTypes.Day ? 'minutes' : 'days').format(DATETIME_FORMAT);
+        let newStart = localeMoment(eventItem.start).add(cellUnit === CellUnits.Hour ? count * config.minuteStep : count, cellUnit === CellUnits.Hour ? 'minutes' : 'days').format(DATETIME_FORMAT);
+        if(count !== 0 && cellUnit !== CellUnits.Hour && config.displayWeekend === false) {
+            if(count > 0) {
+                let tempCount = 0, i = 0;
+                while (true) {
+                    i++;
+                    let tempStart = localeMoment(eventItem.start).add(i, 'days');
+                    let dayOfWeek = tempStart.weekday();
+                    if(dayOfWeek !== 0 && dayOfWeek !== 6) {
+                        tempCount ++;
+                        if(tempCount === count) {
+                            newStart = tempStart.format(DATETIME_FORMAT);
+                            break;
+                        }
+                    }
+
+                }
+            } else {
+                let tempCount = 0, i = 0;
+                while (true) {
+                    i--;
+                    let tempStart = localeMoment(eventItem.start).add(i, 'days');
+                    let dayOfWeek = tempStart.weekday();
+                    if(dayOfWeek !== 0 && dayOfWeek !== 6) {
+                        tempCount --;
+                        if(tempCount === count) {
+                            newStart = tempStart.format(DATETIME_FORMAT);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
 
         let hasConflict = false;
         if (config.checkConflict) {
@@ -198,7 +230,7 @@ class EventItem extends Component {
 
         const {width, leftIndex, rightIndex, schedulerData, eventItem, updateEventEnd} = this.props;
         schedulerData._stopResizing();
-        const {headers, viewType, events, config, localeMoment} = schedulerData;
+        const {headers, cellUnit, events, config, localeMoment} = schedulerData;
         let cellWidth = schedulerData.getContentCellWidth();
         let offset = leftIndex > 0 ? 5 : 6;
         let minWidth = cellWidth - offset;
@@ -213,7 +245,39 @@ class EventItem extends Component {
             count = leftIndex - rightIndex + 1;
         else if (newWidth > maxWidth)
             count = headers.length - rightIndex;
-        let newEnd = localeMoment(eventItem.end).add(viewType === ViewTypes.Day ? count * config.minuteStep : count, viewType === ViewTypes.Day ? 'minutes' : 'days').format(DATETIME_FORMAT);
+        let newEnd = localeMoment(eventItem.end).add(cellUnit === CellUnits.Hour ? count * config.minuteStep : count, cellUnit === CellUnits.Hour ? 'minutes' : 'days').format(DATETIME_FORMAT);
+        if(count !== 0 && cellUnit !== CellUnits.Hour && config.displayWeekend === false) {
+            if(count > 0) {
+                let tempCount = 0, i = 0;
+                while (true) {
+                    i++;
+                    let tempEnd = localeMoment(eventItem.end).add(i, 'days');
+                    let dayOfWeek = tempEnd.weekday();
+                    if(dayOfWeek !== 0 && dayOfWeek !== 6) {
+                        tempCount ++;
+                        if(tempCount === count) {
+                            newEnd = tempEnd.format(DATETIME_FORMAT);
+                            break;
+                        }
+                    }
+
+                }
+            } else {
+                let tempCount = 0, i = 0;
+                while (true) {
+                    i--;
+                    let tempEnd = localeMoment(eventItem.end).add(i, 'days');
+                    let dayOfWeek = tempEnd.weekday();
+                    if(dayOfWeek !== 0 && dayOfWeek !== 6) {
+                        tempCount --;
+                        if(tempCount === count) {
+                            newEnd = tempEnd.format(DATETIME_FORMAT);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
 
         let hasConflict = false;
         if (config.checkConflict) {
@@ -259,7 +323,7 @@ class EventItem extends Component {
         const {left, width, top} = this.state;
         let roundCls = isStart ? (isEnd ? 'round-all' : 'round-head') : (isEnd ? 'round-tail' : 'round-none');
         let bgColor = config.defaultEventBgColor;
-        if (eventItem.bgColor !== undefined)
+        if (!!eventItem.bgColor)
             bgColor = eventItem.bgColor;
 
         let titleText = schedulerData.behaviors.getEventTextFunc(schedulerData, eventItem);

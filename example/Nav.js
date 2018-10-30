@@ -114,6 +114,30 @@ class Nav extends Component {
                             <span>Custom table headers</span>
                         </Link>
                     </li>
+                    <li style={liStyle}>
+                        <Link target="_self"
+                              to='/hideweekends'>
+                            <span>Hide weekends</span>
+                        </Link>
+                    </li>
+                    <li style={liStyle}>
+                        <Link target="_self"
+                              to='/customtimewindow'>
+                            <span>Custom time window</span>
+                        </Link>
+                    </li>
+                    <li style={liStyle}>
+                        <Link target="_self"
+                              to='/infinitescroll'>
+                            <span>Infinite scroll</span>
+                        </Link>
+                    </li>
+                    <li style={liStyle}>
+                        <Link target="_self"
+                              to='/infinitescroll2'>
+                            <span>Infinite scroll 2</span>
+                        </Link>
+                    </li>
                 </ul>
                 <div style={{clear: "both", marginBottom: '24px'}}></div>
             </div>
