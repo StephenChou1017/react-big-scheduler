@@ -7,6 +7,11 @@ A scheduler and resource planning component built for React and made for modern 
 
 Inspired by [Full Calendar Scheduler](https://fullcalendar.io/scheduler/).
 
+## Temp area until Nov 12（临时区域，展示到11.12号）
+
+Welcome to team buying alibaba cloud ECS server, click [here](https://m.aliyun.com/act/team1111/#/share?params=N.llwkK76Hoc.ks7uy8xc) to join my team.
+欢迎一起拼团购买阿里云产品，1核2G内存1M带宽3年只要597元，团满6人再50%，[点此进入](https://m.aliyun.com/act/team1111/#/share?params=N.llwkK76Hoc.ks7uy8xc)我的团。
+
 ## Use and Setup
 
 `npm install react-big-scheduler --save`
