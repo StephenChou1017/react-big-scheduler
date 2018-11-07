@@ -1,9 +1,5 @@
 import React, {Component} from 'react'
 import {PropTypes} from 'prop-types'
-
-import Col from 'antd/lib/col'
-import Row from 'antd/lib/row'
-import Icon from 'antd/lib/icon'
 // Col, Row and Icon do not have their own less files for styling. They use 
 // rules declared in antd's global css. If these styles are imported directly
 // from within antd, they'll include, for instance, reset rules. These will
@@ -28,13 +24,16 @@ import Icon from 'antd/lib/icon'
 // The next components have their own specific stylesheets which we import
 // separately here to avoid importing from files which have required the global
 // antd styles.
+import Col from 'antd/lib/col'
+import Row from 'antd/lib/row'
+import Icon from 'antd/lib/icon'
+import 'antd/lib/grid/style/index.css'
 import Radio from 'antd/lib/radio'
 import 'antd/lib/radio/style/index.css'
 import Popover from 'antd/lib/popover'
 import 'antd/lib/popover/style/index.css'
 import Calendar from 'antd/lib/calendar'
 import 'antd/lib/calendar/style/index.css'
-
 import EventItem from './EventItem'
 import DnDSource from './DnDSource'
 import DnDContext from './DnDContext'
