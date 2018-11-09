@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {PropTypes} from 'prop-types' 
 //import moment from 'moment'
 //import 'moment/locale/zh-cn';
+import 'antd/lib/style/index.less';     //Add this code for locally example
 import Scheduler, {SchedulerData, ViewTypes, DATE_FORMAT, DemoData} from '../src/index'
 import Nav from './Nav'
 import Tips from './Tips'
