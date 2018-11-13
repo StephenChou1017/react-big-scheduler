@@ -413,9 +413,10 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
   `true`, Scheduler will call the `conflictOccurred` function if given. Refer to 
   [this example](https://stephenchou1017.github.io/scheduler/#/overlapcheck).
   
-  #### scrollToTodayEnabled
-  Controls Scheduler whether to scroll to today automatically when the time window contains today. If `true`, Scheduler 
-  horizontal bar will scroll to today after calling `setScrollToToday(true)` to SchedulerData. 
+  #### scrollToSpecialMomentEnabled
+  Controls Scheduler whether to scroll to special moment automatically when the time window contains special moment. If `true`, Scheduler 
+  horizontal bar will scroll to special moment after calling `setScrollToSpecialMoment(true)` to SchedulerData. Use `SchedulerData.behaviors.getScrollSpecialMomentFunc`
+  to tell Scheduler what time the special moment is.
   
   #### eventItemPopoverEnabled
   Controls Scheduler whether to display event item popover when moving mouse on an event item, default `true`.
@@ -465,6 +466,25 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
   ```
   Method that defines the summary text displayed in the Scheduler cells.Refer 
   to [this example](https://stephenchou1017.github.io/scheduler/#/summary).
+    
+  #### getCustomDateFunc
+  ```js
+  getCustomDate(schedulerData, num, date = undefined)
+  ```
+  Method that controls the start and end of time window when current view type is Custom, Custom1 or Custom2.Refer 
+  to [this example](https://stephenchou1017.github.io/scheduler/#/customtimewindow).
+
+  #### getNonAgendaViewBodyCellBgColorFunc
+  ```js
+  getNonAgendaViewBodyCellBgColor(schedulerData, slotId, header)
+  ```
+  Method that sets the background color of cells dynamically.
+
+  #### getScrollSpecialMomentFunc
+  ```js
+  getScrollSpecialMoment(schedulerData, startMoment, endMoment)
+  ```
+  Method that defines the special moment Scheduler will scroll to automatically, when the time window contains that moment.
   
   ### 5.Scheduler.propTypes
   

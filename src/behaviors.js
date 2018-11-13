@@ -1,11 +1,11 @@
 import {ViewTypes, CellUnits, DATE_FORMAT} from './index'
 
-//getSummaryFuncExample
+//getSummary func example
 export const getSummary = (schedulerData, headerEvents, slotId, slotName, headerStart, headerEnd) => {
     return {text: 'Summary', color: 'red', fontSize: '1.2rem'};
 }
 
-//getCustomDateExample
+//getCustomDate example
 export const getCustomDate = (schedulerData, num, date = undefined) => {
     const {viewType} = schedulerData;
     let selectDate = schedulerData.startDate;
@@ -35,7 +35,16 @@ export const getCustomDate = (schedulerData, num, date = undefined) => {
     };
 }
 
-//getDateLabelFuncExample
+//getNonAgendaViewBodyCellBgColor example
+export const getNonAgendaViewBodyCellBgColor = (schedulerData, slotId, header) => {
+    if(!header.nonWorkingTime) {
+        return '#87e8de';
+    }
+
+    return undefined;
+}
+
+//getDateLabel func example
 export const getDateLabel = (schedulerData, viewType, startDate, endDate) => {
     let start = schedulerData.localeMoment(startDate);
     let end = schedulerData.localeMoment(endDate);
@@ -76,6 +85,12 @@ export const getEventText = (schedulerData, event) => {
     return eventText;
 }
 
+export const getScrollSpecialMoment = (schedulerData, startMoment, endMoment) => {
+    // return endMoment;
+    const { localeMoment } = schedulerData;
+    return localeMoment();
+}
+
 export const isNonWorkingTime = (schedulerData, time) => {
     const { localeMoment } = schedulerData;
     if(schedulerData.cellUnit === CellUnits.Hour){
@@ -97,6 +112,9 @@ export default {
     getSummaryFunc: undefined,
     //getCustomDateFunc: getCustomDate,
     getCustomDateFunc: undefined,
+    // getNonAgendaViewBodyCellBgColorFunc: getNonAgendaViewBodyCellBgColor,
+    getNonAgendaViewBodyCellBgColorFunc: undefined, 
+    getScrollSpecialMomentFunc: getScrollSpecialMoment,
     getDateLabelFunc: getDateLabel,
     getEventTextFunc: getEventText,
     isNonWorkingTimeFunc: isNonWorkingTime,

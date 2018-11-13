@@ -121,22 +121,22 @@ class Scheduler extends Component {
         this.resolveScrollbarSize();
 
         const { schedulerData } = this.props;
-        const { localeMoment} = schedulerData;
-        if(schedulerData.getScrollToToday()){
+        const { localeMoment, behaviors } = schedulerData;
+        if(schedulerData.getScrollToSpecialMoment() && !!behaviors.getScrollSpecialMomentFunc){
             if(!!this.schedulerContent && this.schedulerContent.scrollWidth > this.schedulerContent.clientWidth){
                 let start = localeMoment(schedulerData.startDate).startOf('day'),
                     end = localeMoment(schedulerData.endDate).endOf('day'),
-                    now = localeMoment();
-                if(now>= start && now <= end){
+                    specialMoment = behaviors.getScrollSpecialMomentFunc(schedulerData, start, end);
+                if(specialMoment>= start && specialMoment <= end){
                     let index = 0;
                     schedulerData.headers.forEach((item) => {
                         let header = localeMoment(item.time);
-                        if(now >= header)
+                        if(specialMoment >= header)
                             index ++;
                     })
                     this.schedulerContent.scrollLeft = (index - 1) * schedulerData.getContentCellWidth();
 
-                    schedulerData.setScrollToToday(false);
+                    schedulerData.setScrollToSpecialMoment(false);
                 }
             }
         }

@@ -4,6 +4,16 @@
 * An add-more data bug 
 * Responsive layout
 
+### 2018-11-13
+* Add SchedulerData.behaviors.getNonAgendaViewBodyCellBgColorFunc
+* Add SchedulerData.behaviors.getScrollSpecialMomentFunc
+* Rename SchedulerData.config.scrollToTodayEnabled to SchedulerData.config.scrollToSpecialMomentEnabled
+* Rename SchedulerData.setScrollToToday to SchedulerData.setScrollToSpecialMoment
+* Rename SchedulerData.getScrollToToday to SchedulerData.getScrollToSpecialMoment
+
+### 2018-11-09
+* Fix leaking antd global CSS rules
+
 ## npm v0.2.2
 
 ### 2018-10-24

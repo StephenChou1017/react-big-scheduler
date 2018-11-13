@@ -14,7 +14,7 @@ class BodyView extends Component {
     render() {
 
         const {schedulerData} = this.props;
-        const {renderData, headers, config} = schedulerData;
+        const {renderData, headers, config, behaviors} = schedulerData;
         let cellWidth = schedulerData.getContentCellWidth();
 
         let tableRows = renderData.map((item) => {
@@ -23,6 +23,11 @@ class BodyView extends Component {
                 let style = index === headers.length - 1 ? {} : {width: cellWidth};
                 if(!!header.nonWorkingTime)
                     style = {...style, backgroundColor: config.nonWorkingTimeBodyBgColor};
+                if(!!behaviors.getNonAgendaViewBodyCellBgColorFunc){
+                    let cellBgColor = behaviors.getNonAgendaViewBodyCellBgColorFunc(schedulerData, item.slotId, header);
+                    if(!!cellBgColor)
+                        style = {...style, backgroundColor: cellBgColor};
+                }
                 return (
                     <td key={key} style={style}><div></div></td>
                 )
