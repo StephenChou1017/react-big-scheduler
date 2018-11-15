@@ -31,12 +31,26 @@ const DemoData = {
     ],
     events: [
         {
-            id: 1,
-            start: '2017-12-18 09:30:00',
-            end: '2017-12-19 23:30:00',
-            resourceId: 'r1',
-            title: 'I am finished',
-            bgColor: '#D9D9D9'
+            'id': '66497',
+            'resourceId': 'r1',
+            'title': 'Jen O\'Neill',
+             start: '2017-12-18 09:30:00',
+             end: '2017-12-18 23:30:00',
+            'backgroundColor': '#26C281',
+            'url': '/reservations/view/66497',
+            'status': 'Booked',
+            'src': null,
+            'guest': 'Jen O\'Neill',
+            'nights': '5',
+            'guests': '2',
+            'payout': '&#36;250.26',
+            'channel': 'Airbnb',
+            'eta': null,
+            'phone': '+1 (403) 828-6840',
+            'email': 'jen-o7tn1rkodfbrkl81@guest.airbnb.com',
+            'logo': 'airbnb',
+            'movable': false,
+            'readOnly': true
         },
         {
             id: 2,

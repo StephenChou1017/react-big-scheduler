@@ -363,7 +363,7 @@ class EventItem extends Component {
         </a>;
 
         return (
-            isDragging ? null : ( schedulerData._isResizing() || config.eventItemPopoverEnabled == false ?
+            isDragging ? null : (!eventItem.readOnly ?
                     <div>
                         {
                             connectDragPreview(
