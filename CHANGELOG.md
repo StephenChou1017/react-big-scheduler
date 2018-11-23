@@ -4,6 +4,8 @@
 * An add-more data bug 
 * Responsive layout
 
+## npm v0.2.4
+
 ### 2018-11-23
 * Upgrade react-dnd from 2.6.0 to 5.0.0, upgrade react-dnd-html5-backend from 2.6.0 to 5.0.1
 * Upgrade webpack-cli from 2.0.14 to 3.1.1
@@ -15,6 +17,8 @@
 * Rename SchedulerData.config.scrollToTodayEnabled to SchedulerData.config.scrollToSpecialMomentEnabled
 * Rename SchedulerData.setScrollToToday to SchedulerData.setScrollToSpecialMoment
 * Rename SchedulerData.getScrollToToday to SchedulerData.getScrollToSpecialMoment
+
+## npm v0.2.3(beta)
 
 ### 2018-11-09
 * Fix leaking antd global CSS rules
