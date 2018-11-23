@@ -4,6 +4,11 @@
 * An add-more data bug 
 * Responsive layout
 
+### 2018-11-23
+* Upgrade react-dnd from 2.6.0 to 5.0.0, upgrade react-dnd-html5-backend from 2.6.0 to 5.0.1
+* Upgrade webpack-cli from 2.0.14 to 3.1.1
+* Upgrade dependencies to avoid potential security vulnerabilities: mime, hoek, cryptiles, macaddress, url-parse, randomatic, deep-extend, lodash
+
 ### 2018-11-13
 * Add SchedulerData.behaviors.getNonAgendaViewBodyCellBgColorFunc
 * Add SchedulerData.behaviors.getScrollSpecialMomentFunc
