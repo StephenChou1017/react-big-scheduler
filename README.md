@@ -7,6 +7,10 @@ A scheduler and resource planning component built for React and made for modern 
 
 Inspired by [Full Calendar Scheduler](https://fullcalendar.io/scheduler/).
 
+Hey guys:
+
+At present the RBS 0.2.4 still has [an issue](https://github.com/StephenChou1017/react-big-scheduler/issues/63), so I advise you to npm install react-big-scheduler@0.2.2 temporarily when using. sorry.
+
 ## Use and Setup
 
 `npm install react-big-scheduler --save`
