@@ -1,4 +1,5 @@
 import {ViewTypes, CellUnits, DATE_FORMAT} from './index'
+import config from './config'
 
 //getSummary func example
 export const getSummary = (schedulerData, headerEvents, slotId, slotName, headerStart, headerEnd) => {
@@ -92,10 +93,11 @@ export const getScrollSpecialMoment = (schedulerData, startMoment, endMoment) =>
 }
 
 export const isNonWorkingTime = (schedulerData, time) => {
+    const { startHour, endHour } = config;
     const { localeMoment } = schedulerData;
     if(schedulerData.cellUnit === CellUnits.Hour){
         let hour = localeMoment(time).hour();
-        if(hour < 9 || hour > 18)
+        if ((hour < startHour || hour > endHour))
             return true;
     }
     else {

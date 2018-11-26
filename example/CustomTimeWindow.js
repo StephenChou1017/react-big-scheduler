@@ -5,6 +5,7 @@ import Scheduler, {SchedulerData, ViewTypes, CellUnits, DemoData, DATE_FORMAT} f
 import Nav from './Nav'
 import ViewSrcCode from './ViewSrcCode'
 import withDragDropContext from './withDnDContext'
+import config from '../src/config'
 
 class CustomTimeWindow extends Component{
     constructor(props){
@@ -183,10 +184,11 @@ class CustomTimeWindow extends Component{
     }
 
     isNonWorkingTime = (schedulerData, time) => {
+        const { startHour, endHour } = config;
         const { localeMoment } = schedulerData;
         if(schedulerData.cellUnit === CellUnits.Hour){
             let hour = localeMoment(time).hour();
-            if(hour < 1)
+            if ((hour < startHour || hour > endHour))
                 return true;
         }
         else {

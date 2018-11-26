@@ -40,6 +40,8 @@ export default {
     nonWorkingTimeHeadColor: '#999999',
     nonWorkingTimeHeadBgColor: '#fff0f6',
     nonWorkingTimeBodyBgColor: '#fff0f6',
+    startHour: 0,
+    endHour: 23,
     summaryColor: '#666',
     summaryPos: SummaryPos.TopRight,
 

@@ -5,6 +5,7 @@ import Scheduler, {SchedulerData, ViewTypes, AddMorePopover, DemoData} from '../
 import Nav from './Nav'
 import ViewSrcCode from './ViewSrcCode'
 import withDragDropContext from './withDnDContext'
+import config from '../src/config'
 
 class Locale extends Component{
     constructor(props){
@@ -205,10 +206,11 @@ class Locale extends Component{
     }
 
     isNonWorkingTime = (schedulerData, time) => {
+        const { startHour, endHour } = config;
         const { localeMoment } = schedulerData;
         if(schedulerData.viewType === ViewTypes.Day){
             let hour = localeMoment(time).hour();
-            if(hour < 9 || hour > 18)
+            if ((hour < startHour || hour > endHour))
                 return true;
         }
         else {
