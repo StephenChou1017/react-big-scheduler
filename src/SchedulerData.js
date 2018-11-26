@@ -27,14 +27,14 @@ export default class SchedulerData {
         this._validateMinuteStep(this.config.minuteStep);
         this.behaviors = newBehaviors == undefined ? behaviors : {...behaviors, ...newBehaviors};
         this._resolveDate(0, date);
-        this._createHeaders();
+        this._createHeaders(this.config.showNonWorkingTime);
         this._createRenderData();
     }
 
     setLocaleMoment(localeMoment){
         if(!!localeMoment){
             this.localeMoment = localeMoment;
-            this._createHeaders();
+            this._createHeaders(this.config.showNonWorkingTime);
             this._createRenderData();
         }
     }
@@ -63,7 +63,7 @@ export default class SchedulerData {
         if(this.config.minuteStep !== minuteStep) {
             this._validateMinuteStep(minuteStep);
             this.config.minuteStep = minuteStep;
-            this._createHeaders();
+            this._createHeaders(this.config.showNonWorkingTime);
             this._createRenderData();
         }
     }
@@ -132,21 +132,21 @@ export default class SchedulerData {
     prev() {
         this._resolveDate(-1);
         this.events = [];
-        this._createHeaders();
+        this._createHeaders(this.config.showNonWorkingTime);
         this._createRenderData();
     }
 
     next() {
         this._resolveDate(1);
         this.events = [];
-        this._createHeaders();
+        this._createHeaders(this.config.showNonWorkingTime);
         this._createRenderData();
     }
 
     setDate(date=moment().format(DATE_FORMAT)){
         this._resolveDate(0, date);
         this.events = [];
-        this._createHeaders();
+        this._createHeaders(this.config.showNonWorkingTime);
         this._createRenderData();
     }
 
@@ -219,7 +219,7 @@ export default class SchedulerData {
             }
 
             this.events = [];
-            this._createHeaders();
+            this._createHeaders(this.config.showNonWorkingTime);
             this._createRenderData();
             this.setScrollToSpecialMoment(true);
         }
@@ -480,7 +480,7 @@ export default class SchedulerData {
         }
     }
 
-    _createHeaders() {
+    _createHeaders(showNonWorkingTime) {
         let headers = [],
             start = this.localeMoment(this.startDate),
             end = this.localeMoment(this.endDate),
@@ -500,7 +500,7 @@ export default class SchedulerData {
                     for(let i=0; i<minuteSteps; i++){
                         let time = header.format(DATETIME_FORMAT);
                         let nonWorkingTime = this.behaviors.isNonWorkingTimeFunc(this, time);
-                        headers.push({ time: time, nonWorkingTime: nonWorkingTime });
+                        showNonWorkingTime || !nonWorkingTime ? headers.push({ time: time, nonWorkingTime: nonWorkingTime }) : null;
     
                         header = header.add(this.config.minuteStep, 'minutes');
                     }
