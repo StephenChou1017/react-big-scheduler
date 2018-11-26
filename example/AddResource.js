@@ -4,25 +4,60 @@ import Scheduler, {SchedulerData, ViewTypes, DemoData} from '../src/index'
 import Nav from './Nav'
 import ViewSrcCode from './ViewSrcCode'
 import withDragDropContext from './withDnDContext'
+import { Button} from 'antd';
+import AddResourceForm from './AddResourceForm'
 
 class AddResource extends Component{
     constructor(props){
         super(props);
-
-        let schedulerData = new SchedulerData('2017-12-18', ViewTypes.Week);
+        let today = new Date().toLocaleDateString()
+        let schedulerData = new SchedulerData(today, ViewTypes.Week);
         schedulerData.localeMoment.locale('en');
         schedulerData.setResources(DemoData.resources);
         schedulerData.setEvents(DemoData.events);
         this.state = {
-            viewModel: schedulerData
+            viewModel: schedulerData,
+            visible: false
         }
+    }
+    showModal = () => {
+        this.setState({ visible: true });
+    }
+    handleCancel = () => {
+        this.setState({ visible: false });
+    }
+    handleCreate = () => {
+        const form = this.form;
+        form.validateFields((err, values) => {
+            if (err) {
+                return;
+            }
+
+            console.log('Received values of form: ', values);
+            form.resetFields();
+            this.setState({ visible: false });
+        });
+    }
+    saveFormRef = (form) => {
+        this.form = form;
     }
 
     render(){
         const {viewModel} = this.state;
 
-        let leftCustomHeader = (
+        let lefCustomHeader = (
             <div><span style={{fontWeight: 'bold'}}><a onClick={this.addResource}>Add a resource</a></span></div>
+        );
+        let leftCustomHeader = (
+            <div>
+                <Button type="primary" onClick={this.showModal}>New Collection</Button>
+                <AddResourceForm
+                    ref={this.saveFormRef}
+                    visible={this.state.visible}
+                    onCancel={this.handleCancel}
+                    onCreate={this.handleCreate}
+                />
+            </div>
         );
 
         return (
