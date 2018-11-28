@@ -1,12 +1,14 @@
 import React, {Component} from 'react'
-import {PropTypes} from 'prop-types' 
 import Scheduler, {SchedulerData, ViewTypes, DemoData} from '../src/index'
 import Nav from './Nav'
 import ViewSrcCode from './ViewSrcCode'
 import withDragDropContext from './withDnDContext'
-import { Button} from 'antd';
 import AddResourceForm from './AddResourceForm'
-
+import 'antd/lib/style/index.css';
+import 'antd/lib/modal/style/index.css';
+import 'antd/lib/button/style/index.css'
+import 'antd/lib/form/style/index.css'
+import 'antd/lib/input/style/index.css'
 class AddResource extends Component{
     constructor(props){
         super(props);
@@ -32,11 +34,11 @@ class AddResource extends Component{
             if (err) {
                 return;
             }
-
-            console.log('Received values of form: ', values);
+            this.addResource(values.name)
             form.resetFields();
             this.setState({ visible: false });
         });
+        
     }
     saveFormRef = (form) => {
         this.form = form;
@@ -45,17 +47,15 @@ class AddResource extends Component{
     render(){
         const {viewModel} = this.state;
 
-        let lefCustomHeader = (
-            <div><span style={{fontWeight: 'bold'}}><a onClick={this.addResource}>Add a resource</a></span></div>
-        );
         let leftCustomHeader = (
             <div>
-                <Button type="primary" onClick={this.showModal}>New Collection</Button>
+                <span style={{ fontWeight: 'bold' }}><a onClick={this.showModal}>Add a resource</a></span>
                 <AddResourceForm
                     ref={this.saveFormRef}
                     visible={this.state.visible}
                     onCancel={this.handleCancel}
                     onCreate={this.handleCreate}
+                    addResource={this.addResource}
                 />
             </div>
         );
@@ -181,10 +181,10 @@ class AddResource extends Component{
         }
     }
 
-    addResource = () => {
+    addResource = (resourceName) => {
         let schedulerData = this.state.viewModel;
         let newFreshId = schedulerData.resources.length + 1;
-        let newFreshName = `Resource${newFreshId}`;
+        let newFreshName = resourceName;
         schedulerData.addResource({id: newFreshId, name: newFreshName});
         this.setState({
             viewModel: schedulerData
