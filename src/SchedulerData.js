@@ -79,6 +79,15 @@ export default class SchedulerData {
             this._createRenderData();
         }
     }
+    editResource(resource, resourceIndex){
+        let existedResources = this.resources
+        for (let index = 0; index < existedResources.length; index++) {
+            if (index === resourceIndex) {
+                existedResources[index] = resource
+                this._createRenderData();
+            }
+        }
+    }
 
     addEventGroup(eventGroup){
         let existedEventGroups = this.eventGroups.filter(x => x.id === eventGroup.id);

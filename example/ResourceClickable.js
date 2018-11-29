@@ -1,9 +1,14 @@
 import React, {Component} from 'react'
-import {PropTypes} from 'prop-types'
 import Scheduler, {SchedulerData, ViewTypes, DemoData} from '../src/index'
 import Nav from './Nav'
 import ViewSrcCode from './ViewSrcCode'
 import withDragDropContext from './withDnDContext'
+import ResourceClickableForm from './ResourceClickableForm'
+import 'antd/lib/style/index.css';
+import 'antd/lib/modal/style/index.css';
+import 'antd/lib/button/style/index.css'
+import 'antd/lib/form/style/index.css'
+import 'antd/lib/input/style/index.css'
 
 class Basic extends Component{
     constructor(props){
@@ -14,12 +19,38 @@ class Basic extends Component{
         schedulerData.setResources(DemoData.resources);
         schedulerData.setEvents(DemoData.events);
         this.state = {
-            viewModel: schedulerData
+            viewModel: schedulerData,
+            visible: false,
+            slotId: ''
         }
+    }
+    showModal = (slotId) => {
+        this.setState({ visible: true, slotId });
+    }
+    handleCancel = () => {
+        this.setState({ visible: false });
+    }
+    handleEdit = () => {
+        const form = this.form;
+        form.validateFields((err, values) => {
+            if (err) {
+                return;
+            }
+            const name = values.name
+            const slotId = this.state.slotId
+            this.editResource(name, slotId);
+            console.log('Received values of form: ', name);
+            form.resetFields();
+            this.setState({ visible: false });
+        });
+    }
+    saveFormRef = (form) => {
+        this.form = form;
     }
 
     render(){
         const {viewModel} = this.state;
+        console.log(this.state.viewModel.resources)
         return (
             <div>
                 <Nav />
@@ -42,6 +73,12 @@ class Basic extends Component{
                                slotClickedFunc={this.slotClickedFunc}
                     />
                 </div>
+                <ResourceClickableForm
+                    ref={this.saveFormRef}
+                    visible={this.state.visible}
+                    onCancel={this.handleCancel}
+                    onEdit={this.handleEdit}
+                />
             </div>
         )
     }
@@ -142,7 +179,17 @@ class Basic extends Component{
     }
 
     slotClickedFunc = (schedulerData, slot) => {
-        alert(`You just clicked a ${schedulerData.isEventPerspective ? 'task':'resource'}.{id: ${slot.slotId}, name: ${slot.slotName}}`);
+         schedulerData.isEventPerspective ? alert(`You just clicked a task}.{id: ${slot.slotId}, name: ${slot.slotName}}`) : this.showModal(slot.slotId)        
+    }
+    
+    editResource = (name, slotId) => {
+        let schedulerDataResources = this.state.viewModel.resources;    
+        let schedulerData = this.state.viewModel;
+        for (let index = 0; index < schedulerDataResources.length; index++) {
+            if (schedulerDataResources[index].id === slotId){
+                schedulerData.editResource({ id: slotId, name: name }, index);
+            }            
+        }
     }
 }
 
