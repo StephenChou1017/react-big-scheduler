@@ -39,7 +39,6 @@ class Basic extends Component{
             const name = values.name
             const slotId = this.state.slotId
             this.editResource(name, slotId);
-            console.log('Received values of form: ', name);
             form.resetFields();
             this.setState({ visible: false });
         });
@@ -50,7 +49,6 @@ class Basic extends Component{
 
     render(){
         const {viewModel} = this.state;
-        console.log(this.state.viewModel.resources)
         return (
             <div>
                 <Nav />
@@ -182,15 +180,12 @@ class Basic extends Component{
          schedulerData.isEventPerspective ? alert(`You just clicked a task}.{id: ${slot.slotId}, name: ${slot.slotName}}`) : this.showModal(slot.slotId)        
     }
     
-    editResource = (name, slotId) => {
-        let schedulerDataResources = this.state.viewModel.resources;    
+    editResource = (name, slotId) => {  
         let schedulerData = this.state.viewModel;
-        for (let index = 0; index < schedulerDataResources.length; index++) {
-            if (schedulerDataResources[index].id === slotId){
-                schedulerData.editResource({ id: slotId, name: name }, index);
-            }            
-        }
+        schedulerData.editResource({ id: slotId, name: name }, slotId);             
     }
+    
+    
 }
 
 export default withDragDropContext(Basic)
