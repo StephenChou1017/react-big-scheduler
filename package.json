@@ -40,7 +40,7 @@
     "lint"
   ],
   "dependencies": {
-    "antd": "^3.2.3",
+    "antd": "^3.9.0",
     "moment": "^2.18.1",
     "prop-types": "^15.6.1",
     "react": "^16.0.0",
