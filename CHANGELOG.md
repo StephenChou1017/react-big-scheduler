@@ -4,6 +4,11 @@
 * An add-more data bug 
 * Responsive layout
 
+## npm v0.2.5
+
+### 2018-11-29
+* Upgrade antd from 3.2.3 to 3.9.0
+
 ## npm v0.2.4
 
 ### 2018-11-23
