@@ -79,10 +79,10 @@ export default class SchedulerData {
             this._createRenderData();
         }
     }
-    editResource(resource, resourceIndex){
+    editResource(resource, slotId){
         let existedResources = this.resources
         for (let index = 0; index < existedResources.length; index++) {
-            if (index === resourceIndex) {
+            if (existedResources[index].id === slotId) {
                 existedResources[index] = resource
                 this._createRenderData();
             }
