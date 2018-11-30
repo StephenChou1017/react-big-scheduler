@@ -79,11 +79,22 @@ export default class SchedulerData {
             this._createRenderData();
         }
     }
+
     editResource(resource, slotId){
         let existedResources = this.resources
         for (let index = 0; index < existedResources.length; index++) {
             if (existedResources[index].id === slotId) {
                 existedResources[index] = resource
+                this._createRenderData();
+            }
+        }
+    }
+
+    removeResource(slotId){
+        let existedResources = this.resources
+        for (let index = 0; index < existedResources.length; index++) {
+            if (existedResources[index].id === slotId) {
+                existedResources.splice(index, 1);
                 this._createRenderData();
             }
         }
