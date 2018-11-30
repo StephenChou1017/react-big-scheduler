@@ -9,6 +9,7 @@ import 'antd/lib/modal/style/index.css';
 import 'antd/lib/button/style/index.css'
 import 'antd/lib/form/style/index.css'
 import 'antd/lib/input/style/index.css'
+import { Modal } from 'antd';
 
 class Basic extends Component{
     constructor(props){
@@ -46,6 +47,24 @@ class Basic extends Component{
     saveFormRef = (form) => {
         this.form = form;
     }
+    showDeleteConfirm = () => {
+        const confirm = Modal.confirm;        
+        const slotId = this.state.slotId
+        const that = this
+        confirm({
+            title: 'Are you sure delete this resource?',
+            content: 'This will also delete the events associated with this resource.',
+            okText: 'Yes',
+            okType: 'danger',
+            cancelText: 'No',
+            onOk (){
+                that.removeResource(slotId)
+                that.setState({ visible: false });
+            },
+            onCancel() {
+            },            
+        });
+    }
 
     render(){
         const {viewModel} = this.state;
@@ -76,6 +95,7 @@ class Basic extends Component{
                     visible={this.state.visible}
                     onCancel={this.handleCancel}
                     onEdit={this.handleEdit}
+                    showDeleteConfirm={this.showDeleteConfirm}
                 />
             </div>
         )
@@ -183,6 +203,11 @@ class Basic extends Component{
     editResource = (name, slotId) => {  
         let schedulerData = this.state.viewModel;
         schedulerData.editResource({ id: slotId, name: name }, slotId);             
+    }
+
+    removeResource = (slotId) => {
+        let schedulerData = this.state.viewModel;
+        schedulerData.removeResource(slotId);
     }
     
     
