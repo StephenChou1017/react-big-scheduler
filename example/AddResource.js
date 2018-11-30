@@ -1,28 +1,63 @@
 import React, {Component} from 'react'
-import {PropTypes} from 'prop-types' 
 import Scheduler, {SchedulerData, ViewTypes, DemoData} from '../src/index'
 import Nav from './Nav'
 import ViewSrcCode from './ViewSrcCode'
 import withDragDropContext from './withDnDContext'
-
+import AddResourceForm from './AddResourceForm'
+import 'antd/lib/style/index.css';
+import 'antd/lib/modal/style/index.css';
+import 'antd/lib/button/style/index.css'
+import 'antd/lib/form/style/index.css'
+import 'antd/lib/input/style/index.css'
 class AddResource extends Component{
     constructor(props){
         super(props);
-
-        let schedulerData = new SchedulerData('2017-12-18', ViewTypes.Week);
+        let today = new Date().toLocaleDateString()
+        let schedulerData = new SchedulerData(today, ViewTypes.Week);
         schedulerData.localeMoment.locale('en');
         schedulerData.setResources(DemoData.resources);
         schedulerData.setEvents(DemoData.events);
         this.state = {
-            viewModel: schedulerData
+            viewModel: schedulerData,
+            visible: false
         }
+    }
+    showModal = () => {
+        this.setState({ visible: true });
+    }
+    handleCancel = () => {
+        this.setState({ visible: false });
+    }
+    handleCreate = () => {
+        const form = this.form;
+        form.validateFields((err, values) => {
+            if (err) {
+                return;
+            }
+            this.addResource(values.name)
+            form.resetFields();
+            this.setState({ visible: false });
+        });
+        
+    }
+    saveFormRef = (form) => {
+        this.form = form;
     }
 
     render(){
         const {viewModel} = this.state;
 
         let leftCustomHeader = (
-            <div><span style={{fontWeight: 'bold'}}><a onClick={this.addResource}>Add a resource</a></span></div>
+            <div>
+                <span style={{ fontWeight: 'bold' }}><a onClick={this.showModal}>Add a resource</a></span>
+                <AddResourceForm
+                    ref={this.saveFormRef}
+                    visible={this.state.visible}
+                    onCancel={this.handleCancel}
+                    onCreate={this.handleCreate}
+                    addResource={this.addResource}
+                />
+            </div>
         );
 
         return (
@@ -146,10 +181,10 @@ class AddResource extends Component{
         }
     }
 
-    addResource = () => {
+    addResource = (resourceName) => {
         let schedulerData = this.state.viewModel;
         let newFreshId = schedulerData.resources.length + 1;
-        let newFreshName = `Resource${newFreshId}`;
+        let newFreshName = resourceName;
         schedulerData.addResource({id: newFreshId, name: newFreshName});
         this.setState({
             viewModel: schedulerData
