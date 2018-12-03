@@ -578,6 +578,7 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
   #### conflictOccurred
   ```js
   conflictOccurred: PropTypes.func
+  conflictOccurred(schedulerData, action, event, type, slotId, slotName, start, end)
   ```
   Callback function fired when there is a conflict. This could happen when creating, resizing or moving an event, and when  
   `SchedulerData.config.checkConflict` is `true`.

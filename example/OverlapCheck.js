@@ -143,7 +143,7 @@ class OverlapCheck extends Component{
         }
     }
 
-    conflictOccurred = (schedulerData, action, event) => {
+    conflictOccurred = (schedulerData, action, event, type, slotId, slotName, start, end) => {
         alert(`Conflict occurred. {action: ${action}, event: ${event}`);
     }
 }

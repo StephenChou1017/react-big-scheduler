@@ -4,6 +4,7 @@ import Popover from 'antd/lib/popover'
 import 'antd/lib/popover/style/index.css'
 import EventItemPopover from './EventItemPopover'
 import {CellUnits, DATETIME_FORMAT} from './index'
+import {DnDTypes} from './DnDTypes'
 
 class EventItem extends Component {
     constructor(props) {
@@ -154,10 +155,14 @@ class EventItem extends Component {
         }
 
         let hasConflict = false;
+        let slotId = schedulerData._getEventSlotId(eventItem);
+        let slotName = undefined;
+        let slot = schedulerData.getSlotById(slotId);
+        if(!!slot)
+            slotName = slot.name;
         if (config.checkConflict) {
             let start = localeMoment(newStart),
-                end = localeMoment(eventItem.end),
-                slotId = schedulerData._getEventSlotId(eventItem);
+                end = localeMoment(eventItem.end);
 
             events.forEach((e) => {
                 if (schedulerData._getEventSlotId(e) === slotId && e.id !== eventItem.id) {
@@ -178,7 +183,7 @@ class EventItem extends Component {
             });
 
             if (conflictOccurred != undefined) {
-                conflictOccurred(schedulerData, 'StartResize', eventItem);
+                conflictOccurred(schedulerData, 'StartResize', eventItem, DnDTypes.EVENT, slotId, slotName, newStart, eventItem.end);
             }
             else {
                 console.log('Conflict occurred, set conflictOccurred func in Scheduler to handle it');
@@ -281,10 +286,14 @@ class EventItem extends Component {
         }
 
         let hasConflict = false;
+        let slotId = schedulerData._getEventSlotId(eventItem);
+        let slotName = undefined;
+        let slot = schedulerData.getSlotById(slotId);
+        if(!!slot)
+            slotName = slot.name;
         if (config.checkConflict) {
             let start = localeMoment(eventItem.start),
-                end = localeMoment(newEnd),
-                slotId = schedulerData._getEventSlotId(eventItem);
+                end = localeMoment(newEnd);
 
             events.forEach((e) => {
                 if (schedulerData._getEventSlotId(e) === slotId && e.id !== eventItem.id) {
@@ -305,7 +314,7 @@ class EventItem extends Component {
             });
 
             if (conflictOccurred != undefined) {
-                conflictOccurred(schedulerData, 'EndResize', eventItem);
+                conflictOccurred(schedulerData, 'EndResize', eventItem, DnDTypes.EVENT, slotId, slotName, eventItem.start, newEnd);
             }
             else {
                 console.log('Conflict occurred, set conflictOccurred func in Scheduler to handle it');
@@ -363,7 +372,7 @@ class EventItem extends Component {
         </a>;
 
         return (
-            isDragging ? null : ( schedulerData._isResizing() || config.eventItemPopoverEnabled == false ?
+            isDragging ? null : ( schedulerData._isResizing() || config.eventItemPopoverEnabled == false || eventItem.showPopover == false ?
                     <div>
                         {
                             connectDragPreview(

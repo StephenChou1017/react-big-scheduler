@@ -26,8 +26,9 @@ export default class DnDSource {
                 let slotId = dropResult.slotId, slotName = dropResult.slotName;
                 let newStart = dropResult.start, newEnd = dropResult.end;
                 let initialStart = dropResult.initialStart, initialEnd = dropResult.initialEnd;
-                let isEvent = type === DnDTypes.EVENT;
+                let action = 'New';
 
+                let isEvent = type === DnDTypes.EVENT;
                 if(isEvent) {
                     const event = item;
                     if(config.relativeMove) {
@@ -39,6 +40,17 @@ export default class DnDSource {
                         }
                     }
                     newEnd = localeMoment(newStart).add(localeMoment(event.end).diff(localeMoment(event.start)), 'ms').format(DATETIME_FORMAT);
+
+                    //if crossResourceMove disabled, slot returns old value
+                    if(config.crossResourceMove === false) {
+                        slotId = schedulerData._getEventSlotId(item);
+                        slotName = undefined;
+                        let slot = schedulerData.getSlotById(slotId);
+                        if(!!slot)
+                            slotName = slot.name;
+                    }
+
+                    action = 'Move';
                 }
 
                 let hasConflict = false;
@@ -59,7 +71,7 @@ export default class DnDSource {
                 if(hasConflict) {
                     const {conflictOccurred} = props;
                     if(conflictOccurred != undefined){
-                        conflictOccurred(schedulerData, 'Move', event);
+                        conflictOccurred(schedulerData, action, item, type, slotId, slotName, newStart, newEnd);
                     }
                     else {
                         console.log('Conflict occurred, set conflictOccurred func in Scheduler to handle it');
@@ -68,14 +80,6 @@ export default class DnDSource {
                 else {
                     if(isEvent) {
                         if (moveEvent !== undefined) {
-                            //if crossResourceMove disabled, slot returns old value
-                            if(config.crossResourceMove === false){
-                                slotId = schedulerData._getEventSlotId(item);
-                                slotName = undefined;
-                                let slot = schedulerData.getSlotById(slotId);
-                                if(!!slot)
-                                    slotName = slot.name;
-                            }
                             moveEvent(schedulerData, item, slotId, slotName, newStart, newEnd);
                         }
                     }
