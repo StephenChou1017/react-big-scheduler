@@ -84,7 +84,7 @@ export default class SchedulerData {
         let existedResources = this.resources
         for (let index = 0; index < existedResources.length; index++) {
             if (existedResources[index].id === slotId) {
-                existedResources[index] = resource
+                existedResources[index].name = resource.name
                 this._createRenderData();
             }
         }
@@ -95,6 +95,26 @@ export default class SchedulerData {
         for (let index = 0; index < existedResources.length; index++) {
             if (existedResources[index].id === slotId) {
                 existedResources.splice(index, 1);
+                this._createRenderData();
+            }
+        }
+    }
+
+    desactivateResource(slotId) {
+        let existedResources = this.resources
+        for (let index = 0; index < existedResources.length; index++) {
+            if (existedResources[index].id === slotId) {
+                existedResources[index].active = 0
+                this._createRenderData();
+            }
+        }
+    }
+
+    activateResource(slotId) {
+        let existedResources = this.resources
+        for (let index = 0; index < existedResources.length; index++) {
+            if (existedResources[index].id === slotId) {
+                existedResources[index].active = 1
                 this._createRenderData();
             }
         }
@@ -625,10 +645,10 @@ export default class SchedulerData {
             let headerEvents = headers.map((header) => {
                 return this._createInitHeaderEvents(header);
             });
-
             return {
                 slotId: resource.id,
-                slotName: resource.name,
+                slotName: resource.active === 1 ? resource.name : `${resource.name}(off)`,
+                slotActive: resource.active,
                 rowHeight: 0,
                 headerItems: headerEvents
             };
