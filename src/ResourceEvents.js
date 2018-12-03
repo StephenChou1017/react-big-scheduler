@@ -5,6 +5,7 @@ import Summary from './Summary'
 import SelectedArea from './SelectedArea'
 import {CellUnits, DATETIME_FORMAT, SummaryPos} from './index'
 import {getPos} from './Util'
+import {DnDTypes} from './DnDTypes'
 
 class ResourceEvents extends Component {
 
@@ -152,7 +153,7 @@ class ResourceEvents extends Component {
                     slotId: slotId,
                     slotName: slotName,
                     title: undefined,
-                });
+                }, DnDTypes.EVENT, slotId, slotName, startTime, endTime);
             }
             else {
                 console.log('Conflict occurred, set conflictOccurred func in Scheduler to handle it');

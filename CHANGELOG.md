@@ -4,6 +4,10 @@
 * An add-more data bug 
 * Responsive layout
 
+### 2018-12-03
+* Check showPopover property on event level to disable popover
+* Update Scheduler.conflictOccurred
+
 ## npm v0.2.5
 
 ### 2018-11-29
