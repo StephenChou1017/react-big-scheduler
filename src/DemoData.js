@@ -3,30 +3,37 @@ const DemoData = {
         {
             id: 'r1',
             name: 'Resource1',
+            active: 1,
         },
         {
             id: 'r2',
             name: 'Resource2',
+            active: 1
         },
         {
             id: 'r3',
             name: 'Resource3',
+            active: 1
         },
         {
             id: 'r4',
             name: 'Resource4',
+            active: 1
         },
         {
             id: 'r5',
             name: 'Resource5',
+            active: 1
         },
         {
             id: 'r6',
             name: 'Resource6',
+            active: 1
         },
         {
             id: 'r7',
             name: 'Resource7Resource7Resource7Resource7Resource7',
+            active: 1
         }
     ],
     events: [

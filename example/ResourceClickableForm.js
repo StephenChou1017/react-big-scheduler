@@ -5,16 +5,16 @@ const FormItem = Form.Item;
 
 const ResourceClickableForm = Form.create()(
     (props) => {
-        const { visible, onCancel, onEdit, form, showDeleteConfirm } = props;
+        const { visible, onCancel, onEdit, form, showDeleteConfirm, showDesactivationConfirm, showActivationConfirm, slotClickedStatus } = props;
         const { getFieldDecorator } = form;
         return (
             <Modal
                 visible={visible}
                 onCancel={onCancel}
                 title="Edit Resource Name"
-                footer={[
-                    //<Button type="dashed">Desactivate</Button>,
+                footer={[                    
                     <Button type="danger" onClick={showDeleteConfirm}>Delete</Button>, 
+                    slotClickedStatus === 1 ? <Button type="dashed" onClick={showDesactivationConfirm}>Desactivate</Button> : <Button type="dashed" onClick={showActivationConfirm}>Activate</Button>,
                     <Button key="back" onClick={onCancel}>Cancel</Button>,
                     <Button key="edit" type="primary" onClick={onEdit}>
                         Edit

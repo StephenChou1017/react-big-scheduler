@@ -185,7 +185,7 @@ class AddResource extends Component{
         let schedulerData = this.state.viewModel;
         let newFreshId = schedulerData.resources.length + 1;
         let newFreshName = resourceName;
-        schedulerData.addResource({id: newFreshId, name: newFreshName});
+        schedulerData.addResource({id: newFreshId, name: newFreshName, active: 1});
         this.setState({
             viewModel: schedulerData
         })

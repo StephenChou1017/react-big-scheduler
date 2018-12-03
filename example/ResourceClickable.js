@@ -22,7 +22,8 @@ class Basic extends Component{
         this.state = {
             viewModel: schedulerData,
             visible: false,
-            slotId: ''
+            slotId: '',
+            isClickedSlotActive: ''
         }
     }
     showModal = (slotId) => {
@@ -47,6 +48,7 @@ class Basic extends Component{
     saveFormRef = (form) => {
         this.form = form;
     }
+    
     showDeleteConfirm = () => {
         const confirm = Modal.confirm;        
         const slotId = this.state.slotId
@@ -66,8 +68,45 @@ class Basic extends Component{
         });
     }
 
+    showActivationConfirm = () => {
+        const confirm = Modal.confirm;
+        const slotId = this.state.slotId
+        const that = this
+        confirm({
+            title: 'Are you sure desactivate this resource?',
+            content: "You won't be able to create or move tasks/events to this resource.",
+            okText: 'Yes',
+            okType: 'danger',
+            cancelText: 'No',
+            onOk() {
+                that.activateResource(slotId)
+                that.setState({ visible: false });
+            },
+            onCancel() {
+            },
+        });
+    }
+
+    showDesactivationConfirm = () => {
+        const confirm = Modal.confirm;
+        const slotId = this.state.slotId
+        const that = this
+        confirm({
+            title: 'Are you sure desactivate this resource?',
+            content: "You won't be able to create or move tasks/events to this resource.",
+            okText: 'Yes',
+            okType: 'danger',
+            cancelText: 'No',
+            onOk() {
+                that.desactivateResource(slotId)
+                that.setState({ visible: false });
+            },
+            onCancel() {
+            },
+        });
+    }
     render(){
-        const {viewModel} = this.state;
+        const { viewModel, isClickedSlotActive} = this.state;  
         return (
             <div>
                 <Nav />
@@ -96,6 +135,9 @@ class Basic extends Component{
                     onCancel={this.handleCancel}
                     onEdit={this.handleEdit}
                     showDeleteConfirm={this.showDeleteConfirm}
+                    showDesactivationConfirm={this.showDesactivationConfirm}
+                    showActivationConfirm={this.showActivationConfirm}
+                    slotClickedStatus={isClickedSlotActive}
                 />
             </div>
         )
@@ -104,7 +146,7 @@ class Basic extends Component{
     prevClick = (schedulerData)=> {
         schedulerData.prev();
         schedulerData.setEvents(DemoData.events);
-        this.setState({
+        this.setState({ 
             viewModel: schedulerData
         })
     }
@@ -146,7 +188,7 @@ class Basic extends Component{
     };
 
     newEvent = (schedulerData, slotId, slotName, start, end, type, item) => {
-        if(confirm(`Do you want to create a new event? {slotId: ${slotId}, slotName: ${slotName}, start: ${start}, end: ${end}, type: ${type}, item: ${item}}`)){
+        if (schedulerData.getResourceById(slotId).active === 1 && confirm(`Do you want to create a new event? {slotId: ${slotId}, slotName: ${slotName}, start: ${start}, end: ${end}, type: ${type}, item: ${item}}`)){
 
             let newFreshId = 0;
             schedulerData.events.forEach((item) => {
@@ -167,6 +209,7 @@ class Basic extends Component{
                 viewModel: schedulerData
             })
         }
+        else if (schedulerData.getResourceById(slotId).active === 0 ){alert("You won't create new events for this resource until you activate it again!")}
     }
 
     updateEventStart = (schedulerData, event, newStart) => {
@@ -187,17 +230,27 @@ class Basic extends Component{
         })
     }
 
-    moveEvent = (schedulerData, event, slotId, slotName, start, end) => {
-        if(confirm(`Do you want to move the event? {eventId: ${event.id}, eventTitle: ${event.title}, newSlotId: ${slotId}, newSlotName: ${slotName}, newStart: ${start}, newEnd: ${end}`)) {
+    moveEvent = (schedulerData, event, slotId, slotName, start, end) => {        
+        if (schedulerData.getResourceById(slotId).active === 1 && confirm(`Do you want to move the event? {eventId: ${event.id}, eventTitle: ${event.title}, newSlotId: ${slotId}, newSlotName: ${slotName}, newStart: ${start}, newEnd: ${end}`)) {
             schedulerData.moveEvent(event, slotId, slotName, start, end);
             this.setState({
                 viewModel: schedulerData
             })
         }
+        else if (schedulerData.getResourceById(slotId).active === 0) { alert("You won't move new events to this resource until you activate it again!") }
     }
 
     slotClickedFunc = (schedulerData, slot) => {
-         schedulerData.isEventPerspective ? alert(`You just clicked a task}.{id: ${slot.slotId}, name: ${slot.slotName}}`) : this.showModal(slot.slotId)        
+        if(schedulerData.isEventPerspective)
+        {
+            alert(`You just clicked a task}.{id: ${slot.slotId}, name: ${slot.slotName}}`)
+        }
+        else{
+            this.setState({
+                isClickedSlotActive: slot.slotActive
+            }) 
+            this.showModal(slot.slotId)        
+        }
     }
     
     editResource = (name, slotId) => {  
@@ -209,7 +262,16 @@ class Basic extends Component{
         let schedulerData = this.state.viewModel;
         schedulerData.removeResource(slotId);
     }
-    
+
+    desactivateResource = (slotId) => {
+        let schedulerData = this.state.viewModel;
+        schedulerData.desactivateResource(slotId);
+    }    
+
+    activateResource = (slotId) => {
+        let schedulerData = this.state.viewModel;
+        schedulerData.activateResource(slotId);
+    }  
     
 }
 
