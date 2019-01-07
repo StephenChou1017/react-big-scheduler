@@ -21,6 +21,7 @@ import CustomTimeWindow from './CustomTimeWindow'
 import InfiniteScroll from './InfiniteScroll'
 import InfiniteScroll2 from './InfiniteScroll2'
 import ComingSoon from './ComingSoon'
+import CustomPopoverStyle from './CustomPopoverStyle'
 
 render((
     <Router history={hashHistory}>
@@ -44,6 +45,7 @@ render((
         <Route path="/customtimewindow" component={CustomTimeWindow}/>
         <Route path="/infinitescroll" component={InfiniteScroll}/>
         <Route path="/infinitescroll2" component={InfiniteScroll2}/>
+        <Route path="/custompopover" component={CustomPopoverStyle}/>
     </Router>
 ), document.getElementById('root'))
 
