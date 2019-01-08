@@ -138,6 +138,12 @@ class Nav extends Component {
                             <span>Infinite scroll 2</span>
                         </Link>
                     </li>
+                    <li style={liStyle}>
+                        <Link target="_self"
+                              to='/custompopover'>
+                            <span>Custom popover style</span>
+                        </Link>
+                    </li>
                 </ul>
                 <div style={{clear: "both", marginBottom: '24px'}}></div>
             </div>
