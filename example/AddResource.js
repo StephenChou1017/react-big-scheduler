@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
-import Scheduler, {SchedulerData, ViewTypes, DemoData} from '../src/index'
+import moment from 'moment'
+import Scheduler, {SchedulerData, ViewTypes, DATE_FORMAT, DemoData} from '../src/index'
 import Nav from './Nav'
 import ViewSrcCode from './ViewSrcCode'
 import withDragDropContext from './withDnDContext'
@@ -12,7 +13,7 @@ import 'antd/lib/input/style/index.css'
 class AddResource extends Component{
     constructor(props){
         super(props);
-        let today = new Date().toLocaleDateString()
+        let today = moment().format(DATE_FORMAT);
         let schedulerData = new SchedulerData(today, ViewTypes.Week);
         schedulerData.localeMoment.locale('en');
         schedulerData.setResources(DemoData.resources);

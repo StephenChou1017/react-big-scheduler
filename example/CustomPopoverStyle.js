@@ -47,10 +47,6 @@ class CustomPopoverStyle extends Component{
                                updateEventEnd={this.updateEventEnd}
                                moveEvent={this.moveEvent}
                                newEvent={this.newEvent}
-                               onScrollLeft={this.onScrollLeft}
-                               onScrollRight={this.onScrollRight}
-                               onScrollTop={this.onScrollTop}
-                               onScrollBottom={this.onScrollBottom}
                                eventItemPopoverTemplateResolver={this.eventItemPopoverTemplateResolver}
                     />
                 </div>
@@ -154,38 +150,6 @@ class CustomPopoverStyle extends Component{
         }
     }
 
-    onScrollRight = (schedulerData, schedulerContent, maxScrollLeft) => {
-        if(schedulerData.ViewTypes === ViewTypes.Day) {
-            schedulerData.next();
-            schedulerData.setEvents(DemoData.events);
-            this.setState({
-                viewModel: schedulerData
-            });
-    
-            schedulerContent.scrollLeft = maxScrollLeft - 10;
-        }
-    }
-
-    onScrollLeft = (schedulerData, schedulerContent, maxScrollLeft) => {
-        if(schedulerData.ViewTypes === ViewTypes.Day) {
-            schedulerData.prev();
-            schedulerData.setEvents(DemoData.events);
-            this.setState({
-                viewModel: schedulerData
-            });
-
-            schedulerContent.scrollLeft = 10;
-        }
-    }
-
-    onScrollTop = (schedulerData, schedulerContent, maxScrollTop) => {
-        console.log('onScrollTop');
-    }
-
-    onScrollBottom = (schedulerData, schedulerContent, maxScrollTop) => {
-        console.log('onScrollBottom');
-    }
-
     eventItemPopoverTemplateResolver = (schedulerData, eventItem, title, start, end, statusColor) => {
         return (
             // <React.Fragment>
@@ -215,11 +179,15 @@ class CustomPopoverStyle extends Component{
                         <div />
                     </Col>
                     <Col span={22}>
-                        <Button>Demo</Button>
+                        <Button onClick={()=>{this.demoButtonClicked(eventItem);}}>Demo</Button>
                     </Col>
                 </Row>
             </div>
         );
+    }
+
+    demoButtonClicked = (eventItem) => {
+        alert(`You just clicked demo button. event title: ${eventItem.title}`);
     }
 }
 
