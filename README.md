@@ -590,6 +590,13 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
   ```
   Use this function, you can customize the event style. Refer to [this example](https://stephenchou1017.github.io/scheduler/#/customeventstyle).
   
+  ### eventItemPopoverTemplateResolver
+  ```js
+  eventItemPopoverTemplateResolver: PropTypes.func
+  eventItemPopoverTemplateResolver(schedulerData, eventItem, title, start, end, statusColor)
+  ```
+  Use this function, you can customize the event's popover style. Refer to [this example](https://stephenchou1017.github.io/scheduler/#/custompopover).
+  
   #### slotItemTemplateResolver
   ```js
   slotItemTemplateResolver: PropTypes.func
