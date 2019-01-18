@@ -1,5 +1,3 @@
-'use strict';
-
 // Do this as the first thing so that any code reading it knows the right env.
 process.env.BABEL_ENV = 'production';
 process.env.NODE_ENV = 'production';
@@ -22,34 +20,42 @@ async function build() {
   const targetDir = path.resolve(root, 'lib');
   const jsTarget = targetDir;
   const cssTarget = path.resolve(targetDir, 'css');
-  const hackFileName = 'antd-globals-hiding-hack'
+  const hackFileName = 'antd-globals-hiding-hack';
   const hackFileSource = path.resolve(
     sourceDir,
     'less',
     hackFileName + '.less'
   );
-  const hackFileOutputPath = path.resolve(
-    cssTarget,
-    hackFileName + '.css'
-  );
+  const hackFileOutputPath = path.resolve(cssTarget, hackFileName + '.css');
 
   try {
     // clean
     process.stdout.write('Cleaning... \n');
-    const cleanResult = await exec('npm run clean');
-
+    const env = {
+      ...process.env,
+      PATH: process.env.PATH.concat(`:${__dirname}/../node_modules/.bin`),
+    };
+    const cleanResult = await exec('npm run clean', {
+      env,
+    });
     // transpiling and copy js
     process.stdout.write('Transpiling js with babel... \n');
-    const jsResult = await exec(`babel ${sourceDir} --out-dir ${jsTarget}`);
+    const jsResult = await exec(`babel ${sourceDir} --out-dir ${jsTarget}`, {
+      env,
+    });
 
     // copy css
     process.stdout.write('Copying library style definitions... \n');
-    const cssResult = await exec(`cpy ${sourceDir}/css/style.css ${cssTarget}`);
+    const cssResult = await exec(
+      `cpy ${sourceDir}/css/style.css ${cssTarget}`,
+      { env }
+    );
 
     // compile antd-hack less into css and copy it into lib
     process.stdout.write('Implementing antd hack... \n');
     const heckResult = await exec(
-      `lessc --js ${hackFileSource} ${hackFileOutputPath}`
+      `lessc --js ${hackFileSource} ${hackFileOutputPath}`,
+      { env }
     );
     // append lib/index.js with line importing antd-hack
     const linesToBeAdded = [
@@ -58,16 +64,13 @@ async function build() {
       '// this line has been added by scripts/build.js',
       "require('./css/antd-globals-hiding-hack.css');",
       '',
-    ]
-    await appendFile(
-      `${targetDir}/index.js`,
-      linesToBeAdded.join('\n')
-    );
+    ];
+    await appendFile(`${targetDir}/index.js`, linesToBeAdded.join('\n'));
 
     process.stdout.write('Success! \n');
   } catch (e) {
-    process.stderr.write(e)
-    process.exit()
+    process.stderr.write(e);
+    process.exit();
   }
 }
 
