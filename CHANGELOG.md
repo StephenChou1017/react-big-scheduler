@@ -4,6 +4,12 @@
 * An add-more data bug 
 * Responsive layout
 
+### 2019-01-23
+* Add SchedulerData.removeEvent, SchedulerData.removeEventById func
+
+### 2019-01-08
+* Add Scheduler.eventItemPopoverTemplateResolver func to customize the event popover style([MikeDev96](https://github.com/MikeDev96))
+
 ### 2018-12-03
 * Check showPopover property on event level to disable popover
 * Update Scheduler.conflictOccurred

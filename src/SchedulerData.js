@@ -360,6 +360,22 @@ export default class SchedulerData {
         return eventStart < windowEnd && eventEnd >windowStart;
     }
 
+    removeEvent(event) {
+        let index = this.events.indexOf(event);
+        if(index !== -1)
+            this.events.splice(index, 1);
+    }
+
+    removeEventById(eventId) {
+        let index = -1;
+        this.events.forEach((item, idx) => {
+            if(item.id === eventId)
+                index = idx;
+        })
+        if(index !== -1)
+            this.events.splice(index, 1);
+    }
+
     _detachEvent(event) {
         let index = this.events.indexOf(event);
         if(index !== -1)

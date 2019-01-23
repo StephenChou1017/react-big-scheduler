@@ -271,6 +271,18 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
   Update the `newSlotId`, `newSlotName`, `newStart`, `newEnd` of the `event`. In resource view,  new slot is a resource,
   while in task view, new slot is a event group. SchedulerData will replace the `event` in the right index according 
   to the `newStart` value.
+
+  #### removeEvent
+  ```js
+  removeEvent(event)
+  ```
+  Remove the given event from `SchedeulerData.events`.
+
+  #### removeEventById
+  ```js
+  removeEventById(eventId)
+  ```
+  Remove event from `SchedeulerData.events` by the given event id.
   
   #### getSlots
   ```js
