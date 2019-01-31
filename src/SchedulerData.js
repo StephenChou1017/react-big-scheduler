@@ -362,8 +362,10 @@ export default class SchedulerData {
 
     removeEvent(event) {
         let index = this.events.indexOf(event);
-        if(index !== -1)
+        if(index !== -1) {
             this.events.splice(index, 1);
+            this._createRenderData();
+        }
     }
 
     removeEventById(eventId) {
@@ -372,8 +374,10 @@ export default class SchedulerData {
             if(item.id === eventId)
                 index = idx;
         })
-        if(index !== -1)
+        if(index !== -1) {
             this.events.splice(index, 1);
+            this._createRenderData();
+        }
     }
 
     _detachEvent(event) {
