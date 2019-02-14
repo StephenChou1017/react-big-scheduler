@@ -2,6 +2,7 @@ react-big-scheduler
 ========================
 
 A scheduler and resource planning component built for React and made for modern browsers (IE10+), IE needs babel-polyfill.
+From the npm version 0.2.6, Scheduler will use responsive layout by default(set SchedulerData.config.schedulerWidth to a percentage instead of a number).
 
 [Online demo](https://stephenchou1017.github.io/scheduler/#/)
 
@@ -338,7 +339,10 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
   ### 3.SchedulerData.config(See the [config.js](https://github.com/StephenChou1017/react-big-scheduler/blob/master/src/config.js) for details.)
   
   #### schedulerWidth
-  The width of Scheduler.
+  The width of Scheduler. If schedulerWidth is a number, Scheduler will use fixed width layout, while if schedulerWidth is a percentage, 
+  Scheduler will use responsive layout. And in the responsive layout:
+  ```actual width of Scheduler = (SchedulerData.documentWidth - SchedulerData.config.besidesWidth) * SchedulerData.config.schedulerWidth```
+  `SchedulerData.documentWidth` is the window width of browser and will change automatically when resized.
   
   #### schedulerMaxHeight
   The max height of Scheduler. If the desired height is bigger than the max height, the header row of Scheduler will be

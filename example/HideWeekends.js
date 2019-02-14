@@ -15,7 +15,7 @@ class HideWeekends extends Component{
         //let schedulerData = new SchedulerData(new moment("2017-12-18").format(DATE_FORMAT), ViewTypes.Week);
         let schedulerData = new SchedulerData('2017-12-18', ViewTypes.Week, false, false, {
             displayWeekend: false,
-            weekCellWidth: 168
+            weekCellWidth: '16%'
         });
         schedulerData.localeMoment.locale('en');
         schedulerData.setResources(DemoData.resources);

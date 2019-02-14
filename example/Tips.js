@@ -32,6 +32,9 @@ class Tips extends Component {
                     <li style={liStyle}>
                         <span style={{fontWeight: 'bold'}}>4. The event array set to the SchedulerData should be sorted in ascending order by event.start property, otherwise there will be many rendering errors in the Scheduler component.</span>
                     </li>
+                    <li style={liStyle}>
+                        <span style={{fontWeight: 'bold', color: 'red'}}>5. From the npm version 0.2.6, Scheduler will use responsive layout by default(set SchedulerData.config.schedulerWidth to a percentage instead of a number).</span>
+                    </li>
                 </ul>
                 <div style={{clear: "both"}}></div>
             </div>

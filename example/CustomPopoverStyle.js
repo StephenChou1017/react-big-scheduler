@@ -8,7 +8,6 @@ import Button from 'antd/lib/button'
 import 'antd/lib/style/index.less';     //Add this code for locally example
 import Scheduler, {SchedulerData, ViewTypes, DATE_FORMAT, DemoData} from '../src/index'
 import Nav from './Nav'
-import Tips from './Tips'
 import ViewSrcCode from './ViewSrcCode'
 import withDragDropContext from './withDnDContext'
 
@@ -50,7 +49,6 @@ class CustomPopoverStyle extends Component{
                                eventItemPopoverTemplateResolver={this.eventItemPopoverTemplateResolver}
                     />
                 </div>
-                <Tips />
             </div>
         )
     }

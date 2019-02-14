@@ -19,6 +19,7 @@ export default class SchedulerData {
         this.isEventPerspective = isEventPerspective;
         this.resizing = false;
         this.scrollToSpecialMoment = false;
+        this.documentWidth = 0;
 
         this.localeMoment = moment;
         if(!!localeMoment)
@@ -65,6 +66,12 @@ export default class SchedulerData {
             this.config.minuteStep = minuteStep;
             this._createHeaders();
             this._createRenderData();
+        }
+    }
+
+    setBesidesWidth(besidesWidth) {
+        if(besidesWidth >= 0) {
+            this.config.besidesWidth = besidesWidth;
         }
     }
 
@@ -121,12 +128,6 @@ export default class SchedulerData {
     setScrollToSpecialMoment(scrollToSpecialMoment){
         if(this.config.scrollToSpecialMomentEnabled)
             this.scrollToSpecialMoment = scrollToSpecialMoment;
-    }
-
-    getScrollToSpecialMoment(){
-        if(this.config.scrollToSpecialMomentEnabled)
-            return this.scrollToSpecialMoment;
-        return false;
     }
 
     prev() {
@@ -229,6 +230,51 @@ export default class SchedulerData {
         this.config.schedulerMaxHeight = newSchedulerMaxHeight;
     }
 
+    isSchedulerResponsive() {
+        return !!this.config.schedulerWidth.endsWith && this.config.schedulerWidth.endsWith("%");
+    }
+
+    isResourceViewResponsive() {
+        let resourceTableWidth = this.getResourceTableConfigWidth();
+        return !!resourceTableWidth.endsWith && resourceTableWidth.endsWith("%");
+    }
+
+    isContentViewResponsive() {
+        let contentCellWidth = this.getContentCellConfigWidth();
+        return !!contentCellWidth.endsWith && contentCellWidth.endsWith("%");
+    }
+
+    getSchedulerWidth() {
+        let baseWidth = this.documentWidth - this.config.besidesWidth > 0 ? this.documentWidth - this.config.besidesWidth : 0;
+        return this.isSchedulerResponsive() ? parseInt(baseWidth * Number(this.config.schedulerWidth.slice(0,-1)) / 100) : this.config.schedulerWidth;
+    }    
+
+    getResourceTableWidth() {
+        let resourceTableConfigWidth = this.getResourceTableConfigWidth();
+        let schedulerWidth = this.getSchedulerWidth();
+        let resourceTableWidth = this.isResourceViewResponsive() ? parseInt(schedulerWidth * Number(resourceTableConfigWidth.slice(0,-1)) / 100)
+            : resourceTableConfigWidth;
+        if(this.isSchedulerResponsive() && ( this.getContentTableWidth() + resourceTableWidth < schedulerWidth ))
+            resourceTableWidth = schedulerWidth - this.getContentTableWidth();
+        return resourceTableWidth;
+    }
+
+    getContentCellWidth(){
+        let contentCellConfigWidth = this.getContentCellConfigWidth();
+        let schedulerWidth = this.getSchedulerWidth();
+        return this.isContentViewResponsive() ? parseInt(schedulerWidth * Number(contentCellConfigWidth.slice(0,-1)) / 100) : contentCellConfigWidth;
+    }    
+
+    getContentTableWidth(){
+        return this.headers.length * (this.getContentCellWidth());
+    }
+
+    getScrollToSpecialMoment(){
+        if(this.config.scrollToSpecialMomentEnabled)
+            return this.scrollToSpecialMoment;
+        return false;
+    }
+
     getSlots(){
         return this.isEventPerspective ? this.eventGroups : this.resources;
     }
@@ -264,34 +310,6 @@ export default class SchedulerData {
         return height;
     }
 
-    getResourceTableWidth() {
-        if(this.showAgenda) return this.config.agendaResourceTableWidth;
-
-        return this.viewType === ViewTypes.Week ? this.config.weekResourceTableWidth : (
-            this.viewType === ViewTypes.Day ? this.config.dayResourceTableWidth : (
-                this.viewType === ViewTypes.Month ? this.config.monthResourceTableWidth : (
-                    this.viewType === ViewTypes.Year ? this.config.yearResourceTableWidth : (
-                        this.viewType === ViewTypes.Quarter ? this.config.quarterResourceTableWidth : 
-                            this.config.customResourceTableWidth
-                    )
-                )
-            )
-        );
-    }
-
-    getContentCellWidth(){
-        return this.viewType === ViewTypes.Week ? this.config.weekCellWidth : (
-            this.viewType === ViewTypes.Day ? this.config.dayCellWidth : (
-                this.viewType === ViewTypes.Month ? this.config.monthCellWidth : (
-                    this.viewType === ViewTypes.Year ? this.config.yearCellWidth : (
-                        this.viewType === ViewTypes.Quarter ? this.config.quarterCellWidth : 
-                            this.config.customCellWidth
-                    )
-                )
-            )
-        );
-    }
-
     getCellMaxEvents(){
         return this.viewType === ViewTypes.Week ? this.config.weekMaxEvents : (
             this.viewType === ViewTypes.Day ? this.config.dayMaxEvents : (
@@ -303,10 +321,6 @@ export default class SchedulerData {
                 )
             )
         );
-    }
-
-    getContentTableWidth(){
-        return this.headers.length * (this.getContentCellWidth());
     }
 
     getDateLabel(){
@@ -377,6 +391,40 @@ export default class SchedulerData {
         if(index !== -1) {
             this.events.splice(index, 1);
             this._createRenderData();
+        }
+    }
+
+    getResourceTableConfigWidth() {
+        if(this.showAgenda) return this.config.agendaResourceTableWidth;
+
+        return this.viewType === ViewTypes.Week ? this.config.weekResourceTableWidth : (
+            this.viewType === ViewTypes.Day ? this.config.dayResourceTableWidth : (
+                this.viewType === ViewTypes.Month ? this.config.monthResourceTableWidth : (
+                    this.viewType === ViewTypes.Year ? this.config.yearResourceTableWidth : (
+                        this.viewType === ViewTypes.Quarter ? this.config.quarterResourceTableWidth : 
+                            this.config.customResourceTableWidth
+                    )
+                )
+            )
+        );
+    }
+
+    getContentCellConfigWidth() {
+        return this.viewType === ViewTypes.Week ? this.config.weekCellWidth : (
+            this.viewType === ViewTypes.Day ? this.config.dayCellWidth : (
+                this.viewType === ViewTypes.Month ? this.config.monthCellWidth : (
+                    this.viewType === ViewTypes.Year ? this.config.yearCellWidth : (
+                        this.viewType === ViewTypes.Quarter ? this.config.quarterCellWidth : 
+                            this.config.customCellWidth
+                    )
+                )
+            )
+        );
+    }
+
+    _setDocumentWidth(documentWidth) {
+        if(documentWidth >= 0) {
+            this.documentWidth = documentWidth;
         }
     }
 

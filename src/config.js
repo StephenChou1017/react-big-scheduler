@@ -2,7 +2,8 @@ import ViewTypes from './ViewTypes'
 import SummaryPos from './SummaryPos'
 
 export default {
-    schedulerWidth: '1000',
+    schedulerWidth: '100%',
+    besidesWidth: 20,
     schedulerMaxHeight: 0,
     tableHeaderHeight: 40,
 
@@ -10,14 +11,14 @@ export default {
     agendaMaxEventWidth: 100,
 
     dayResourceTableWidth: 160,
-    weekResourceTableWidth: 160,
+    weekResourceTableWidth: '16%',
     monthResourceTableWidth: 160,
     quarterResourceTableWidth: 160,
     yearResourceTableWidth: 160,
     customResourceTableWidth: 160,
 
     dayCellWidth: 30,
-    weekCellWidth: 120,
+    weekCellWidth: '12%',
     monthCellWidth: 80,
     quarterCellWidth: 80,
     yearCellWidth: 80,

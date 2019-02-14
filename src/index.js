@@ -68,7 +68,7 @@ class Scheduler extends Component {
         let dndContext = new DnDContext(sources, ResourceEvents);
 
         this.currentArea = -1;
-
+        schedulerData._setDocumentWidth(document.documentElement.clientWidth);
         this.state = {
             visible: false,
             dndContext: dndContext,
@@ -79,7 +79,21 @@ class Scheduler extends Component {
             resourceScrollbarWidth: 17,
             scrollLeft: 0,
             scrollTop: 0,
+            documentWidth: document.documentElement.clientWidth,
+            documentHeight: document.documentElement.clientHeight,
         };
+
+        if(schedulerData.isSchedulerResponsive())
+            window.onresize = this.onWindowResize;
+    }
+
+    onWindowResize = (e) => {
+        const {schedulerData} = this.props;
+        schedulerData._setDocumentWidth(document.documentElement.clientWidth);
+        this.setState({
+            documentWidth: document.documentElement.clientWidth,
+            documentHeight: document.documentElement.clientHeight,
+        });
     }
 
     static propTypes = {
@@ -144,8 +158,8 @@ class Scheduler extends Component {
 
     render() {
         const { schedulerData, leftCustomHeader, rightCustomHeader } = this.props;
-        const {renderData, viewType, showAgenda, isEventPerspective, config} = schedulerData;
-        const width = config.schedulerWidth;
+        const { renderData, viewType, showAgenda, isEventPerspective, config } = schedulerData;
+        const width = schedulerData.getSchedulerWidth();
         const calendarPopoverEnabled = config.calendarPopoverEnabled;
 
         let dateLabel = schedulerData.getDateLabel();

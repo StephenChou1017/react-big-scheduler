@@ -1,8 +1,12 @@
 ## Coming npm version
 
 ### Some day
-* An add-more data bug 
-* Responsive layout
+* An add-more data bug
+
+### 2019-02-14
+* Responsive layout support, by setting SchedulerData.config.schedulerWidth to a percentage instead of a number
+* Add SchedulerData.isSchedulerResponsive, SchedulerData.isResourceViewResponsive, SchedulerData.isContentViewResponsive, SchedulerData.getSchedulerWidth, SchedulerData.getResourceTableConfigWidth, SchedulerData.getContentCellConfigWidth func
+* Add SchedulerData.config.besidesWidth property
 
 ### 2019-01-23
 * Add SchedulerData.removeEvent, SchedulerData.removeEventById func

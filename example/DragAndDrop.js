@@ -18,6 +18,7 @@ class DragAndDrop extends Component{
         super(props);
 
         let schedulerData = new SchedulerData('2017-12-18', ViewTypes.Month, false, false, {
+            schedulerWidth: '80%',
             schedulerMaxHeight: 500,
             views: [
                 {viewName: 'Agenda View', viewType: ViewTypes.Month, showAgenda: true, isEventPerspective: false},
