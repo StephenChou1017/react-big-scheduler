@@ -77,6 +77,12 @@ class ResourceEvents extends Component {
 
         document.documentElement.addEventListener('mousemove', this.doDrag, false);
         document.documentElement.addEventListener('mouseup', this.stopDrag, false);
+        document.onselectstart = function () {
+			return false;
+		};
+		document.ondragstart = function () {
+			return false;
+		};
     }
 
     doDrag = (ev) => {
@@ -111,6 +117,8 @@ class ResourceEvents extends Component {
         const { leftIndex, rightIndex } = this.state;
         document.documentElement.removeEventListener('mousemove', this.doDrag, false);
         document.documentElement.removeEventListener('mouseup', this.stopDrag, false);
+        document.onselectstart = null;
+        document.ondragstart = null;
 
         let startTime = headers[leftIndex].time;
         let endTime = resourceEvents.headerItems[rightIndex - 1].end;

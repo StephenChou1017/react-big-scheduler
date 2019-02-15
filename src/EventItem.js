@@ -74,6 +74,12 @@ class EventItem extends Component {
 
         document.documentElement.addEventListener('mousemove', this.doStartDrag, false);
         document.documentElement.addEventListener('mouseup', this.stopStartDrag, false);
+        document.onselectstart = function () {
+			return false;
+		};
+		document.ondragstart = function () {
+			return false;
+		};
     }
 
     doStartDrag = (ev) => {
@@ -103,6 +109,8 @@ class EventItem extends Component {
         ev.stopPropagation();
         document.documentElement.removeEventListener('mousemove', this.doStartDrag, false);
         document.documentElement.removeEventListener('mouseup', this.stopStartDrag, false);
+        document.onselectstart = null;
+        document.ondragstart = null;
 
         const {width, leftIndex, rightIndex, schedulerData, eventItem, updateEventStart} = this.props;
         schedulerData._stopResizing();
@@ -208,6 +216,12 @@ class EventItem extends Component {
 
         document.documentElement.addEventListener('mousemove', this.doEndDrag, false);
         document.documentElement.addEventListener('mouseup', this.stopEndDrag, false);
+        document.onselectstart = function () {
+			return false;
+		};
+		document.ondragstart = function () {
+			return false;
+		};
     }
 
     doEndDrag = (ev) => {
@@ -233,6 +247,8 @@ class EventItem extends Component {
         ev.stopPropagation();
         document.documentElement.removeEventListener('mousemove', this.doEndDrag, false);
         document.documentElement.removeEventListener('mouseup', this.stopEndDrag, false);
+        document.onselectstart = null;
+        document.ondragstart = null;
 
         const {width, leftIndex, rightIndex, schedulerData, eventItem, updateEventEnd} = this.props;
         schedulerData._stopResizing();
