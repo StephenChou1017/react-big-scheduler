@@ -4,7 +4,6 @@ import {PropTypes} from 'prop-types'
 //import 'moment/locale/zh-cn';
 import Scheduler, {SchedulerData, ViewTypes, DATE_FORMAT, DemoData} from '../src/index'
 import Nav from './Nav'
-import Tips from './Tips'
 import ViewSrcCode from './ViewSrcCode'
 import withDragDropContext from './withDnDContext'
 
@@ -48,7 +47,6 @@ class HideWeekends extends Component{
                                newEvent={this.newEvent}
                     />
                 </div>
-                <Tips />
             </div>
         )
     }
