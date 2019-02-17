@@ -10,7 +10,7 @@ Inspired by [Full Calendar Scheduler](https://fullcalendar.io/scheduler/).
 
 ## Version selection
 
-* antd >= 3.9.0 ? react-big-scheduler@0.2.5 : react-big-scheduler@0.2.4
+* antd >= 3.9.0 ? react-big-scheduler@0.2.6 : react-big-scheduler@0.2.4
 
 ## Use and Setup
 

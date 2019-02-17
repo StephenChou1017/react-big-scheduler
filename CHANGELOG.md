@@ -3,6 +3,11 @@
 ### Some day
 * An add-more data bug
 
+## npm v0.2.6
+
+### 2019-02-17
+* Fix the dayStartFrom and dayStopTo bug in custom view type([Report by ZomerVinicius](https://github.com/StephenChou1017/react-big-scheduler/issues/73))
+
 ### 2019-02-14
 * Responsive layout support, by setting SchedulerData.config.schedulerWidth to a percentage instead of a number
 * Add SchedulerData.isSchedulerResponsive, SchedulerData.isResourceViewResponsive, SchedulerData.isContentViewResponsive, SchedulerData.getSchedulerWidth, SchedulerData.getResourceTableConfigWidth, SchedulerData.getContentCellConfigWidth func

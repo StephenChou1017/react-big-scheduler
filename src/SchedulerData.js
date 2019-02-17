@@ -566,9 +566,12 @@ export default class SchedulerData {
                 while (header >= start && header <= end) {
                     let minuteSteps = this.getMinuteStepsInHour();
                     for(let i=0; i<minuteSteps; i++){
-                        let time = header.format(DATETIME_FORMAT);
-                        let nonWorkingTime = this.behaviors.isNonWorkingTimeFunc(this, time);
-                        headers.push({ time: time, nonWorkingTime: nonWorkingTime });
+                        let hour = header.hour();
+                        if(hour >= this.config.dayStartFrom && hour <= this.config.dayStopTo) {
+                            let time = header.format(DATETIME_FORMAT);
+                            let nonWorkingTime = this.behaviors.isNonWorkingTimeFunc(this, time);
+                            headers.push({ time: time, nonWorkingTime: nonWorkingTime });
+                        }
     
                         header = header.add(this.config.minuteStep, 'minutes');
                     }
