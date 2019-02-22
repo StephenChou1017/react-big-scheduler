@@ -11,12 +11,12 @@
     "antd"
   ],
   "files": [
-    "lib/",
+    "src/",
     "LICENSE",
     "README.md",
     "CHANGELOG.md"
   ],
-  "main": "lib/index",
+  "main": "src/index",
   "homepage": "https://github.com/StephenChou1017/react-big-scheduler",
   "author": "Stephen Chou <27788280@qq.com> (https://github.com/StephenChou1017)",
   "repository": {
