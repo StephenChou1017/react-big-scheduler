@@ -64,7 +64,11 @@ class HeaderView extends Component {
                 if(index === headers.length - 1)
                     style = !!item.nonWorkingTime ? {color: config.nonWorkingTimeHeadColor, backgroundColor: config.nonWorkingTimeHeadBgColor} : {};
 
-                let pFormattedList = config.nonAgendaOtherCellHeaderFormat.split('|').map(item => datetime.format(item));
+                let cellFormat = cellUnit === CellUnits.Week ? config.nonAgendaWeekCellHeaderFormat
+                    : cellUnit === CellUnits.Month ? config.nonAgendaMonthCellHeaderFormat
+                        : cellUnit === CellUnits.Year ? config.nonAgendaYearCellHeaderFormat
+                            : config.nonAgendaOtherCellHeaderFormat;
+                let pFormattedList = cellFormat.split('|').map(item => datetime.format(item));
 
                 if (typeof nonAgendaCellHeaderTemplateResolver === 'function') {
                     return nonAgendaCellHeaderTemplateResolver(schedulerData, item, pFormattedList, style)
