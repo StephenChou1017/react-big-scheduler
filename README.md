@@ -377,52 +377,51 @@ Returns the resource by `resourceId`, returns `undefined` if not found.
 
 ```js
 isEventInTimeWindow(eventStart, eventEnd, windowStart, windowEnd);
-```
-
-Returns whether an event is in the time window or not, remind that `eventStart`, `eventEnd`, `windowStart`, `windowEnd`
-are all moment objects.
-
-### 2.Locale support(Refer to [this example](https://stephenchou1017.github.io/scheduler/#/locale) for details.)
-
-#### SchedulerData.config.resourceName
-
-The locale string of resource name.
-
-#### SchedulerData.config.taskName
-
-The locale string of task name.
-
-#### SchedulerData.config.agendaViewHeader
-
-The locale string of agenda view header.
-
-#### SchedulerData.config.addMorePopoverHeaderFormat
-
-The locale string of add more popover header format.
-
-#### SchedulerData.config.eventItemPopoverDateFormat
-
-The locale string of event item popover date format.
-
-#### SchedulerData.config.nonAgendaDayCellHeaderFormat
-
-The locale string of non-agenda view cell header format of day view type.
-
-#### SchedulerData.config.nonAgendaOtherCellHeaderFormat
-
-The locale string of non-agenda view cell header format of other view types.
-
-#### SchedulerData.behaviors.getDateLabelFunc
-
-Used to resolve the locale string of date label of Scheduler component.(Refer to the [getDateLabel](https://github.com/StephenChou1017/react-big-scheduler/blob/master/src/behaviors.js) func for example)
-
-### 3.SchedulerData.config(See the [config.js](https://github.com/StephenChou1017/react-big-scheduler/blob/master/src/config.js) for details.)
-
-#### schedulerWidth
-
-The width of Scheduler. If schedulerWidth is a number, Scheduler will use fixed width layout, while if schedulerWidth is a percentage,
-Scheduler will use responsive layout. And in the responsive layout:
-`actual width of Scheduler = (SchedulerData.documentWidth - SchedulerData.config.besidesWidth) * SchedulerData.config.schedulerWidth`
+  ```
+  Returns whether an event is in the time window or not, remind that `eventStart`, `eventEnd`, `windowStart`, `windowEnd` 
+  are all moment objects.
+  
+  ### 2.Locale support(Refer to [this example](https://stephenchou1017.github.io/scheduler/#/locale) for details.)
+  
+  #### SchedulerData.config.resourceName
+  The locale string of resource name.
+  
+  #### SchedulerData.config.taskName
+  The locale string of task name.
+  
+  #### SchedulerData.config.agendaViewHeader
+  The locale string of agenda view header.
+  
+  #### SchedulerData.config.addMorePopoverHeaderFormat
+  The locale string of add more popover header format.
+  
+  #### SchedulerData.config.eventItemPopoverDateFormat
+  The locale string of event item popover date format.
+    
+  #### SchedulerData.config.nonAgendaDayCellHeaderFormat
+  The locale string of non-agenda view cell header format of day view type.
+  
+  #### SchedulerData.config.nonAgendaWeekCellHeaderFormat
+  The locale string of non-agenda view cell header format of week view type.
+    
+  #### SchedulerData.config.nonAgendaMonthCellHeaderFormat
+  The locale string of non-agenda view cell header format of month view type.
+      
+  #### SchedulerData.config.nonAgendaYearCellHeaderFormat
+  The locale string of non-agenda view cell header format of year view type.
+      
+  #### SchedulerData.config.nonAgendaOtherCellHeaderFormat
+  The locale string of non-agenda view cell header format of other view types.
+  
+  #### SchedulerData.behaviors.getDateLabelFunc
+  Used to resolve the locale string of date label of Scheduler component.(Refer to the [getDateLabel](https://github.com/StephenChou1017/react-big-scheduler/blob/master/src/behaviors.js) func for example)
+  
+  ### 3.SchedulerData.config(See the [config.js](https://github.com/StephenChou1017/react-big-scheduler/blob/master/src/config.js) for details.)
+  
+  #### schedulerWidth
+  The width of Scheduler. If schedulerWidth is a number, Scheduler will use fixed width layout, while if schedulerWidth is a percentage, 
+  Scheduler will use responsive layout. And in the responsive layout:
+  `actual width of Scheduler = (SchedulerData.documentWidth - SchedulerData.config.besidesWidth) * SchedulerData.config.schedulerWidth`
 `SchedulerData.documentWidth` is the window width of browser and will change automatically when resized.
 
 #### schedulerMaxHeight
