@@ -577,7 +577,7 @@ export default class SchedulerData {
                     }
                 }
             }
-            else {
+            else if (this.cellUnit === CellUnits.Day) {
                 while (header >= start && header <= end) {
                     let time = header.format(DATETIME_FORMAT);
                     let dayOfWeek = header.weekday();
@@ -588,6 +588,27 @@ export default class SchedulerData {
                     }
 
                     header = header.add(1, 'days');
+                }
+            }
+            else if (this.cellUnit === CellUnits.Week) {
+                while (header >= start && header <= end) {
+                    let time  = header.format(DATE_FORMAT);
+                    headers.push({time});
+                    header = header.add(1, 'weeks').startOf('week')
+                }
+            }
+            else if (this.cellUnit === CellUnits.Month) {
+                while (header >= start && header <= end) {
+                    let time  = header.format(DATE_FORMAT);
+                    headers.push({time});
+                    header = header.add(1, 'months').startOf('month');
+                }
+            }
+            else if (this.cellUnit === CellUnits.Year) {
+                while (header >= start && header <= end) {
+                    let time  = header.format(DATE_FORMAT);
+                    headers.push({time});
+                    header = header.add(1, 'years').startOf('year');
                 }
             }
         }
@@ -607,8 +628,11 @@ export default class SchedulerData {
                     )
                 )
             )
-        )) : (this.cellUnit === CellUnits.Hour ?  start.add(this.config.minuteStep, 'minutes').format(DATETIME_FORMAT)
-            : start.add(1, 'days').format(DATETIME_FORMAT));
+        )) : (this.cellUnit === CellUnits.Hour ? start.add(this.config.minuteStep, 'minutes').format(DATETIME_FORMAT)
+            : this.cellUnit === CellUnits.Year ? start.add(1, 'years').format(DATE_FORMAT)
+                : this.cellUnit === CellUnits.Month ? start.add(1, 'months').format(DATE_FORMAT)
+                    : this.cellUnit === CellUnits.Week ? start.add(1, 'weeks').format(DATE_FORMAT)
+                        : start.add(1, 'days').format(DATETIME_FORMAT));
         return {
             time:  header.time,
             nonWorkingTime: header.nonWorkingTime,
@@ -696,7 +720,10 @@ export default class SchedulerData {
         for(let header of headers) {
             let spanStart = this.localeMoment(header.time),
             spanEnd = this.cellUnit === CellUnits.Hour ? this.localeMoment(header.time).add(this.config.minuteStep, 'minutes') 
-                : this.localeMoment(header.time).add(1, 'days');
+                : this.cellUnit === CellUnits.Week ? this.localeMoment(header.time).add(1, 'weeks')
+                    : this.cellUnit === CellUnits.Month ? this.localeMoment(header.time).add(1, 'months')
+                        : this.cellUnit === CellUnits.Year ? this.localeMoment(header.time).add(1, 'year')
+                            : this.localeMoment(header.time).add(1, 'days');
             
                 if(spanStart < end && spanEnd > start) {
                     span++;
@@ -881,5 +908,3 @@ export default class SchedulerData {
         return this.resizing;
     }
 }
-
-

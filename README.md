@@ -329,6 +329,15 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
     
   #### SchedulerData.config.nonAgendaDayCellHeaderFormat
   The locale string of non-agenda view cell header format of day view type.
+  
+  #### SchedulerData.config.nonAgendaWeekCellHeaderFormat
+  The locale string of non-agenda view cell header format of week view type.
+    
+  #### SchedulerData.config.nonAgendaMonthCellHeaderFormat
+  The locale string of non-agenda view cell header format of month view type.
+      
+  #### SchedulerData.config.nonAgendaYearCellHeaderFormat
+  The locale string of non-agenda view cell header format of year view type.
       
   #### SchedulerData.config.nonAgendaOtherCellHeaderFormat
   The locale string of non-agenda view cell header format of other view types.
