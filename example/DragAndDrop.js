@@ -67,6 +67,7 @@ class DragAndDrop extends Component{
                                        updateEventStart={this.updateEventStart}
                                        updateEventEnd={this.updateEventEnd}
                                        moveEvent={this.moveEvent}
+                                       movingEvent={this.movingEvent}
                                        newEvent={this.newEvent}
                                        subtitleGetter={this.subtitleGetter}
                                        dndSources={dndSources}
@@ -192,6 +193,10 @@ class DragAndDrop extends Component{
                 viewModel: schedulerData
             })
         }
+    }
+
+    movingEvent = (schedulerData, slotId, slotName, newStart, newEnd, action, type, item) => {
+        console.log('moving event', schedulerData, slotId, slotName, newStart, newEnd, action, type, item);
     }
 
     subtitleGetter = (schedulerData, event) => {

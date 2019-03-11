@@ -106,6 +106,7 @@ class Scheduler extends Component {
         updateEventStart: PropTypes.func,
         updateEventEnd: PropTypes.func,
         moveEvent: PropTypes.func,
+        movingEvent: PropTypes.func,
         leftCustomHeader: PropTypes.object,
         rightCustomHeader: PropTypes.object,
         newEvent: PropTypes.func,
