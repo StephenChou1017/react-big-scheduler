@@ -6,6 +6,7 @@ import SelectedArea from './SelectedArea'
 import {CellUnits, DATETIME_FORMAT, SummaryPos} from './index'
 import {getPos} from './Util'
 import {DnDTypes} from './DnDTypes'
+const supportTouch = 'ontouchstart' in window;
 
 class ResourceEvents extends Component {
 
@@ -43,25 +44,50 @@ class ResourceEvents extends Component {
         const {schedulerData} = this.props;
         const {config} = schedulerData;
         if(config.creatable === true) {
-            this.eventContainer.addEventListener('mousedown', this.initDrag, false);
+            if(supportTouch) {
+                // this.eventContainer.addEventListener('touchstart', this.initDrag, false);
+            } else {
+                this.eventContainer.addEventListener('mousedown', this.initDrag, false);
+            }            
         }
     }
 
     componentWillReceiveProps(np) {
-        this.eventContainer.removeEventListener('mousedown', this.initDrag, false);
-        if(np.schedulerData.config.creatable)
-            this.eventContainer.addEventListener('mousedown', this.initDrag, false);
+        if(supportTouch) {
+            // this.eventContainer.removeEventListener('touchstart', this.initDrag, false);
+        } else {
+            this.eventContainer.removeEventListener('mousedown', this.initDrag, false);
+        }        
+        if(np.schedulerData.config.creatable) {
+            if(supportTouch) {
+                // this.eventContainer.addEventListener('touchstart', this.initDrag, false);
+            } else {
+                this.eventContainer.addEventListener('mousedown', this.initDrag, false);
+            }
+        }            
     }
 
     initDrag = (ev) => {
-        ev.stopPropagation();
-        if(ev.buttons !== undefined && ev.buttons !== 1) return;
+        const { isSelecting } = this.state;
+        if(isSelecting) return;
         if((ev.srcElement || ev.target) !== this.eventContainer) return;
+
+        ev.stopPropagation();
+
+        let clientX = 0;
+        if(supportTouch) {
+            if(ev.changedTouches.length == 0) return;
+            const touch = ev.changedTouches[0];
+            clientX = touch.pageX;
+        } else {
+            if(ev.buttons !== undefined && ev.buttons !== 1) return;
+            clientX = ev.clientX;
+        }
 
         const {schedulerData} = this.props;
         let cellWidth = schedulerData.getContentCellWidth();
         let pos = getPos(this.eventContainer);
-        let startX = ev.clientX - pos.x;
+        let startX = clientX - pos.x;
         let leftIndex = Math.floor(startX/cellWidth);
         let left = leftIndex*cellWidth;
         let rightIndex = Math.ceil(startX/cellWidth);
@@ -76,8 +102,14 @@ class ResourceEvents extends Component {
             isSelecting: true
         });
 
-        document.documentElement.addEventListener('mousemove', this.doDrag, false);
-        document.documentElement.addEventListener('mouseup', this.stopDrag, false);
+        if(supportTouch) {
+            document.documentElement.addEventListener('touchmove', this.doDrag, false);
+            document.documentElement.addEventListener('touchend', this.stopDrag, false);
+            document.documentElement.addEventListener('touchcancel', this.cancelDrag, false);
+        } else {
+            document.documentElement.addEventListener('mousemove', this.doDrag, false);
+            document.documentElement.addEventListener('mouseup', this.stopDrag, false);
+        }
         document.onselectstart = function () {
 			return false;
 		};
@@ -89,12 +121,20 @@ class ResourceEvents extends Component {
     doDrag = (ev) => {
         ev.stopPropagation();
 
+        let clientX = 0;
+        if(supportTouch) {
+            if(ev.changedTouches.length == 0) return;
+            const touch = ev.changedTouches[0];
+            clientX = touch.pageX;
+        } else {
+            clientX = ev.clientX;
+        }
         const { startX } = this.state;
         const {schedulerData} = this.props;
         const {headers} = schedulerData;
         let cellWidth = schedulerData.getContentCellWidth();
         let pos = getPos(this.eventContainer);
-        let currentX = ev.clientX - pos.x;
+        let currentX = clientX - pos.x;
         let leftIndex = Math.floor(Math.min(startX, currentX)/cellWidth);
         leftIndex = leftIndex < 0 ? 0 : leftIndex;
         let left = leftIndex*cellWidth;
@@ -113,11 +153,18 @@ class ResourceEvents extends Component {
 
     stopDrag = (ev) => {
         ev.stopPropagation();
+
         const {schedulerData, newEvent, resourceEvents} = this.props;
         const {headers, events, config, cellUnit, localeMoment} = schedulerData;
         const { leftIndex, rightIndex } = this.state;
-        document.documentElement.removeEventListener('mousemove', this.doDrag, false);
-        document.documentElement.removeEventListener('mouseup', this.stopDrag, false);
+        if(supportTouch) {
+            document.documentElement.removeEventListener('touchmove', this.doDrag, false);
+            document.documentElement.removeEventListener('touchend', this.stopDrag, false);
+            document.documentElement.removeEventListener('touchcancel', this.cancelDrag, false);
+        } else {
+            document.documentElement.removeEventListener('mousemove', this.doDrag, false);
+            document.documentElement.removeEventListener('mouseup', this.stopDrag, false);
+        }
         document.onselectstart = null;
         document.ondragstart = null;
 
@@ -171,6 +218,27 @@ class ResourceEvents extends Component {
         else {
             if(newEvent != undefined)
                 newEvent(schedulerData, slotId, slotName, startTime, endTime);
+        }
+    }
+
+    cancelDrag = (ev) => {
+        ev.stopPropagation();
+
+        const { isSelecting } = this.state;
+        if(isSelecting) {
+            document.documentElement.removeEventListener('touchmove', this.doDrag, false);
+            document.documentElement.removeEventListener('touchend', this.stopDrag, false);
+            document.documentElement.removeEventListener('touchcancel', this.cancelDrag, false);
+            document.onselectstart = null;
+            document.ondragstart = null;
+            this.setState({
+                startX: 0,
+                leftIndex: 0,
+                left: 0,
+                rightIndex: 0,
+                width: 0,
+                isSelecting: false
+            });
         }
     }
 
