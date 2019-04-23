@@ -114,6 +114,8 @@ const {schedulerData} = this.props;
 * Start: `npm run example`
 * Open [http://localhost:8080/example/#/](http://localhost:8080/example/#/).
 
+If you fail to execute the `npm install` command, remove the package-lock.json file and try again.
+
 ## API
 
 ### 1.SchedulerData
