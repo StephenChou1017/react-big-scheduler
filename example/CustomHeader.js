@@ -49,6 +49,7 @@ class CustomHeader extends Component{
                                newEvent={this.newEvent}
                                leftCustomHeader={leftCustomHeader}
                                rightCustomHeader={rightCustomHeader}
+                               toggleExpandFunc={this.toggleExpandFunc}
                     />
                 </div>
             </div>
@@ -148,6 +149,13 @@ class CustomHeader extends Component{
                 viewModel: schedulerData
             })
         }
+    }
+
+    toggleExpandFunc = (schedulerData, slotId) => {
+        schedulerData.toggleExpandStatus(slotId);
+        this.setState({
+            viewModel: schedulerData
+        });
     }
 }
 

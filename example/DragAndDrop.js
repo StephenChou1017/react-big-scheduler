@@ -71,6 +71,7 @@ class DragAndDrop extends Component{
                                        newEvent={this.newEvent}
                                        subtitleGetter={this.subtitleGetter}
                                        dndSources={dndSources}
+                                       toggleExpandFunc={this.toggleExpandFunc}
                             />
                         </Col>
                         <Col span={4}>
@@ -201,6 +202,13 @@ class DragAndDrop extends Component{
 
     subtitleGetter = (schedulerData, event) => {
         return schedulerData.isEventPerspective ? schedulerData.getResourceById(event.resourceId).name : event.groupName;
+    }
+
+    toggleExpandFunc = (schedulerData, slotId) => {
+        schedulerData.toggleExpandStatus(slotId);
+        this.setState({
+            viewModel: schedulerData
+        });
     }
 }
 

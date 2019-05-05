@@ -3,6 +3,10 @@
 ### Some day
 * An add-more data bug
 
+### 2019-05-04
+* Add inner resources
+* Update dependencies version
+
 ## npm v0.2.6
 
 ### 2019-02-17

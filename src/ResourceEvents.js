@@ -73,7 +73,9 @@ class ResourceEvents extends Component {
         if((ev.srcElement || ev.target) !== this.eventContainer) return;
 
         ev.stopPropagation();
-
+        
+        const {resourceEvents} = this.props;
+        if(resourceEvents.groupOnly) return;
         let clientX = 0;
         if(supportTouch) {
             if(ev.changedTouches.length == 0) return;

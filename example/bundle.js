@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {render} from 'react-dom'
-import {Router, Route, hashHistory} from 'react-router'
+import {HashRouter as Router, Route} from 'react-router-dom'
 import Basic from './Basic'
 import Readonly from './Readonly'
 import Locale from './Locale'
@@ -24,8 +24,8 @@ import ComingSoon from './ComingSoon'
 import CustomPopoverStyle from './CustomPopoverStyle'
 
 render((
-    <Router history={hashHistory}>
-        <Route path="/" component={Basic}/>
+    <Router>
+        <Route exact path="/" component={Basic}/>
         <Route path="/readonly" component={Readonly}/>
         <Route path="/locale" component={Locale}/>
         <Route path="/views" component={Views}/>

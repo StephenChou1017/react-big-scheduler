@@ -234,6 +234,42 @@ export default class SchedulerData {
         return !!this.config.schedulerWidth.endsWith && this.config.schedulerWidth.endsWith("%");
     }
 
+    toggleExpandStatus(slotId) {
+        let slotEntered = false;
+        let slotIndent = -1;
+        let isExpanded = false;
+        let expandedMap = new Map();
+        this.renderData.forEach((item) => {
+            if(slotEntered === false) {
+                if(item.slotId === slotId && item.hasChildren) {
+                    slotEntered = true;
+                    
+                    isExpanded = !item.expanded;
+                    item.expanded = isExpanded;
+                    slotIndent = item.indent;
+                    expandedMap.set(item.indent, {
+                        expanded: item.expanded,
+                        render: item.render,
+                    });
+                }
+            } else {
+                if(item.indent > slotIndent) {
+                    let expandStatus = expandedMap.get(item.indent - 1);
+                    item.render = expandStatus.expanded && expandStatus.render;
+
+                    if(item.hasChildren) {
+                        expandedMap.set(item.indent, {
+                            expanded: item.expanded,
+                            render: item.render,
+                        });
+                    }
+                } else {
+                    slotEntered = false;
+                }
+            }
+        });
+    }
+
     isResourceViewResponsive() {
         let resourceTableWidth = this.getResourceTableConfigWidth();
         return !!resourceTableWidth.endsWith && resourceTableWidth.endsWith("%");
@@ -303,9 +339,10 @@ export default class SchedulerData {
     }
 
     getSchedulerContentDesiredHeight() {
-        var height = 0;
+        let height = 0;
         this.renderData.forEach((item) => {
-           height += item.rowHeight;
+            if(item.render)
+                height += item.rowHeight;
         });
         return height;
     }
@@ -661,29 +698,83 @@ export default class SchedulerData {
     }
 
     _createInitRenderData(isEventPerspective, eventGroups, resources, headers) {
-        return isEventPerspective ? eventGroups.map((eventGroup) => {
+        let slots = isEventPerspective ? eventGroups : resources;
+        let slotTree = [],
+            slotMap = new Map();
+        slots.forEach((slot) => {
             let headerEvents = headers.map((header) => {
                 return this._createInitHeaderEvents(header);
             });
 
-            return {
-                slotId: eventGroup.id,
-                slotName: eventGroup.name,
+            let slotRenderData = {
+                slotId: slot.id,
+                slotName: slot.name,
+                parentId: slot.parentId,
+                groupOnly: slot.groupOnly,
                 rowHeight: 0,
-                headerItems: headerEvents
+                headerItems: headerEvents,
+                indent: 0,
+                hasChildren: false,
+                expanded: true,
+                render: true,
             };
-        }) : resources.map((resource) => {
-            let headerEvents = headers.map((header) => {
-                return this._createInitHeaderEvents(header);
-            });
+            let id = slot.id;
+            let value = undefined;
+            if(slotMap.has(id)) {
+                value = slotMap.get(id);
+                value.data = slotRenderData;
+            } else {
+                value = {
+                    data: slotRenderData,
+                    children: [],
+                };
+                slotMap.set(id, value);
+            }
 
-            return {
-                slotId: resource.id,
-                slotName: resource.name,
-                rowHeight: 0,
-                headerItems: headerEvents
-            };
+            let parentId = slot.parentId;
+            if(!parentId || parentId === id) {
+                slotTree.push(value);
+            } else {
+                let parentValue = undefined;
+                if(slotMap.has(parentId)) {
+                    parentValue = slotMap.get(parentId);
+                } else {
+                    parentValue = {
+                        data: undefined,
+                        children: [],
+                    };
+                    slotMap.set(parentId, parentValue);
+                }
+
+                parentValue.children.push(value);
+            }
         });
+
+        let slotStack = [];
+        let i;
+        for(i=slotTree.length-1; i>=0; i--) {
+            slotStack.push(slotTree[i]);
+        }
+        let initRenderData = [];
+        let currentNode = undefined;
+        while(slotStack.length > 0) {
+            currentNode = slotStack.pop();
+            if(currentNode.data.indent > 0) {
+                currentNode.data.render = this.config.defaultExpanded;
+            }
+            if(currentNode.children.length > 0) {
+                currentNode.data.hasChildren = true;
+                currentNode.data.expanded = this.config.defaultExpanded;
+            }
+            initRenderData.push(currentNode.data);
+            
+            for(i=currentNode.children.length -1; i>=0; i--) {
+                currentNode.children[i].data.indent = currentNode.data.indent + 1;
+                slotStack.push(currentNode.children[i]);
+            }
+        }
+
+        return initRenderData;
     }
 
     _getSpan(startTime, endTime, headers){

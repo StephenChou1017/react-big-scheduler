@@ -48,6 +48,7 @@ class Basic extends Component{
                                onScrollRight={this.onScrollRight}
                                onScrollTop={this.onScrollTop}
                                onScrollBottom={this.onScrollBottom}
+                               toggleExpandFunc={this.toggleExpandFunc}
                     />
                 </div>
                 <Tips />
@@ -180,6 +181,13 @@ class Basic extends Component{
 
     onScrollBottom = (schedulerData, schedulerContent, maxScrollTop) => {
         console.log('onScrollBottom');
+    }
+
+    toggleExpandFunc = (schedulerData, slotId) => {
+        schedulerData.toggleExpandStatus(slotId);
+        this.setState({
+            viewModel: schedulerData
+        });
     }
 }
 

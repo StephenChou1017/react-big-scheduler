@@ -77,6 +77,7 @@ class Locale extends Component{
                                moveEvent={this.moveEvent}
                                newEvent={this.newEvent}
                                onSetAddMoreState={this.onSetAddMoreState}
+                               toggleExpandFunc={this.toggleExpandFunc}
                     />
                     {popover}
                 </div>
@@ -234,6 +235,13 @@ class Locale extends Component{
                 ...newState,
             });
         }
+    }
+
+    toggleExpandFunc = (schedulerData, slotId) => {
+        schedulerData.toggleExpandStatus(slotId);
+        this.setState({
+            viewModel: schedulerData
+        });
     }
 }
 

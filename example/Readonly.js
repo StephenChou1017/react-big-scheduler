@@ -40,6 +40,7 @@ class Readonly extends Component{
                                viewEventText="Ops 1"
                                viewEvent2Text="Ops 2"
                                viewEvent2Click={this.ops2}
+                               toggleExpandFunc={this.toggleExpandFunc}
                     />
                 </div>
             </div>
@@ -89,6 +90,13 @@ class Readonly extends Component{
     ops2 = (schedulerData, event) => {
         alert(`You just executed ops2 to event: {id: ${event.id}, title: ${event.title}}`);
     };
+
+    toggleExpandFunc = (schedulerData, slotId) => {
+        schedulerData.toggleExpandStatus(slotId);
+        this.setState({
+            viewModel: schedulerData
+        });
+    }
 }
 
 export default withDragDropContext(Readonly)

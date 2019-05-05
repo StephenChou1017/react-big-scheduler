@@ -101,11 +101,11 @@ export default class DnDContext {
             },
 
             canDrop: (props, monitor) => {
-                const {schedulerData} = props;
+                const {schedulerData, resourceEvents} = props;
                 const item = monitor.getItem();
                 if(schedulerData._isResizing()) return false;
                 const {config} = schedulerData;
-                return config.movable && (item.movable == undefined || item.movable !== false);
+                return config.movable && !resourceEvents.groupOnly && (item.movable == undefined || item.movable !== false);
             }
         }
     }

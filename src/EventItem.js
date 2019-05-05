@@ -64,7 +64,10 @@ class EventItem extends Component {
     }
 
     initStartDrag = (ev) => {
-        const {schedulerData} = this.props;
+        const {schedulerData, eventItem} = this.props;
+        let slotId = schedulerData._getEventSlotId(eventItem);
+        let slot = schedulerData.getSlotById(slotId);
+        if(!!slot && !!slot.groupOnly) return;
         if(schedulerData._isResizing()) return;
 
         ev.stopPropagation();
@@ -266,7 +269,10 @@ class EventItem extends Component {
     }
 
     initEndDrag = (ev) => {
-        const {schedulerData} = this.props;
+        const {schedulerData, eventItem} = this.props;
+        let slotId = schedulerData._getEventSlotId(eventItem);
+        let slot = schedulerData.getSlotById(slotId);
+        if(!!slot && !!slot.groupOnly) return;
         if(schedulerData._isResizing()) return;
 
         ev.stopPropagation();

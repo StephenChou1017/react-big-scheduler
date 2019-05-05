@@ -62,6 +62,7 @@ class AddMore extends Component{
                                moveEvent={this.moveEvent}
                                newEvent={this.newEvent}
                                onSetAddMoreState={this.onSetAddMoreState}
+                               toggleExpandFunc={this.toggleExpandFunc}
                     />
                     {popover}
                 </div>
@@ -178,6 +179,13 @@ class AddMore extends Component{
                 ...newState,
             });
         }
+    }
+
+    toggleExpandFunc = (schedulerData, slotId) => {
+        schedulerData.toggleExpandStatus(slotId);
+        this.setState({
+            viewModel: schedulerData
+        });
     }
 }
 

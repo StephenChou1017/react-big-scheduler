@@ -47,6 +47,7 @@ class CustomPopoverStyle extends Component{
                                moveEvent={this.moveEvent}
                                newEvent={this.newEvent}
                                eventItemPopoverTemplateResolver={this.eventItemPopoverTemplateResolver}
+                               toggleExpandFunc={this.toggleExpandFunc}
                     />
                 </div>
             </div>
@@ -186,6 +187,13 @@ class CustomPopoverStyle extends Component{
 
     demoButtonClicked = (eventItem) => {
         alert(`You just clicked demo button. event title: ${eventItem.title}`);
+    }
+
+    toggleExpandFunc = (schedulerData, slotId) => {
+        schedulerData.toggleExpandStatus(slotId);
+        this.setState({
+            viewModel: schedulerData
+        });
     }
 }
 
