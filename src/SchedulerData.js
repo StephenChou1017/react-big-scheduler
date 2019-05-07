@@ -711,7 +711,9 @@ export default class SchedulerData {
                 slotName: slot.name,
                 parentId: slot.parentId,
                 groupOnly: slot.groupOnly,
-                rowHeight: 0,
+                hasSummary: false,
+                rowMaxCount: 0,
+                rowHeight: this.config.nonAgendaSlotMinHeight !== 0 ? this.config.nonAgendaSlotMinHeight : this.config.eventItemLineHeight + 2,
                 headerItems: headerEvents,
                 indent: 0,
                 hasChildren: false,
@@ -871,6 +873,8 @@ export default class SchedulerData {
     _createRenderData() {
         let initRenderData = this._createInitRenderData(this.isEventPerspective, this.eventGroups, this.resources, this.headers);
         //this.events.sort(this._compare);
+        let cellMaxEventsCount = this.getCellMaxEvents();        
+        const cellMaxEventsCountValue = 30;
 
         this.events.forEach((item) => {
             let resourceEventsList = initRenderData.filter(x => x.slotId === this._getEventSlotId(item));
@@ -884,6 +888,13 @@ export default class SchedulerData {
                     let headerStart = this.localeMoment(header.start), headerEnd = this.localeMoment(header.end);
                     if(headerEnd > eventStart && headerStart < eventEnd) {
                         header.count = header.count + 1;
+                        if(header.count > resourceEvents.rowMaxCount) {
+                            resourceEvents.rowMaxCount = header.count;
+                            let rowsCount = (cellMaxEventsCount <= cellMaxEventsCountValue && resourceEvents.rowMaxCount > cellMaxEventsCount) ? cellMaxEventsCount : resourceEvents.rowMaxCount;
+                            let newRowHeight = rowsCount * this.config.eventItemLineHeight + (this.config.creatable && this.config.checkConflict === false ? 20 : 2);
+                            if(newRowHeight > resourceEvents.rowHeight)
+                                resourceEvents.rowHeight = newRowHeight;
+                        }
 
                         if(pos === -1)
                         {
@@ -906,56 +917,58 @@ export default class SchedulerData {
             }
         });
 
-        initRenderData.forEach((resourceEvents) => {
-            let maxRowsCount = 0;
-            let hasSummary = false;
-            resourceEvents.headerItems.forEach((headerItem) => {
-                maxRowsCount = headerItem.count > maxRowsCount ? headerItem.count : maxRowsCount;
+        if(cellMaxEventsCount <= cellMaxEventsCountValue || this.behaviors.getSummaryFunc !== undefined) {
+            initRenderData.forEach((resourceEvents) => {
+                let hasSummary = false;
 
-                let renderItemsCount = 0, addMoreIndex = 0, index = 0;
-                while (index < this.getCellMaxEvents() - 1) {
-                    if(headerItem.events[index] !== undefined) {
-                        renderItemsCount++;
-                        addMoreIndex = index + 1;
+                resourceEvents.headerItems.forEach((headerItem) => {
+                    if(cellMaxEventsCount <= cellMaxEventsCountValue) {
+                        let renderItemsCount = 0, addMoreIndex = 0, index = 0;
+                        while (index < cellMaxEventsCount - 1) {
+                            if(headerItem.events[index] !== undefined) {
+                                renderItemsCount++;
+                                addMoreIndex = index + 1;
+                            }
+        
+                            index++;
+                        }
+        
+                        if(headerItem.events[index] !== undefined) {
+                            if(renderItemsCount + 1 < headerItem.count) {
+                                headerItem.addMore = headerItem.count - renderItemsCount;
+                                headerItem.addMoreIndex = addMoreIndex;
+                            }
+                        }
+                        else {
+                            if(renderItemsCount < headerItem.count) {
+                                headerItem.addMore = headerItem.count - renderItemsCount;
+                                headerItem.addMoreIndex = addMoreIndex;
+                            }
+                        }
+                    }                    
+    
+                    if(this.behaviors.getSummaryFunc !== undefined){
+                        let events = [];
+                        headerItem.events.forEach((e) => {
+                            if(!!e && !!e.eventItem)
+                                events.push(e.eventItem);
+                        });
+    
+                        headerItem.summary = this.behaviors.getSummaryFunc(this, events, resourceEvents.slotId, resourceEvents.slotName, headerItem.start, headerItem.end);
+                        if(!!headerItem.summary && headerItem.summary.text != undefined)
+                            hasSummary = true;
                     }
-
-                    index++;
-                }
-
-                if(headerItem.events[index] !== undefined) {
-                    if(renderItemsCount + 1 < headerItem.count) {
-                        headerItem.addMore = headerItem.count - renderItemsCount;
-                        headerItem.addMoreIndex = addMoreIndex;
-                    }
-                }
-                else {
-                    if(renderItemsCount < headerItem.count) {
-                        headerItem.addMore = headerItem.count - renderItemsCount;
-                        headerItem.addMoreIndex = addMoreIndex;
-                    }
-                }
-
-                if(this.behaviors.getSummaryFunc !== undefined){
-                    let events = [];
-                    headerItem.events.forEach((e) => {
-                        if(!!e && !!e.eventItem)
-                            events.push(e.eventItem);
-                    });
-
-                    headerItem.summary = this.behaviors.getSummaryFunc(this, events, resourceEvents.slotId, resourceEvents.slotName, headerItem.start, headerItem.end);
-                    if(!!headerItem.summary && headerItem.summary.text != undefined)
-                        hasSummary = true;
+                });
+    
+                resourceEvents.hasSummary = hasSummary;
+                if(hasSummary) {
+                    let rowsCount = (cellMaxEventsCount <= cellMaxEventsCountValue && resourceEvents.rowMaxCount > cellMaxEventsCount) ? cellMaxEventsCount : resourceEvents.rowMaxCount;
+                    let newRowHeight = (rowsCount + 1) * this.config.eventItemLineHeight + (this.config.creatable && this.config.checkConflict === false ? 20 : 2);
+                    if(newRowHeight > resourceEvents.rowHeight)
+                        resourceEvents.rowHeight = newRowHeight;
                 }
             });
-
-            resourceEvents.hasSummary = hasSummary;
-            let rowsCount = maxRowsCount > this.getCellMaxEvents() ? this.getCellMaxEvents() : maxRowsCount;
-            resourceEvents.rowHeight = rowsCount === 0 ? this.config.eventItemLineHeight + 2 : rowsCount * this.config.eventItemLineHeight + (this.config.creatable && this.config.checkConflict === false ? 20 : 2);
-            if(hasSummary)
-                resourceEvents.rowHeight = resourceEvents.rowHeight + this.config.eventItemLineHeight;
-            if(this.config.nonAgendaSlotMinHeight !== 0 && resourceEvents.rowHeight < this.config.nonAgendaSlotMinHeight)
-                resourceEvents.rowHeight = this.config.nonAgendaSlotMinHeight;
-        });
+        }
 
         this.renderData = initRenderData;
     }

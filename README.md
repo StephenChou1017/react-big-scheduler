@@ -10,7 +10,7 @@ Inspired by [Full Calendar Scheduler](https://fullcalendar.io/scheduler/).
 
 ## Version selection
 
-* antd >= 3.9.0 ? react-big-scheduler@0.2.6 : react-big-scheduler@0.2.4
+* antd >= 3.9.0 ? react-big-scheduler@0.2.7 : react-big-scheduler@0.2.4
 
 ## Use and Setup
 
@@ -32,17 +32,29 @@ schedulerData.setLocaleMoment(moment);
 //set resources here or later
 let resources = [
                     {
+                       id: 'r0',
+                       name: 'Resource0',
+                       groupOnly: true
+                    },
+                    {
                        id: 'r1',
                        name: 'Resource1'
                     },
                     {
                        id: 'r2',
-                       name: 'Resource2'
+                       name: 'Resource2',
+                       parentId: 'r0'
                     },
                     {
                        id: 'r3',
-                       name: 'Resource3'
-                    }
+                       name: 'Resource3',
+                       parentId: 'r4'
+                    },
+                    {
+                       id: 'r4',
+                       name: 'Resource4',
+                       parentId: 'r2'
+                    },
                 ];
 schedulerData.setResources(resources);
 //set events here or later, 
@@ -225,6 +237,12 @@ SchedulerData is the view model of Scheduler, we can modify it to control the vi
   setMinuteStep(minuteStep)
   ```
   Used to set minute step for daily view and refresh the render data.
+
+  #### toggleExpandStatus
+  ```js
+  toggleExpandStatus(slotId)
+  ```
+  Used to toggle slot's(and its children's) expand status.
 
   #### getMinuteStepsInHour
   ```js

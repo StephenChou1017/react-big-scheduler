@@ -3,9 +3,12 @@
 ### Some day
 * An add-more data bug
 
+## npm v0.2.7
+
 ### 2019-05-04
 * Add inner resources
 * Update dependencies version
+* Optimize the SchedulerData._createRenderData function
 
 ## npm v0.2.6
 
