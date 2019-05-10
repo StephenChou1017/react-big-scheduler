@@ -42,6 +42,7 @@
   ],
   "dependencies": {
     "antd": "^3.16.6",
+    "cpy": "^3.4.1",
     "moment": "^2.24.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
@@ -61,7 +62,6 @@
     "babel-preset-es2015": "6.24.1",
     "babel-preset-react": "6.24.1",
     "babel-preset-stage-0": "6.24.1",
-    "cpy": "^7.2.0",
     "cross-env": "^5.2.0",
     "css-loader": "^2.1.1",
     "eslint": "5.16.0",

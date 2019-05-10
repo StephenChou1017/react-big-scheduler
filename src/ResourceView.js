@@ -47,9 +47,9 @@ class ResourceView extends Component {
             }
             indents.push(indent);
                     
-            let a = slotClickedFunc != undefined ? <a className="slot-cell" onClick={() => {
+            let a = slotClickedFunc != undefined ? <span className="slot-cell">{indents}<a className="slot-text" onClick={() => {
                 slotClickedFunc(schedulerData, item);
-            }}>{indents}<span className="slot-text">{item.slotName}</span></a>
+            }}>{item.slotName}</a></span>
                 : <span className="slot-cell">{indents}<span className="slot-text">{item.slotName}</span></span>;
             let slotItem = (
                 <div title={item.slotName} className="overflow-text header2-text" style={{textAlign: "left"}}>
