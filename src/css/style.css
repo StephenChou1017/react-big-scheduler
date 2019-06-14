@@ -227,3 +227,7 @@ table.resource-table tr td:last-child, /*table.scheduler-bg-table tr td:last-chi
     padding-right: 4px;
 }
 
+.current-day {
+    background: red;
+}
+

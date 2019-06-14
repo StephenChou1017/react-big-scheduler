@@ -93,6 +93,7 @@ export const getScrollSpecialMoment = (schedulerData, startMoment, endMoment) =>
 
 export const isNonWorkingTime = (schedulerData, time) => {
     const { localeMoment } = schedulerData;
+
     if(schedulerData.cellUnit === CellUnits.Hour){
         let hour = localeMoment(time).hour();
         if(hour < 9 || hour > 18)
@@ -100,7 +101,7 @@ export const isNonWorkingTime = (schedulerData, time) => {
     }
     else {
         let dayOfWeek = localeMoment(time).weekday();
-        if (dayOfWeek === 0 || dayOfWeek === 6)
+        if (dayOfWeek === 5 || dayOfWeek === 6)
             return true;
     }
 

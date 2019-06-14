@@ -276,9 +276,11 @@ class ResourceEvents extends Component {
                         let eventEnd = localeMoment(evt.eventItem.end);
                         let isStart = eventStart >= durationStart;
                         let isEnd = eventEnd <= durationEnd;
-                        let left = index*cellWidth + (index > 0 ? 2 : 3);
-                        let width = (evt.span * cellWidth - (index > 0 ? 5 : 6)) > 0 ? (evt.span * cellWidth - (index > 0 ? 5 : 6)) : 0;
-                        let top = marginTop + idx*config.eventItemLineHeight;
+                        let left = index*cellWidth + (index > 0 ? 1 : 2);
+                        let width = (evt.span * cellWidth) > 0 ? (evt.span * cellWidth) - 1 : 0;
+                        let top = (idx * 100 / headerItem.count) || 1;
+                        let height = 100 / headerItem.count;
+
                         let eventItem = <DnDEventItem
                                                    {...this.props}
                                                    key={evt.eventItem.id}
@@ -289,6 +291,7 @@ class ResourceEvents extends Component {
                                                    left={left}
                                                    width={width}
                                                    top={top}
+                                                   height={height}
                                                    leftIndex={index}
                                                    rightIndex={index + evt.span}
                                                    />
