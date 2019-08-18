@@ -498,7 +498,7 @@ export default class SchedulerData {
             if(!!rule.origOptions.dtstart) {
                 oldDtstart = this.localeMoment(rule.origOptions.dtstart);
             }
-            rule.origOptions.dtstart = oldStart.toDate();
+            //rule.origOptions.dtstart = oldStart.toDate();
             if(!rule.origOptions.until || windowEnd < this.localeMoment(rule.origOptions.until)) {
                 rule.origOptions.until = windowEnd.toDate();
             }
@@ -529,8 +529,12 @@ export default class SchedulerData {
                     recurringEventStart: item.start,
                     recurringEventEnd: item.end,
                     id: `${item.id}-${index}`,
-                    start: this.localeMoment(time).format(DATETIME_FORMAT),
-                    end: this.localeMoment(time).add(oldEnd.diff(oldStart), 'ms').format(DATETIME_FORMAT)
+                    start: rule.origOptions.tzid
+                      ? this.localeMoment.utc(time).utcOffset(this.localeMoment().utcOffset(), true).format(DATETIME_FORMAT)
+                      : this.localeMoment(time).format(DATETIME_FORMAT),
+                    end: rule.origOptions.tzid
+                      ? this.localeMoment.utc(time).utcOffset(this.localeMoment().utcOffset(), true).add(oldEnd.diff(oldStart), 'ms').format(DATETIME_FORMAT)
+                      : this.localeMoment(time).add(oldEnd.diff(oldStart), 'ms').format(DATETIME_FORMAT)
                 };
             });
             newEvents.forEach((newEvent) => {
