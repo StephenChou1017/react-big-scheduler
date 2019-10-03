@@ -52,7 +52,7 @@ class ResourceEvents extends Component {
         }
     }
 
-    componentWillReceiveProps(np) {
+    UNSAFE_componentWillReceiveProps(np) {
         if(supportTouch) {
             // this.eventContainer.removeEventListener('touchstart', this.initDrag, false);
         } else {
