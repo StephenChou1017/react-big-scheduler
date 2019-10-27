@@ -600,8 +600,10 @@ export default class SchedulerData {
         }
         else {
             if (this.cellUnit === CellUnits.Hour) {
-                start = start.add(this.config.dayStartFrom, 'hours');
-                end = end.add(this.config.dayStopTo, 'hours');
+                if (start.hour() == 0)
+                    start = start.add(this.config.dayStartFrom, 'hours');
+                if (end.hour() == 0)
+                    end = end.add(this.config.dayStopTo, 'hours');
                 header = start;
 
                 let prevHour = -1;
