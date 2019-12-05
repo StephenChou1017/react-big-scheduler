@@ -48,7 +48,7 @@ class EventItem extends Component {
         eventItemTemplateResolver: PropTypes.func,
     }
 
-    componentWillReceiveProps(np) {
+    UNSAFE_componentWillReceiveProps(np) {
         const {left, top, width} = np;
         this.setState({
             left: left,
