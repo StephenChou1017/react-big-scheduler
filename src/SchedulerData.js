@@ -494,12 +494,13 @@ export default class SchedulerData {
                 oldStart = this.localeMoment(item.start),
                 oldEnd = this.localeMoment(item.end),
                 rule = rrulestr(item.rrule),
-                oldDtstart = undefined;
+                oldDtstart = undefined,
+                oldUntil = rule.origOptions.until || windowEnd.toDate();
             if(!!rule.origOptions.dtstart) {
                 oldDtstart = this.localeMoment(rule.origOptions.dtstart);
             }
             //rule.origOptions.dtstart = oldStart.toDate();
-            if(!rule.origOptions.until || windowEnd < this.localeMoment(rule.origOptions.until)) {
+            if(windowEnd < oldUntil) {
                 rule.origOptions.until = windowEnd.toDate();
             }
                 
@@ -533,7 +534,7 @@ export default class SchedulerData {
                       ? this.localeMoment.utc(time).utcOffset(this.localeMoment().utcOffset(), true).format(DATETIME_FORMAT)
                       : this.localeMoment(time).format(DATETIME_FORMAT),
                     end: rule.origOptions.tzid
-                      ? this.localeMoment.utc(time).utcOffset(this.localeMoment().utcOffset(), true).add(oldEnd.diff(oldStart), 'ms').format(DATETIME_FORMAT)
+                      ? this.localeMoment.utc(time).utcOffset(this.localeMoment().utcOffset(), true).add(oldEnd.diff(oldStart), 'ms').add(this.localeMoment(oldUntil).utcOffset() - this.localeMoment(item.start).utcOffset(), "m").format(DATETIME_FORMAT)
                       : this.localeMoment(time).add(oldEnd.diff(oldStart), 'ms').format(DATETIME_FORMAT)
                 };
             });
