@@ -392,6 +392,30 @@ export default class SchedulerData {
         event.end = newEnd;
         this._createRenderData();
     }
+    
+    swapEvent(eventSource, eventDest) {
+        var tempEventSource = Object.assign({}, eventSource);
+        var tempEventDest = Object.assign({}, eventDest);;
+        this._detachEvent(eventSource);
+        this._detachEvent(eventDest);
+        if (this.isEventPerspective) {
+            tempEventSource.groupId = eventDest.groupId;
+            tempEventSource.groupName = eventDest.groupName;
+            tempEventDest.groupId = eventSource.groupId;
+            tempEventDest.groupName = eventSource.groupName;
+        }
+        else{
+            tempEventSource.resourceId = eventDest.resourceId;
+            tempEventDest.resourceId = eventSource.resourceId;
+        }
+        tempEventSource.end = eventDest.end;
+        tempEventSource.start = eventDest.start;
+        tempEventDest.end = eventSource.end;
+        tempEventDest.start = eventSource.start;
+        this._attachEvent(tempEventSource);
+        this._attachEvent(tempEventDest);
+        this._createRenderData();
+    }
 
     moveEvent(event, newSlotId, newSlotName, newStart, newEnd){
         this._detachEvent(event);
