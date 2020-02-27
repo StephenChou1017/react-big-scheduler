@@ -1,6 +1,6 @@
 {
   "name": "geo-react-big-scheduler",
-  "version": "0.2.7-geo.1",
+  "version": "0.2.7-geo.2",
   "description": "A scheduler and resource planning component built for React and made for modern browsers (IE10+)",
   "keywords": [
     "scheduler",
