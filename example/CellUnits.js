@@ -106,7 +106,6 @@ class CellUnitsComponent extends Component{
             endDate = schedulerData.localeMoment(startDate).add(60, 'months').endOf('month').format(DATE_FORMAT);
             cellUnit = CellUnits.Year;
         }
-console.log(startDate, endDate)
         return {
             startDate,
             endDate,
