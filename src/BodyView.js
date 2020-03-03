@@ -17,12 +17,15 @@ class BodyView extends Component {
         const {renderData, headers, config, behaviors} = schedulerData;
         let cellWidth = schedulerData.getContentCellWidth();
 
-        let tableRows = renderData.map((item) => {
+        let displayRenderData = renderData.filter(o => o.render);
+        let tableRows = displayRenderData.map((item) => {
             let rowCells = headers.map((header, index) => {
                 let key = item.slotId + '_' + header.time;
                 let style = index === headers.length - 1 ? {} : {width: cellWidth};
                 if(!!header.nonWorkingTime)
                     style = {...style, backgroundColor: config.nonWorkingTimeBodyBgColor};
+                if(item.groupOnly)
+                    style = {...style, backgroundColor: config.groupOnlySlotColor};
                 if(!!behaviors.getNonAgendaViewBodyCellBgColorFunc){
                     let cellBgColor = behaviors.getNonAgendaViewBodyCellBgColorFunc(schedulerData, item.slotId, header);
                     if(!!cellBgColor)

@@ -5,7 +5,6 @@ import {PropTypes} from 'prop-types'
 import Col from 'antd/lib/col'
 import Row from 'antd/lib/row'
 import Button from 'antd/lib/button'
-// import 'antd/lib/style/index.less';     //Add this code for locally example
 import Scheduler, {SchedulerData, ViewTypes, DATE_FORMAT, DemoData} from '../src/index'
 import Nav from './Nav'
 import ViewSrcCode from './ViewSrcCode'
@@ -47,6 +46,7 @@ class CustomPopoverStyle extends Component{
                                moveEvent={this.moveEvent}
                                newEvent={this.newEvent}
                                eventItemPopoverTemplateResolver={this.eventItemPopoverTemplateResolver}
+                               toggleExpandFunc={this.toggleExpandFunc}
                     />
                 </div>
             </div>
@@ -186,6 +186,13 @@ class CustomPopoverStyle extends Component{
 
     demoButtonClicked = (eventItem) => {
         alert(`You just clicked demo button. event title: ${eventItem.title}`);
+    }
+
+    toggleExpandFunc = (schedulerData, slotId) => {
+        schedulerData.toggleExpandStatus(slotId);
+        this.setState({
+            viewModel: schedulerData
+        });
     }
 }
 

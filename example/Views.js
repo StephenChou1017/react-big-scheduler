@@ -47,6 +47,7 @@ class Basic extends Component{
                                moveEvent={this.moveEvent}
                                newEvent={this.newEvent}
                                subtitleGetter={this.subtitleGetter}
+                               toggleExpandFunc={this.toggleExpandFunc}
                     />
                 </div>
             </div>
@@ -151,6 +152,13 @@ class Basic extends Component{
 
     subtitleGetter = (schedulerData, event) => {
         return schedulerData.isEventPerspective ? schedulerData.getResourceById(event.resourceId).name : event.groupName;
+    }
+
+    toggleExpandFunc = (schedulerData, slotId) => {
+        schedulerData.toggleExpandStatus(slotId);
+        this.setState({
+            viewModel: schedulerData
+        });
     }
 }
 

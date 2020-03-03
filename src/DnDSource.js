@@ -91,11 +91,11 @@ export default class DnDSource {
             },
 
             canDrag: (props) => {
-                const {schedulerData} = props;
+                const {schedulerData, resourceEvents} = props;
                 const item = this.resolveDragObjFunc(props);
                 if(schedulerData._isResizing()) return false;
                 const {config} = schedulerData;
-                return config.movable && (item.movable == undefined || item.movable !== false);
+                return config.movable && (resourceEvents == undefined || !resourceEvents.groupOnly) && (item.movable == undefined || item.movable !== false);
             }
         }
     }

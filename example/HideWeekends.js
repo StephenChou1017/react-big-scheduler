@@ -45,6 +45,7 @@ class HideWeekends extends Component{
                                updateEventEnd={this.updateEventEnd}
                                moveEvent={this.moveEvent}
                                newEvent={this.newEvent}
+                               toggleExpandFunc={this.toggleExpandFunc}
                     />
                 </div>
             </div>
@@ -144,6 +145,13 @@ class HideWeekends extends Component{
                 viewModel: schedulerData
             })
         }
+    }
+
+    toggleExpandFunc = (schedulerData, slotId) => {
+        schedulerData.toggleExpandStatus(slotId);
+        this.setState({
+            viewModel: schedulerData
+        });
     }
 }
 

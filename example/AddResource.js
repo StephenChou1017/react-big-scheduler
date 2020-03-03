@@ -81,6 +81,7 @@ class AddResource extends Component{
                                moveEvent={this.moveEvent}
                                newEvent={this.newEvent}
                                leftCustomHeader={leftCustomHeader}
+                               toggleExpandFunc={this.toggleExpandFunc}
                     />
                 </div>
             </div>
@@ -190,6 +191,13 @@ class AddResource extends Component{
         this.setState({
             viewModel: schedulerData
         })
+    }
+
+    toggleExpandFunc = (schedulerData, slotId) => {
+        schedulerData.toggleExpandStatus(slotId);
+        this.setState({
+            viewModel: schedulerData
+        });
     }
 }
 

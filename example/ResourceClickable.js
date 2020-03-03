@@ -40,6 +40,7 @@ class Basic extends Component{
                                moveEvent={this.moveEvent}
                                newEvent={this.newEvent}
                                slotClickedFunc={this.slotClickedFunc}
+                               toggleExpandFunc={this.toggleExpandFunc}
                     />
                 </div>
             </div>
@@ -143,6 +144,13 @@ class Basic extends Component{
 
     slotClickedFunc = (schedulerData, slot) => {
         alert(`You just clicked a ${schedulerData.isEventPerspective ? 'task':'resource'}.{id: ${slot.slotId}, name: ${slot.slotName}}`);
+    }
+
+    toggleExpandFunc = (schedulerData, slotId) => {
+        schedulerData.toggleExpandStatus(slotId);
+        this.setState({
+            viewModel: schedulerData
+        });
     }
 }
 

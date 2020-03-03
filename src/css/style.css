@@ -216,5 +216,14 @@ table.resource-table tr td:last-child, /*table.scheduler-bg-table tr td:last-chi
     position: absolute;
 }
 
+.slot-cell {
+    padding-left: 4px;
+    padding-right: 4px;
+}
 
+.slot-text {
+    display: inline-block;
+    padding-left: 4px;
+    padding-right: 4px;
+}
 

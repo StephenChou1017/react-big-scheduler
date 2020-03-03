@@ -234,6 +234,42 @@ export default class SchedulerData {
         return !!this.config.schedulerWidth.endsWith && this.config.schedulerWidth.endsWith("%");
     }
 
+    toggleExpandStatus(slotId) {
+        let slotEntered = false;
+        let slotIndent = -1;
+        let isExpanded = false;
+        let expandedMap = new Map();
+        this.renderData.forEach((item) => {
+            if(slotEntered === false) {
+                if(item.slotId === slotId && item.hasChildren) {
+                    slotEntered = true;
+
+                    isExpanded = !item.expanded;
+                    item.expanded = isExpanded;
+                    slotIndent = item.indent;
+                    expandedMap.set(item.indent, {
+                        expanded: item.expanded,
+                        render: item.render,
+                    });
+                }
+            } else {
+                if(item.indent > slotIndent) {
+                    let expandStatus = expandedMap.get(item.indent - 1);
+                    item.render = expandStatus.expanded && expandStatus.render;
+
+                    if(item.hasChildren) {
+                        expandedMap.set(item.indent, {
+                            expanded: item.expanded,
+                            render: item.render,
+                        });
+                    }
+                } else {
+                    slotEntered = false;
+                }
+            }
+        });
+    }
+
     isResourceViewResponsive() {
         let resourceTableWidth = this.getResourceTableConfigWidth();
         return !!resourceTableWidth.endsWith && resourceTableWidth.endsWith("%");
@@ -303,9 +339,10 @@ export default class SchedulerData {
     }
 
     getSchedulerContentDesiredHeight() {
-        var height = 0;
+        let height = 0;
         this.renderData.forEach((item) => {
-           height += item.rowHeight;
+            if(item.render)
+                height += item.rowHeight;
         });
         return height;
     }
@@ -457,12 +494,13 @@ export default class SchedulerData {
                 oldStart = this.localeMoment(item.start),
                 oldEnd = this.localeMoment(item.end),
                 rule = rrulestr(item.rrule),
-                oldDtstart = undefined;
+                oldDtstart = undefined,
+                oldUntil = rule.origOptions.until || windowEnd.toDate();
             if(!!rule.origOptions.dtstart) {
                 oldDtstart = this.localeMoment(rule.origOptions.dtstart);
             }
-            rule.origOptions.dtstart = oldStart.toDate();
-            if(!rule.origOptions.until || windowEnd < this.localeMoment(rule.origOptions.until)) {
+            //rule.origOptions.dtstart = oldStart.toDate();
+            if(windowEnd < oldUntil) {
                 rule.origOptions.until = windowEnd.toDate();
             }
                 
@@ -492,8 +530,12 @@ export default class SchedulerData {
                     recurringEventStart: item.start,
                     recurringEventEnd: item.end,
                     id: `${item.id}-${index}`,
-                    start: this.localeMoment(time).format(DATETIME_FORMAT),
-                    end: this.localeMoment(time).add(oldEnd.diff(oldStart), 'ms').format(DATETIME_FORMAT)
+                    start: rule.origOptions.tzid
+                      ? this.localeMoment.utc(time).utcOffset(this.localeMoment().utcOffset(), true).format(DATETIME_FORMAT)
+                      : this.localeMoment(time).format(DATETIME_FORMAT),
+                    end: rule.origOptions.tzid
+                      ? this.localeMoment.utc(time).utcOffset(this.localeMoment().utcOffset(), true).add(oldEnd.diff(oldStart), 'ms').add(this.localeMoment(oldUntil).utcOffset() - this.localeMoment(item.start).utcOffset(), "m").format(DATETIME_FORMAT)
+                      : this.localeMoment(time).add(oldEnd.diff(oldStart), 'ms').format(DATETIME_FORMAT)
                 };
             });
             newEvents.forEach((newEvent) => {
@@ -685,29 +727,85 @@ export default class SchedulerData {
     }
 
     _createInitRenderData(isEventPerspective, eventGroups, resources, headers) {
-        return isEventPerspective ? eventGroups.map((eventGroup) => {
+        let slots = isEventPerspective ? eventGroups : resources;
+        let slotTree = [],
+            slotMap = new Map();
+        slots.forEach((slot) => {
             let headerEvents = headers.map((header) => {
                 return this._createInitHeaderEvents(header);
             });
 
-            return {
-                slotId: eventGroup.id,
-                slotName: eventGroup.name,
-                rowHeight: 0,
-                headerItems: headerEvents
+            let slotRenderData = {
+                slotId: slot.id,
+                slotName: slot.name,
+                parentId: slot.parentId,
+                groupOnly: slot.groupOnly,
+                hasSummary: false,
+                rowMaxCount: 0,
+                rowHeight: this.config.nonAgendaSlotMinHeight !== 0 ? this.config.nonAgendaSlotMinHeight : this.config.eventItemLineHeight + 2,
+                headerItems: headerEvents,
+                indent: 0,
+                hasChildren: false,
+                expanded: true,
+                render: true,
             };
-        }) : resources.map((resource) => {
-            let headerEvents = headers.map((header) => {
-                return this._createInitHeaderEvents(header);
-            });
+            let id = slot.id;
+            let value = undefined;
+            if(slotMap.has(id)) {
+                value = slotMap.get(id);
+                value.data = slotRenderData;
+            } else {
+                value = {
+                    data: slotRenderData,
+                    children: [],
+                };
+                slotMap.set(id, value);
+            }
 
-            return {
-                slotId: resource.id,
-                slotName: resource.name,
-                rowHeight: 0,
-                headerItems: headerEvents
-            };
+            let parentId = slot.parentId;
+            if(!parentId || parentId === id) {
+                slotTree.push(value);
+            } else {
+                let parentValue = undefined;
+                if(slotMap.has(parentId)) {
+                    parentValue = slotMap.get(parentId);
+                } else {
+                    parentValue = {
+                        data: undefined,
+                        children: [],
+                    };
+                    slotMap.set(parentId, parentValue);
+                }
+
+                parentValue.children.push(value);
+            }
         });
+
+        let slotStack = [];
+        let i;
+        for(i=slotTree.length-1; i>=0; i--) {
+            slotStack.push(slotTree[i]);
+        }
+        let initRenderData = [];
+        let currentNode = undefined;
+        while(slotStack.length > 0) {
+            currentNode = slotStack.pop();
+            if(currentNode.data.indent > 0) {
+                currentNode.data.render = this.config.defaultExpanded;
+            }
+            if(currentNode.children.length > 0) {
+                currentNode.data.hasChildren = true;
+                currentNode.data.expanded = this.config.defaultExpanded;
+            }
+            initRenderData.push(currentNode.data);
+
+            for(i=currentNode.children.length -1; i>=0; i--) {
+                currentNode.children[i].data.indent = currentNode.data.indent + 1;
+                slotStack.push(currentNode.children[i]);
+            }
+        }
+
+        return initRenderData;
     }
 
     _getSpan(startTime, endTime, headers){
@@ -807,6 +905,8 @@ export default class SchedulerData {
     _createRenderData() {
         let initRenderData = this._createInitRenderData(this.isEventPerspective, this.eventGroups, this.resources, this.headers);
         //this.events.sort(this._compare);
+        let cellMaxEventsCount = this.getCellMaxEvents();
+        const cellMaxEventsCountValue = 30;
 
         this.events.forEach((item) => {
             let resourceEventsList = initRenderData.filter(x => x.slotId === this._getEventSlotId(item));
@@ -820,6 +920,13 @@ export default class SchedulerData {
                     let headerStart = this.localeMoment(header.start), headerEnd = this.localeMoment(header.end);
                     if(headerEnd > eventStart && headerStart < eventEnd) {
                         header.count = header.count + 1;
+                        if(header.count > resourceEvents.rowMaxCount) {
+                            resourceEvents.rowMaxCount = header.count;
+                            let rowsCount = (cellMaxEventsCount <= cellMaxEventsCountValue && resourceEvents.rowMaxCount > cellMaxEventsCount) ? cellMaxEventsCount : resourceEvents.rowMaxCount;
+                            let newRowHeight = rowsCount * this.config.eventItemLineHeight + (this.config.creatable && this.config.checkConflict === false ? 20 : 2);
+                            if(newRowHeight > resourceEvents.rowHeight)
+                                resourceEvents.rowHeight = newRowHeight;
+                        }
 
                         if(pos === -1)
                         {
@@ -842,56 +949,58 @@ export default class SchedulerData {
             }
         });
 
-        initRenderData.forEach((resourceEvents) => {
-            let maxRowsCount = 0;
-            let hasSummary = false;
-            resourceEvents.headerItems.forEach((headerItem) => {
-                maxRowsCount = headerItem.count > maxRowsCount ? headerItem.count : maxRowsCount;
+        if(cellMaxEventsCount <= cellMaxEventsCountValue || this.behaviors.getSummaryFunc !== undefined) {
+            initRenderData.forEach((resourceEvents) => {
+                let hasSummary = false;
 
-                let renderItemsCount = 0, addMoreIndex = 0, index = 0;
-                while (index < this.getCellMaxEvents() - 1) {
-                    if(headerItem.events[index] !== undefined) {
-                        renderItemsCount++;
-                        addMoreIndex = index + 1;
+                resourceEvents.headerItems.forEach((headerItem) => {
+                    if(cellMaxEventsCount <= cellMaxEventsCountValue) {
+                        let renderItemsCount = 0, addMoreIndex = 0, index = 0;
+                        while (index < cellMaxEventsCount - 1) {
+                            if(headerItem.events[index] !== undefined) {
+                                renderItemsCount++;
+                                addMoreIndex = index + 1;
+                            }
+
+                            index++;
+                        }
+
+                        if(headerItem.events[index] !== undefined) {
+                            if(renderItemsCount + 1 < headerItem.count) {
+                                headerItem.addMore = headerItem.count - renderItemsCount;
+                                headerItem.addMoreIndex = addMoreIndex;
+                            }
+                        }
+                        else {
+                            if(renderItemsCount < headerItem.count) {
+                                headerItem.addMore = headerItem.count - renderItemsCount;
+                                headerItem.addMoreIndex = addMoreIndex;
+                            }
+                        }
                     }
 
-                    index++;
-                }
+                    if(this.behaviors.getSummaryFunc !== undefined){
+                        let events = [];
+                        headerItem.events.forEach((e) => {
+                            if(!!e && !!e.eventItem)
+                                events.push(e.eventItem);
+                        });
 
-                if(headerItem.events[index] !== undefined) {
-                    if(renderItemsCount + 1 < headerItem.count) {
-                        headerItem.addMore = headerItem.count - renderItemsCount;
-                        headerItem.addMoreIndex = addMoreIndex;
+                        headerItem.summary = this.behaviors.getSummaryFunc(this, events, resourceEvents.slotId, resourceEvents.slotName, headerItem.start, headerItem.end);
+                        if(!!headerItem.summary && headerItem.summary.text != undefined)
+                            hasSummary = true;
                     }
-                }
-                else {
-                    if(renderItemsCount < headerItem.count) {
-                        headerItem.addMore = headerItem.count - renderItemsCount;
-                        headerItem.addMoreIndex = addMoreIndex;
-                    }
-                }
+                });
 
-                if(this.behaviors.getSummaryFunc !== undefined){
-                    let events = [];
-                    headerItem.events.forEach((e) => {
-                        if(!!e && !!e.eventItem)
-                            events.push(e.eventItem);
-                    });
-
-                    headerItem.summary = this.behaviors.getSummaryFunc(this, events, resourceEvents.slotId, resourceEvents.slotName, headerItem.start, headerItem.end);
-                    if(!!headerItem.summary && headerItem.summary.text != undefined)
-                        hasSummary = true;
+                resourceEvents.hasSummary = hasSummary;
+                if(hasSummary) {
+                    let rowsCount = (cellMaxEventsCount <= cellMaxEventsCountValue && resourceEvents.rowMaxCount > cellMaxEventsCount) ? cellMaxEventsCount : resourceEvents.rowMaxCount;
+                    let newRowHeight = (rowsCount + 1) * this.config.eventItemLineHeight + (this.config.creatable && this.config.checkConflict === false ? 20 : 2);
+                    if(newRowHeight > resourceEvents.rowHeight)
+                        resourceEvents.rowHeight = newRowHeight;
                 }
             });
-
-            resourceEvents.hasSummary = hasSummary;
-            let rowsCount = maxRowsCount > this.getCellMaxEvents() ? this.getCellMaxEvents() : maxRowsCount;
-            resourceEvents.rowHeight = rowsCount === 0 ? this.config.eventItemLineHeight + 2 : rowsCount * this.config.eventItemLineHeight + (this.config.creatable && this.config.checkConflict === false ? 20 : 2);
-            if(hasSummary)
-                resourceEvents.rowHeight = resourceEvents.rowHeight + this.config.eventItemLineHeight;
-            if(this.config.nonAgendaSlotMinHeight !== 0 && resourceEvents.rowHeight < this.config.nonAgendaSlotMinHeight)
-                resourceEvents.rowHeight = this.config.nonAgendaSlotMinHeight;
-        });
+        }
 
         this.renderData = initRenderData;
     }

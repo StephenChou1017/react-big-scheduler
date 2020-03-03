@@ -43,6 +43,7 @@ export default {
     nonWorkingTimeBodyBgColor: '#fff0f6',
     summaryColor: '#666',
     summaryPos: SummaryPos.TopRight,
+    groupOnlySlotColor: '#F8F8F8',
 
     startResizable: true,
     endResizable: true,
@@ -57,6 +58,7 @@ export default {
     headerEnabled: true,
     displayWeekend: true,
     relativeMove: true,
+    defaultExpanded: true,
 
     resourceName: 'Resource Name',
     taskName: 'Task Name',

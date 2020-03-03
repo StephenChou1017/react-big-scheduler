@@ -106,6 +106,7 @@ class Scheduler extends Component {
         updateEventStart: PropTypes.func,
         updateEventEnd: PropTypes.func,
         moveEvent: PropTypes.func,
+        movingEvent: PropTypes.func,
         leftCustomHeader: PropTypes.object,
         rightCustomHeader: PropTypes.object,
         newEvent: PropTypes.func,
@@ -119,6 +120,7 @@ class Scheduler extends Component {
         eventItemTemplateResolver: PropTypes.func,
         dndSources: PropTypes.array,
         slotClickedFunc: PropTypes.func,
+        toggleExpandFunc: PropTypes.func,
         slotItemTemplateResolver: PropTypes.func,
         nonAgendaCellHeaderTemplateResolver: PropTypes.func,
         onScrollLeft: PropTypes.func,
@@ -183,7 +185,8 @@ class Scheduler extends Component {
             let DndResourceEvents = this.state.dndContext.getDropTarget();
             let eventDndSource = this.state.dndContext.getDndSource();
 
-            let resourceEventsList = renderData.map((item) => {
+            let displayRenderData = renderData.filter(o => o.render);
+            let resourceEventsList = displayRenderData.map((item) => {
                 return <DndResourceEvents
                                 {...this.props}
                                 key={item.slotId}

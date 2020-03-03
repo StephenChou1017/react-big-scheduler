@@ -73,6 +73,7 @@ class CustomHeaders extends Component {
                      moveEvent={this.moveEvent}
                      newEvent={this.newEvent}
                      nonAgendaCellHeaderTemplateResolver = {this.nonAgendaCellHeaderTemplateResolver}
+                     toggleExpandFunc={this.toggleExpandFunc}
           />
         </div>
       </div>
@@ -172,6 +173,13 @@ class CustomHeaders extends Component {
         viewModel: schedulerData
       })
     }
+  }
+
+  toggleExpandFunc = (schedulerData, slotId) => {
+    schedulerData.toggleExpandStatus(slotId);
+    this.setState({
+        viewModel: schedulerData
+    });
   }
 }
 

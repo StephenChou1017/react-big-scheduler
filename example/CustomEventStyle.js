@@ -47,6 +47,7 @@ class CustomEventStyle extends Component{
                                moveEvent={this.moveEvent}
                                newEvent={this.newEvent}
                                eventItemTemplateResolver={this.eventItemTemplateResolver}
+                               toggleExpandFunc={this.toggleExpandFunc}
                     />
                 </div>
             </div>
@@ -163,6 +164,13 @@ class CustomEventStyle extends Component{
         return <div key={event.id} className={mustAddCssClass} style={divStyle}>
             <span style={{marginLeft: '4px', lineHeight: `${mustBeHeight}px` }}>{titleText}</span>
         </div>;
+    }
+
+    toggleExpandFunc = (schedulerData, slotId) => {
+        schedulerData.toggleExpandStatus(slotId);
+        this.setState({
+            viewModel: schedulerData
+        });
     }
 }
 

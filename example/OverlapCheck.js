@@ -42,6 +42,7 @@ class OverlapCheck extends Component{
                                moveEvent={this.moveEvent}
                                newEvent={this.newEvent}
                                conflictOccurred={this.conflictOccurred}
+                               toggleExpandFunc={this.toggleExpandFunc}
                     />
                 </div>
             </div>
@@ -145,6 +146,13 @@ class OverlapCheck extends Component{
 
     conflictOccurred = (schedulerData, action, event, type, slotId, slotName, start, end) => {
         alert(`Conflict occurred. {action: ${action}, event: ${event}`);
+    }
+
+    toggleExpandFunc = (schedulerData, slotId) => {
+        schedulerData.toggleExpandStatus(slotId);
+        this.setState({
+            viewModel: schedulerData
+        });
     }
 }
 
