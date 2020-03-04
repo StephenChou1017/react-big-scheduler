@@ -1,6 +1,6 @@
 {
   "name": "geo-react-big-scheduler",
-  "version": "0.2.7-geo.2",
+  "version": "0.2.7-geo.3",
   "description": "A scheduler and resource planning component built for React and made for modern browsers (IE10+)",
   "keywords": [
     "scheduler",
@@ -17,14 +17,14 @@
     "CHANGELOG.md"
   ],
   "main": "lib/index",
-  "homepage": "https://github.com/StephenChou1017/react-big-scheduler",
+  "homepage": "https://github.com/geo-workforce/geo-react-big-scheduler",
   "author": "Stephen Chou <27788280@qq.com> (https://github.com/StephenChou1017)",
   "repository": {
     "type": "git",
-    "url": "git@github.com:StephenChou1017/react-big-scheduler.git"
+    "url": "git@github.com:geo-workforce/geo-react-big-scheduler.git"
   },
   "bugs": {
-    "url": "http://github.com/StephenChou1017/react-big-scheduler/issues"
+    "url": "https://github.com/geo-workforce/geo-react-big-scheduler/issues"
   },
   "license": "MIT",
   "config": {},
