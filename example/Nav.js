@@ -143,6 +143,12 @@ class Nav extends Component {
                             <span>Custom popover style</span>
                         </Link>
                     </li>
+                    <li style={liStyle}>
+                        <Link target="_self"
+                              to='/cellunits'>
+                            <span>Cell units</span>
+                        </Link>
+                    </li>
                 </ul>
                 <div style={{clear: "both", marginBottom: '24px'}}></div>
             </div>

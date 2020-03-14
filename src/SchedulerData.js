@@ -243,7 +243,7 @@ export default class SchedulerData {
             if(slotEntered === false) {
                 if(item.slotId === slotId && item.hasChildren) {
                     slotEntered = true;
-                    
+
                     isExpanded = !item.expanded;
                     item.expanded = isExpanded;
                     slotIndent = item.indent;
@@ -619,7 +619,7 @@ export default class SchedulerData {
                     }
                 }
             }
-            else {
+            else if (this.cellUnit === CellUnits.Day) {
                 while (header >= start && header <= end) {
                     let time = header.format(DATETIME_FORMAT);
                     let dayOfWeek = header.weekday();
@@ -630,6 +630,27 @@ export default class SchedulerData {
                     }
 
                     header = header.add(1, 'days');
+                }
+            }
+            else if (this.cellUnit === CellUnits.Week) {
+                while (header >= start && header <= end) {
+                    let time  = header.format(DATE_FORMAT);
+                    headers.push({time});
+                    header = header.add(1, 'weeks').startOf('week')
+                }
+            }
+            else if (this.cellUnit === CellUnits.Month) {
+                while (header >= start && header <= end) {
+                    let time  = header.format(DATE_FORMAT);
+                    headers.push({time});
+                    header = header.add(1, 'months').startOf('month');
+                }
+            }
+            else if (this.cellUnit === CellUnits.Year) {
+                while (header >= start && header <= end) {
+                    let time  = header.format(DATE_FORMAT);
+                    headers.push({time});
+                    header = header.add(1, 'years').startOf('year');
                 }
             }
         }
@@ -649,8 +670,11 @@ export default class SchedulerData {
                     )
                 )
             )
-        )) : (this.cellUnit === CellUnits.Hour ?  start.add(this.config.minuteStep, 'minutes').format(DATETIME_FORMAT)
-            : start.add(1, 'days').format(DATETIME_FORMAT));
+        )) : (this.cellUnit === CellUnits.Hour ? start.add(this.config.minuteStep, 'minutes').format(DATETIME_FORMAT)
+            : this.cellUnit === CellUnits.Year ? start.add(1, 'years').format(DATE_FORMAT)
+                : this.cellUnit === CellUnits.Month ? start.add(1, 'months').format(DATE_FORMAT)
+                    : this.cellUnit === CellUnits.Week ? start.add(1, 'weeks').format(DATE_FORMAT)
+                        : start.add(1, 'days').format(DATETIME_FORMAT));
         return {
             time:  header.time,
             nonWorkingTime: header.nonWorkingTime,
@@ -774,7 +798,7 @@ export default class SchedulerData {
                 currentNode.data.expanded = this.config.defaultExpanded;
             }
             initRenderData.push(currentNode.data);
-            
+
             for(i=currentNode.children.length -1; i>=0; i--) {
                 currentNode.children[i].data.indent = currentNode.data.indent + 1;
                 slotStack.push(currentNode.children[i]);
@@ -794,7 +818,10 @@ export default class SchedulerData {
         for(let header of headers) {
             let spanStart = this.localeMoment(header.time),
             spanEnd = this.cellUnit === CellUnits.Hour ? this.localeMoment(header.time).add(this.config.minuteStep, 'minutes') 
-                : this.localeMoment(header.time).add(1, 'days');
+                : this.cellUnit === CellUnits.Week ? this.localeMoment(header.time).add(1, 'weeks')
+                    : this.cellUnit === CellUnits.Month ? this.localeMoment(header.time).add(1, 'months')
+                        : this.cellUnit === CellUnits.Year ? this.localeMoment(header.time).add(1, 'year')
+                            : this.localeMoment(header.time).add(1, 'days');
             
                 if(spanStart < end && spanEnd > start) {
                     span++;
@@ -878,7 +905,7 @@ export default class SchedulerData {
     _createRenderData() {
         let initRenderData = this._createInitRenderData(this.isEventPerspective, this.eventGroups, this.resources, this.headers);
         //this.events.sort(this._compare);
-        let cellMaxEventsCount = this.getCellMaxEvents();        
+        let cellMaxEventsCount = this.getCellMaxEvents();
         const cellMaxEventsCountValue = 30;
 
         this.events.forEach((item) => {
@@ -934,10 +961,10 @@ export default class SchedulerData {
                                 renderItemsCount++;
                                 addMoreIndex = index + 1;
                             }
-        
+
                             index++;
                         }
-        
+
                         if(headerItem.events[index] !== undefined) {
                             if(renderItemsCount + 1 < headerItem.count) {
                                 headerItem.addMore = headerItem.count - renderItemsCount;
@@ -950,21 +977,21 @@ export default class SchedulerData {
                                 headerItem.addMoreIndex = addMoreIndex;
                             }
                         }
-                    }                    
-    
+                    }
+
                     if(this.behaviors.getSummaryFunc !== undefined){
                         let events = [];
                         headerItem.events.forEach((e) => {
                             if(!!e && !!e.eventItem)
                                 events.push(e.eventItem);
                         });
-    
+
                         headerItem.summary = this.behaviors.getSummaryFunc(this, events, resourceEvents.slotId, resourceEvents.slotName, headerItem.start, headerItem.end);
                         if(!!headerItem.summary && headerItem.summary.text != undefined)
                             hasSummary = true;
                     }
                 });
-    
+
                 resourceEvents.hasSummary = hasSummary;
                 if(hasSummary) {
                     let rowsCount = (cellMaxEventsCount <= cellMaxEventsCountValue && resourceEvents.rowMaxCount > cellMaxEventsCount) ? cellMaxEventsCount : resourceEvents.rowMaxCount;
@@ -990,5 +1017,3 @@ export default class SchedulerData {
         return this.resizing;
     }
 }
-
-
