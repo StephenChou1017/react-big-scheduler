@@ -127,6 +127,7 @@ class Scheduler extends Component {
         onScrollRight: PropTypes.func,
         onScrollTop: PropTypes.func,
         onScrollBottom: PropTypes.func,
+        customResourceHeader: PropTypes.object,
     }
 
     componentDidMount(props, state){
@@ -159,7 +160,7 @@ class Scheduler extends Component {
     }
 
     render() {
-        const { schedulerData, leftCustomHeader, rightCustomHeader } = this.props;
+        const { schedulerData, leftCustomHeader, rightCustomHeader, customResourceHeader } = this.props;
         const { renderData, viewType, showAgenda, isEventPerspective, config } = schedulerData;
         const width = schedulerData.getSchedulerWidth();
         const calendarPopoverEnabled = config.calendarPopoverEnabled;
@@ -215,7 +216,14 @@ class Scheduler extends Component {
                 };
             }
 
-            let resourceName = schedulerData.isEventPerspective ? config.taskName : config.resourceName;
+            let resourceName;
+
+            if (customResourceHeader) {
+                resourceName = customResourceHeader
+            } else {
+                resourceName = schedulerData.isEventPerspective ? config.taskName : config.resourceName;
+            }
+
             tbodyContent = (
                 <tr>
                     <td style={{width: resourceTableWidth, verticalAlign: 'top'}}>
@@ -233,7 +241,7 @@ class Scheduler extends Component {
                                     </table>
                                 </div>
                             </div>
-                            <div style={resourceContentStyle} ref={this.schedulerResourceRef} onMouseOver={this.onSchedulerResourceMouseOver} onMouseOut={this.onSchedulerResourceMouseOut} onScroll={this.onSchedulerResourceScroll}>
+                            <div className="resource-view-content" style={resourceContentStyle} ref={this.schedulerResourceRef} onMouseOver={this.onSchedulerResourceMouseOver} onMouseOut={this.onSchedulerResourceMouseOut} onScroll={this.onSchedulerResourceScroll}>
                                 <ResourceView
                                     {...this.props}
                                     contentScrollbarHeight={resourcePaddingBottom}
@@ -252,7 +260,7 @@ class Scheduler extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <div style={schedulerContentStyle} ref={this.schedulerContentRef} onMouseOver={this.onSchedulerContentMouseOver} onMouseOut={this.onSchedulerContentMouseOut} onScroll={this.onSchedulerContentScroll} >
+                            <div className="scheduler-view-content" style={schedulerContentStyle} ref={this.schedulerContentRef} onMouseOver={this.onSchedulerContentMouseOver} onMouseOut={this.onSchedulerContentMouseOut} onScroll={this.onSchedulerContentScroll} >
                                 <div style={{width: schedulerWidth, height: contentHeight}}>
                                     <div className="scheduler-content">
                                         <table className="scheduler-content-table" >
