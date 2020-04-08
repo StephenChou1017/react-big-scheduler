@@ -281,7 +281,7 @@ class ResourceEvents extends Component {
                         let top = marginTop + idx*config.eventItemLineHeight;
                         let eventItem = <DnDEventItem
                                                    {...this.props}
-                                                   key={evt.eventItem.id}
+                                                   key={evt.eventItem.key || evt.eventItem.id}
                                                    eventItem={evt.eventItem}
                                                    isStart={isStart}
                                                    isEnd={isEnd}

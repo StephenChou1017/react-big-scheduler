@@ -466,7 +466,7 @@ export default class SchedulerData {
     }
 
     _detachEvent(event) {
-        let index = this.events.indexOf(event);
+        let index = this.events.findIndex(e => event.key ? e.key === event.key : e.id === event.id);
         if(index !== -1)
             this.events.splice(index, 1);
     }

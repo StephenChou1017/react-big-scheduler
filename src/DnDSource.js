@@ -23,6 +23,7 @@ export default class DnDSource {
                 const item = monitor.getItem();
                 const type = monitor.getItemType();
                 const dropResult = monitor.getDropResult();
+                const sourceResource = props.resourceEvents;
                 let slotId = dropResult.slotId, slotName = dropResult.slotName;
                 let newStart = dropResult.start, newEnd = dropResult.end;
                 let initialStart = dropResult.initialStart, initialEnd = dropResult.initialEnd;
@@ -80,7 +81,7 @@ export default class DnDSource {
                 else {
                     if(isEvent) {
                         if (moveEvent !== undefined) {
-                            moveEvent(schedulerData, item, slotId, slotName, newStart, newEnd);
+                            moveEvent(schedulerData, item, slotId, slotName, newStart, newEnd, sourceResource);
                         }
                     }
                     else {
