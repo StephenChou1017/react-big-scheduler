@@ -1,5 +1,5 @@
 {
-  "name": "react-big-scheduler",
+  "name": "@findpace/react-big-scheduler",
   "version": "0.2.7",
   "description": "A scheduler and resource planning component built for React and made for modern browsers (IE10+)",
   "keywords": [
@@ -17,14 +17,14 @@
     "CHANGELOG.md"
   ],
   "main": "lib/index",
-  "homepage": "https://github.com/StephenChou1017/react-big-scheduler",
-  "author": "Stephen Chou <27788280@qq.com> (https://github.com/StephenChou1017)",
+  "homepage": "https://github.com/findpace/react-big-scheduler",
+  "author": "Karl Fusaris <karl@paceup.com> (https://github.com/karlfus)",
   "repository": {
     "type": "git",
-    "url": "git@github.com:StephenChou1017/react-big-scheduler.git"
+    "url": "git@github.com:findpace/react-big-scheduler.git"
   },
   "bugs": {
-    "url": "http://github.com/StephenChou1017/react-big-scheduler/issues"
+    "url": "http://github.com/findpace/react-big-scheduler/issues"
   },
   "license": "MIT",
   "config": {},
