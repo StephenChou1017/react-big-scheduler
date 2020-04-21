@@ -364,9 +364,7 @@ class Scheduler extends Component {
     }
 
     let popover = (
-      <div className="popover-calendar">
         <DatePicker picker="month" onChange={this.onSelect} />
-      </div>
     );
     let schedulerHeader = <div />;
     if (config.headerEnabled) {
