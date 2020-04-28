@@ -43,8 +43,8 @@ async function build() {
     const jsResult = await exec(`babel ${sourceDir} --out-dir ${jsTarget}`);
 
     // copy css
-    process.stdout.write('Copying library style definitions... \n');
-    const cssResult = await exec(`cpy ${sourceDir}/css/style.css ${cssTarget}`);
+    process.stdout.write(`Copying library style definitions to ${cssTarget}/style.css ... \n`);
+    const cssResult = await exec(`mkdir -p ${cssTarget} && cp ${sourceDir}/css/style.css ${cssTarget}/style.css`);
 
     // compile antd-hack less into css and copy it into lib
     process.stdout.write('Implementing antd hack... \n');
