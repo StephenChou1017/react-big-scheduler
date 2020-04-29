@@ -33,8 +33,8 @@ import Radio from "antd/lib/radio";
 import "antd/lib/radio/style/index.css";
 import Popover from "antd/lib/popover";
 import "antd/lib/popover/style/index.css";
-import DatePicker from 'antd/lib/date-picker'
-import "antd/lib/date-picker/style/index.css";
+import MonthPicker from 'antd/lib/month-picker'
+import "antd/lib/month-picker/style/index.css";
 import EventItem from "./EventItem";
 import DnDSource from "./DnDSource";
 import DnDContext from "./DnDContext";
@@ -364,7 +364,7 @@ class Scheduler extends Component {
     }
 
     let popover = (
-        <DatePicker picker="month" onChange={this.onSelect} />
+        <MonthPicker onChange={this.onSelect} />
     );
     let schedulerHeader = <div />;
     if (config.headerEnabled) {
