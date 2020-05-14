@@ -510,7 +510,7 @@ class EventItem extends Component {
         if(eventItemTemplateResolver != undefined)
             eventItemTemplate = eventItemTemplateResolver(schedulerData, eventItem, bgColor, isStart, isEnd, 'event-item', config.eventItemHeight, undefined);
 
-        let a = <a className="timeline-event" style={{left: left, width: width, top: top}} onClick={() => { if(!!eventItemClick) eventItemClick(schedulerData, eventItem);}}>
+        let a = <a className="timeline-event" style={{left: left, width: width, top: top}} onClick={(e) => { if(!!eventItemClick) eventItemClick(schedulerData, eventItem, { left: left, width: width, top: top }, e);}}>
             {eventItemTemplate}
             {startResizeDiv}
             {endResizeDiv}
