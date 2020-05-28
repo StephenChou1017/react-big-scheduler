@@ -11,15 +11,16 @@ function getPos(element) {
 }
 
 const checkConflicts = (eventItem, schedulerData) => {
-  let slotId = schedulerData._getEventSlotId(eventItem);
+  const { localeMoment } = schedulerData;
+  const slotId = schedulerData._getEventSlotId(eventItem);
 
-  let start = localeMoment(eventItem.start),
-    end = localeMoment(eventItem.end);
+  const start = localeMoment(eventItem.start);
+  const end = localeMoment(eventItem.end);
 
   schedulerData.events.forEach((e) => {
     if (schedulerData._getEventSlotId(e) === slotId && e.id !== eventItem.id) {
-      let eStart = localeMoment(e.start),
-        eEnd = localeMoment(e.end);
+      const eStart = localeMoment(e.start);
+      const eEnd = localeMoment(e.end);
       if (
         (start >= eStart && start < eEnd) ||
         (end > eStart && end <= eEnd) ||
