@@ -33,7 +33,7 @@ import Radio from "antd/lib/radio";
 import "antd/lib/radio/style/index.css";
 import Popover from "antd/lib/popover";
 import "antd/lib/popover/style/index.css";
-import Calendar from 'antd/lib/calendar'
+import Calendar from "antd/lib/calendar";
 import "antd/lib/calendar/style/index.css";
 import EventItem from "./EventItem";
 import DnDSource from "./DnDSource";
@@ -49,6 +49,7 @@ import CellUnits from "./CellUnits";
 import SummaryPos from "./SummaryPos";
 import SchedulerData from "./SchedulerData";
 import DemoData from "./DemoData";
+import { checkConflicts } from "./Util";
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 
@@ -671,5 +672,6 @@ export {
   DnDContext,
   AddMorePopover,
   DemoData,
+  checkConflicts,
 };
 export default Scheduler;
