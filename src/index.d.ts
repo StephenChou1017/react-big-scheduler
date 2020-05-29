@@ -19,7 +19,7 @@ export interface SchedulerProps {
 
 export class SchedulerData {
   localeMoment(date: string): moment.Moment;
-  checkConflicts(eventItem: Event): eventItem;
+  checkConflicts(eventItem: Event): Event;
   cellUnit: CellUnits;
   viewType: ViewTypes;
   startDate: string;
