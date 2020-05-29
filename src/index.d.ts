@@ -19,6 +19,7 @@ export interface SchedulerProps {
 
 export class SchedulerData {
   localeMoment(date: string): moment.Moment;
+  checkConflicts(eventItem: Event, schedulerData: SchedulerData): boolean;
   cellUnit: CellUnits;
   viewType: ViewTypes;
   startDate: string;
@@ -150,8 +151,4 @@ export interface SchedulerDataBehaviors {
     num: number,
     date?: string
   ): { startDate: string; endDate: string; cellUnit: CellUnits };
-}
-
-export class Utils {
-  checkConflicts(eventItem: Event, schedulerData: SchedulerData): boolean;
 }
