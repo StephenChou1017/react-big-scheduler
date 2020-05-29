@@ -27,7 +27,7 @@ function checkConflict(eventItem, schedulerData) {
         (eStart >= start && eStart < end) ||
         (eEnd > start && eEnd <= end)
       )
-        return true;
+        return e;
     }
   });
 }
