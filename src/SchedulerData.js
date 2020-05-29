@@ -38,8 +38,8 @@ export default class SchedulerData {
     this._createRenderData();
   }
 
-  checkConflicts(eventItem, schedulerData) {
-    return checkConflict(eventItem, schedulerData);
+  checkConflicts(eventItem) {
+    return checkConflict(eventItem, this);
   }
 
   setLocaleMoment(localeMoment) {
