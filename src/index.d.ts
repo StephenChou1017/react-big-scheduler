@@ -152,6 +152,6 @@ export interface SchedulerDataBehaviors {
   ): { startDate: string; endDate: string; cellUnit: CellUnits };
 }
 
-export class Util {
+export class Utils {
   checkConflicts(eventItem: Event, schedulerData: SchedulerData): boolean;
 }
