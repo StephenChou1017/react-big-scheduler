@@ -49,7 +49,7 @@ import CellUnits from "./CellUnits";
 import SummaryPos from "./SummaryPos";
 import SchedulerData from "./SchedulerData";
 import DemoData from "./DemoData";
-import Util from "./Util";
+import Utils from "./Utils";
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 
@@ -665,6 +665,7 @@ export const DATE_FORMAT = "YYYY-MM-DD";
 export const DATETIME_FORMAT = "YYYY-MM-DD HH:mm:ss";
 export {
   SchedulerData,
+  Utils,
   ViewTypes,
   CellUnits,
   SummaryPos,
@@ -672,6 +673,5 @@ export {
   DnDContext,
   AddMorePopover,
   DemoData,
-  Util,
 };
 export default Scheduler;
