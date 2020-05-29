@@ -11,7 +11,7 @@ function getPos(element) {
 }
 
 function checkConflict(eventParameter, schedulerData) {
-  let event = null;
+  let result = null;
   const { localeMoment } = schedulerData;
   const slotId = schedulerData._getEventSlotId(eventParameter);
 
@@ -32,12 +32,13 @@ function checkConflict(eventParameter, schedulerData) {
           (eStart >= start && eStart < end) ||
           (eEnd > start && eEnd <= end)
         ) {
+          result = event;
           return true;
         }
       }
     })
   )
-    return event;
+    return result;
   else return null;
 }
 
