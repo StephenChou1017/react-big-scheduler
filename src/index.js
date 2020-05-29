@@ -49,7 +49,7 @@ import CellUnits from "./CellUnits";
 import SummaryPos from "./SummaryPos";
 import SchedulerData from "./SchedulerData";
 import DemoData from "./DemoData";
-import { checkConflicts } from "./Util";
+import Util from "./Util";
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 
@@ -672,6 +672,6 @@ export {
   DnDContext,
   AddMorePopover,
   DemoData,
-  checkConflicts,
+  Util,
 };
 export default Scheduler;

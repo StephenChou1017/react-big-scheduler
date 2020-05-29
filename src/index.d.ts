@@ -152,7 +152,6 @@ export interface SchedulerDataBehaviors {
   ): { startDate: string; endDate: string; cellUnit: CellUnits };
 }
 
-export function checkConflicts(
-  eventItem: Event,
-  schedulerData: SchedulerData
-): boolean;
+export class Util {
+  checkConflicts(eventItem: Event, schedulerData: SchedulerData): boolean;
+}
