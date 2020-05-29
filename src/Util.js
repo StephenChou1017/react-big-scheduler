@@ -10,26 +10,35 @@ function getPos(element) {
   return { x: x, y: y };
 }
 
-function checkConflict(eventItem, schedulerData) {
+function checkConflict(eventParameter, schedulerData) {
+  let event = null;
   const { localeMoment } = schedulerData;
-  const slotId = schedulerData._getEventSlotId(eventItem);
+  const slotId = schedulerData._getEventSlotId(eventParameter);
 
-  const start = localeMoment(eventItem.start);
-  const end = localeMoment(eventItem.end);
+  const start = localeMoment(eventParameter.start);
+  const end = localeMoment(eventParameter.end);
 
-  return schedulerData.events.some((e) => {
-    if (schedulerData._getEventSlotId(e) === slotId && e.id !== eventItem.id) {
-      const eStart = localeMoment(e.start);
-      const eEnd = localeMoment(e.end);
+  if (
+    schedulerData.events.some((event) => {
       if (
-        (start >= eStart && start < eEnd) ||
-        (end > eStart && end <= eEnd) ||
-        (eStart >= start && eStart < end) ||
-        (eEnd > start && eEnd <= end)
-      )
-        return e;
-    }
-  });
+        schedulerData._getEventSlotId(event) === slotId &&
+        event.id !== eventParameter.id
+      ) {
+        const eStart = localeMoment(event.start);
+        const eEnd = localeMoment(event.end);
+        if (
+          (start >= eStart && start < eEnd) ||
+          (end > eStart && end <= eEnd) ||
+          (eStart >= start && eStart < end) ||
+          (eEnd > start && eEnd <= end)
+        ) {
+          return true;
+        }
+      }
+    })
+  )
+    return event;
+  else return null;
 }
 
 export { getPos, checkConflict };
