@@ -365,7 +365,10 @@ class Scheduler extends Component {
 
     let popover = (
       <div className="popover-calendar">
-        <DatePicker.RangePicker onChange={this.onSelect} />
+        <DatePicker.RangePicker
+          value={[schedulerData.startDate, schedulerData.endDate]}
+          onChange={this.onSelect}
+        />
       </div>
     );
     let schedulerHeader = <div />;
