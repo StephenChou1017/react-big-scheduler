@@ -386,24 +386,7 @@ class Scheduler extends Component {
                 className="icon-nav"
                 onClick={this.goBack}
               />
-              {calendarPopoverEnabled ? (
-                <Popover
-                  content={popover}
-                  placement="bottom"
-                  trigger="click"
-                  visible={this.state.visible}
-                  onVisibleChange={this.handleVisibleChange}
-                >
-                  <span
-                    className={"header2-text-label"}
-                    style={{ cursor: "pointer" }}
-                  >
-                    {dateLabel}
-                  </span>
-                </Popover>
-              ) : (
-                <span className={"header2-text-label"}>{dateLabel}</span>
-              )}
+              <DatePicker.RangePicker onChange={this.onSelect} />
               <Icon
                 type="right"
                 style={{ marginLeft: "8px" }}
