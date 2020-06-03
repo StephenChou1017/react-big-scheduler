@@ -390,6 +390,8 @@ class Scheduler extends Component {
                   moment(schedulerData.endDate),
                 ]}
                 onChange={this.onSelect}
+                style={{ width: "220px" }}
+                format={"DD/MM/YYYY"}
               />
               <Icon
                 type="right"
