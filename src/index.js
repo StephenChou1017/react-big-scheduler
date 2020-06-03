@@ -381,7 +381,10 @@ class Scheduler extends Component {
                 onClick={this.goBack}
               />
               <DatePicker.RangePicker
-                value={[schedulerData.startDate, schedulerData.endDate]}
+                value={[
+                  moment(schedulerData.startDate),
+                  moment(schedulerData.endDate),
+                ]}
                 onChange={this.onSelect}
               />
               <Icon
