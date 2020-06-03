@@ -185,20 +185,23 @@ class Scheduler extends Component {
     let defaultValue = `${viewType}${showAgenda ? 1 : 0}${
       isEventPerspective ? 1 : 0
     }`;
-    let radioButtonList = config.views.map((item) => {
-      return (
-        <RadioButton
-          key={`${item.viewType}${item.showAgenda ? 1 : 0}${
-            item.isEventPerspective ? 1 : 0
-          }`}
-          value={`${item.viewType}${item.showAgenda ? 1 : 0}${
-            item.isEventPerspective ? 1 : 0
-          }`}
-        >
-          <span style={{ margin: "0px 8px" }}>{item.viewName}</span>
-        </RadioButton>
-      );
-    });
+    let radioButtonList =
+      config.views.length > 1
+        ? config.views.map((item) => {
+            return (
+              <RadioButton
+                key={`${item.viewType}${item.showAgenda ? 1 : 0}${
+                  item.isEventPerspective ? 1 : 0
+                }`}
+                value={`${item.viewType}${item.showAgenda ? 1 : 0}${
+                  item.isEventPerspective ? 1 : 0
+                }`}
+              >
+                <span style={{ margin: "0px 8px" }}>{item.viewName}</span>
+              </RadioButton>
+            );
+          })
+        : null;
 
     let tbodyContent = <tr />;
     if (showAgenda) {
