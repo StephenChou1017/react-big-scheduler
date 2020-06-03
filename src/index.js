@@ -362,14 +362,6 @@ class Scheduler extends Component {
       );
     }
 
-    let popover = (
-      <div className="popover-calendar">
-        <DatePicker.RangePicker
-          value={[schedulerData.startDate, schedulerData.endDate]}
-          onChange={this.onSelect}
-        />
-      </div>
-    );
     let schedulerHeader = <div />;
     if (config.headerEnabled) {
       schedulerHeader = (
@@ -388,7 +380,10 @@ class Scheduler extends Component {
                 className="icon-nav"
                 onClick={this.goBack}
               />
-              <DatePicker.RangePicker onChange={this.onSelect} />
+              <DatePicker.RangePicker
+                value={[schedulerData.startDate, schedulerData.endDate]}
+                onChange={this.onSelect}
+              />
               <Icon
                 type="right"
                 style={{ marginLeft: "8px" }}
