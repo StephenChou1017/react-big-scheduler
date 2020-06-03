@@ -26,6 +26,8 @@ export default class SchedulerData {
     this.resizing = false;
     this.scrollToSpecialMoment = false;
     this.documentWidth = 0;
+    this.startDate = date;
+    this.endDate = date;
 
     this.localeMoment = moment;
     if (!!localeMoment) this.localeMoment = localeMoment;

@@ -179,9 +179,8 @@ class Scheduler extends Component {
       config,
     } = schedulerData;
     const width = schedulerData.getSchedulerWidth();
-    const calendarPopoverEnabled = config.calendarPopoverEnabled;
-
-    let dateLabel = schedulerData.getDateLabel();
+    //const calendarPopoverEnabled = config.calendarPopoverEnabled;
+    //let dateLabel = schedulerData.getDateLabel();
     let defaultValue = `${viewType}${showAgenda ? 1 : 0}${
       isEventPerspective ? 1 : 0
     }`;
