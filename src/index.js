@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { PropTypes } from "prop-types";
+import moment from "moment";
 // Col, Row and Icon do not have their own less files for styling. They use
 // rules declared in antd's global css. If these styles are imported directly
 // from within antd, they'll include, for instance, reset rules. These will
