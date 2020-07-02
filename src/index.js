@@ -391,9 +391,9 @@ class Scheduler extends Component {
                 style={{ width: "220px" }}
                 format={"DD/MM/YYYY"}
                 ranges={{
-                  'Next 30 Days': [moment(TODAY), moment(TODAY).add(30, 'days')],
-                  'Next 3 Months': [moment(TODAY), moment(TODAY).add(3, 'months')],
-                  'Next 6 Months': [moment(TODAY), moment(TODAY).add(6, 'months')],
+                  'Next 30 Days': [moment(), moment().add(30, 'days')],
+                  'Next 3 Months': [moment(), moment().add(3, 'months')],
+                  'Next 6 Months': [moment(), moment().add(6, 'months')],
                 }}
               />
               <Icon
