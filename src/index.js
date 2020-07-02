@@ -32,8 +32,6 @@ import "antd/lib/select/style/index.css";
 import "antd/lib/grid/style/index.css";
 import Radio from "antd/lib/radio";
 import "antd/lib/radio/style/index.css";
-import Popover from "antd/lib/popover";
-import "antd/lib/popover/style/index.css";
 import DatePicker from "antd/lib/date-picker";
 import "antd/lib/date-picker/style/index.css";
 import EventItem from "./EventItem";
@@ -392,6 +390,11 @@ class Scheduler extends Component {
                 onChange={this.onSelect}
                 style={{ width: "220px" }}
                 format={"DD/MM/YYYY"}
+                ranges={{
+                  'Next 30 Days': [moment(TODAY), moment(TODAY).add(30, 'days')],
+                  'Next 3 Months': [moment(TODAY), moment(TODAY).add(3, 'months')],
+                  'Next 6 Months': [moment(TODAY), moment(TODAY).add(6, 'months')],
+                }}
               />
               <Icon
                 type="right"
