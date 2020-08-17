@@ -74,7 +74,7 @@ export interface View {
 }
 
 export interface Event {
-  id: number;
+  id: string;
   start: string;
   end: string;
   resourceId: string;
