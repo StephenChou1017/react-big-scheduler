@@ -650,6 +650,9 @@ class Scheduler extends Component {
     const { onSelectDate, schedulerData } = this.props;
     onSelectDate(schedulerData, date);
   };
+
+  DATE_FORMAT = "YYYY-MM-DD";
+  DATETIME_FORMAT = "YYYY-MM-DD HH:mm:ss";
 }
 
 export const DATE_FORMAT = "YYYY-MM-DD";
