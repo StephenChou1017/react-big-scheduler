@@ -7,9 +7,10 @@
 import * as React from "react";
 import * as moment from "moment";
 
+export const DATE_FORMAT: string;
+export const DATETIME_FORMAT: string;
+
 export class Scheduler extends React.Component<SchedulerProps, any> {
-  static DATE_FORMAT: string;
-  static DATETIME_FORMAT: string;
 }
 
 export interface SchedulerProps {
