@@ -1,3 +1,3 @@
 export const DnDTypes = {
-    EVENT: 'event'
-};
+  EVENT: 'event',
+}
