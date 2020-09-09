@@ -652,8 +652,8 @@ class Scheduler extends Component {
   };
 }
 
-DATE_FORMAT = "YYYY-MM-DD";
-DATETIME_FORMAT = "YYYY-MM-DD HH:mm:ss";
+const DATE_FORMAT = "YYYY-MM-DD";
+const DATETIME_FORMAT = "YYYY-MM-DD HH:mm:ss";
 
 export {
   SchedulerData,
