@@ -36,7 +36,8 @@
     "example": "webpack-dev-server --config ./webpack/webpack-dev.config.js --hot",
     "analyz": "cross-env NODE_ENV=production npm_config_report=true npm run build",
     "build:dll": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.dll.config.js",
-    "patch": "npm version patch"
+    "patch": "npm version patch",
+    "publish": "npm run build && npm version patch && npm publish && git push"
   },
   "pre-commit": [
     "lint"
