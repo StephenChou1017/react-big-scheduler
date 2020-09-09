@@ -50,7 +50,7 @@
     "react-dnd": "^7.5.0",
     "react-dnd-html5-backend": "^7.5.0",
     "react-dom": "^16.8.6",
-    "rrule": "^2.6.0"
+    "rrule": "2.6.4"
   },
   "devDependencies": {
     "babel": "6.23.0",
