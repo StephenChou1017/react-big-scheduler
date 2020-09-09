@@ -525,7 +525,7 @@ class EventItem extends Component {
                             )
                         }
                     </div> :
-                    <Popover placement="bottomLeft" content={content} trigger="hover">
+                    <Popover autoAdjustOverflow="true" placement="bottomLeft" content={content} trigger="hover">
                         {
                             connectDragPreview(
                                 connectDragSource(a)
