@@ -1,6 +1,6 @@
 {
   "name": "findpace-react-big-scheduler",
-  "version": "0.2.53",
+  "version": "0.2.54",
   "description": "A scheduler and resource planning component built for React and made for modern browsers (IE10+)",
   "keywords": [
     "scheduler",
