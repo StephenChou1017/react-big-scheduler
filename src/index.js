@@ -394,6 +394,7 @@ class Scheduler extends Component {
                   'Next 30 Days': [moment(), moment().add(30, 'days')],
                   'Next 3 Months': [moment(), moment().add(3, 'months')],
                   'Next 6 Months': [moment(), moment().add(6, 'months')],
+                  'Next Year': [moment(), moment().add(1, 'year')]
                 }}
               />
               <Icon
