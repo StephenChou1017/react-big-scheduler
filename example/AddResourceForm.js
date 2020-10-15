@@ -1,6 +1,7 @@
 import React from 'react'
+import { Form as LegacyForm } from '@ant-design/compatible';
 import { Modal, Form, Input, Radio } from 'antd';
-const FormItem = Form.Item;
+import '@ant-design/compatible/assets/index.css';
 
 
 const AddResourceForm = Form.create()(
