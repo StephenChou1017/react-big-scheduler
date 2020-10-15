@@ -1,12 +1,6 @@
-// import {DragDropContext} from 'react-dnd'
-// import HTML5Backend from 'react-dnd-html5-backend'
-
-// export default DragDropContext(HTML5Backend);
-
-
 import * as React from 'react'
 import { DndProvider } from 'react-dnd'
-import HTML5Backend from 'react-dnd-html5-backend'
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 export default Component => {
   return props => (
