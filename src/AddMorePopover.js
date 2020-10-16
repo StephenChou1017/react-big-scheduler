@@ -2,7 +2,9 @@ import React, {Component} from 'react'
 import {PropTypes} from 'prop-types'
 import Col from 'antd/lib/col'
 import Row from 'antd/lib/row'
-import Icon from 'antd/lib/icon'
+import {
+    CloseCircleFilled,
+  } from '@ant-design/icons';
 import 'antd/lib/grid/style/index.css'
 import EventItem from './EventItem'
 import DnDSource from './DnDSource'
@@ -77,7 +79,7 @@ class AddMorePopover extends Component {
                         <span className="base-text">{header}</span>
                     </Col>
                     <Col span="2">
-                        <span onClick={() => {closeAction(undefined);}}><Icon type="cross"></Icon></span>
+                        <span onClick={() => {closeAction(undefined);}}><CloseCircleFilled /></span>
                     </Col>
                 </Row>
                 {eventList}

@@ -41,9 +41,9 @@
     "lint"
   ],
   "dependencies": {
-    "@ant-design/compatible": "^1.0.8",
+    "@ant-design/icons": "^4.2.2",
     "antd": "^4.5.2",
-    "cpy": "^8.1.1",
+    "cpy": "^3.4.1",
     "moment": "^2.24.0",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
