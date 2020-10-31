@@ -127,6 +127,8 @@ class Scheduler extends Component {
         onScrollRight: PropTypes.func,
         onScrollTop: PropTypes.func,
         onScrollBottom: PropTypes.func,
+        TopLeftCustomHeader: PropTypes.object,
+        TopRightCustomHeader: PropTypes.object,
     }
 
     componentDidMount(props, state){
@@ -159,7 +161,7 @@ class Scheduler extends Component {
     }
 
     render() {
-        const { schedulerData, leftCustomHeader, rightCustomHeader } = this.props;
+        const { schedulerData, leftCustomHeader, rightCustomHeader, TopLeftCustomHeader, TopRightCustomHeader } = this.props;
         const { renderData, viewType, showAgenda, isEventPerspective, config } = schedulerData;
         const width = schedulerData.getSchedulerWidth();
         const calendarPopoverEnabled = config.calendarPopoverEnabled;
@@ -278,18 +280,27 @@ class Scheduler extends Component {
         let schedulerHeader = <div />;
         if(config.headerEnabled) {
             schedulerHeader = (
+            <div>
                 <Row type="flex" align="middle" justify="space-between" style={{marginBottom: '24px'}}>
-                    {leftCustomHeader}
+                    {TopLeftCustomHeader}
+                    <Col>
+                        <RadioGroup defaultValue={defaultValue} size="default" onChange={this.onViewChange}>
+                            {radioButtonList}
+                        </RadioGroup>
+                    </Col>
+                    {TopRightCustomHeader}
+                </Row>
+                <Row type="flex" align="middle" justify="space-between" style={{marginBottom: '24px'}}>
                     <Col>
                         <div className='header2-text'>
                             <HomeOutlined type="left" style={{marginRight: "8px"}}
                                     onClick={this.goBack}/>
                             {
-                            calendarPopoverEnabled
+                                calendarPopoverEnabled
                                 ?
                                 <Popover content={popover} placement="bottom" trigger="click"
-                                        visible={this.state.visible}
-                                        onVisibleChange={this.handleVisibleChange}>
+                                visible={this.state.visible}
+                                onVisibleChange={this.handleVisibleChange}>
                                 <span className={'header2-text-label'} style={{cursor: 'pointer'}}>{dateLabel}</span>
                                 </Popover>
                                 : <span className={'header2-text-label'}>{dateLabel}</span>
@@ -298,13 +309,10 @@ class Scheduler extends Component {
                                     onClick={this.goNext}/>
                         </div>
                     </Col>
-                    <Col>
-                        <RadioGroup defaultValue={defaultValue} size="default" onChange={this.onViewChange}>
-                            {radioButtonList}
-                        </RadioGroup>
-                    </Col>
+                    {leftCustomHeader}
                     {rightCustomHeader}
                 </Row>
+            </div>
             );
         }
 

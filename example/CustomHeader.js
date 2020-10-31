@@ -4,6 +4,8 @@ import Scheduler, {SchedulerData, ViewTypes, DemoData} from '../src/index'
 import Nav from './Nav'
 import ViewSrcCode from './ViewSrcCode'
 import withDragDropContext from './withDnDContext'
+import Col from 'antd/lib/col'
+import Row from 'antd/lib/row'
 
 class CustomHeader extends Component{
     constructor(props){
@@ -26,8 +28,13 @@ class CustomHeader extends Component{
         );
         let rightCustomHeader = (
             <div><span style={{fontWeight: 'bold', color: 'red'}}>or here</span></div>
+        );  
+        let TopLeftCustomHeader = (
+            <div><span style={{fontWeight: 'bold', color: 'red'}}>Attendance Schedules</span></div>
         );
-
+        let TopRightCustomHeader = (
+            <div><span style={{fontWeight: 'bold', color: 'red'}}>Schedule setting</span></div>
+        );
         return (
             <div>
                 <Nav />
@@ -49,6 +56,8 @@ class CustomHeader extends Component{
                                newEvent={this.newEvent}
                                leftCustomHeader={leftCustomHeader}
                                rightCustomHeader={rightCustomHeader}
+                               TopLeftCustomHeader={TopLeftCustomHeader}
+                               TopRightCustomHeader={TopRightCustomHeader}
                                toggleExpandFunc={this.toggleExpandFunc}
                     />
                 </div>
