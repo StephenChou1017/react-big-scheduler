@@ -1,12 +1,10 @@
 import React from 'react'
-import { Modal, Form, Input, Radio } from 'antd';
+import { Modal, Form, Input } from 'antd';
 const FormItem = Form.Item;
 
 
-const AddResourceForm = Form.create()(
-    (props) => {
+const AddResourceForm = (props) => {
         const { visible, onCancel, onCreate, form } = props;
-        const { getFieldDecorator } = form;
         return (
             <Modal
                 visible={visible}
@@ -15,18 +13,13 @@ const AddResourceForm = Form.create()(
                 onCancel={onCancel}
                 onOk={onCreate}
             >
-                <Form layout="vertical" >
-                    <FormItem label="Name">
-                        {getFieldDecorator('name', {
-                            rules: [{ required: true, message: 'Please input the name of the resource!' }],
-                        })(
-                            <Input />
-                        )}
+                <Form layout="vertical" form={form}>
+                    <FormItem label="Name" name="username" message="Please input the name of the resource!"  rules={[{ required: true }]}>
+                        <Input />
                     </FormItem>
                 </Form>
             </Modal>
         );
-    }
-);
+  }
 
 export default AddResourceForm

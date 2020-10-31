@@ -26,7 +26,7 @@ import {PropTypes} from 'prop-types'
 // antd styles.
 import Col from 'antd/lib/col'
 import Row from 'antd/lib/row'
-import Icon from 'antd/lib/icon'
+import { HomeOutlined } from '@ant-design/icons';
 import 'antd/lib/select/style/index.css'
 import 'antd/lib/grid/style/index.css'
 import Radio from 'antd/lib/radio'
@@ -127,6 +127,8 @@ class Scheduler extends Component {
         onScrollRight: PropTypes.func,
         onScrollTop: PropTypes.func,
         onScrollBottom: PropTypes.func,
+        TopLeftCustomHeader: PropTypes.object,
+        TopRightCustomHeader: PropTypes.object,
     }
 
     componentDidMount(props, state){
@@ -159,7 +161,7 @@ class Scheduler extends Component {
     }
 
     render() {
-        const { schedulerData, leftCustomHeader, rightCustomHeader } = this.props;
+        const { schedulerData, leftCustomHeader, rightCustomHeader, TopLeftCustomHeader, TopRightCustomHeader } = this.props;
         const { renderData, viewType, showAgenda, isEventPerspective, config } = schedulerData;
         const width = schedulerData.getSchedulerWidth();
         const calendarPopoverEnabled = config.calendarPopoverEnabled;
@@ -278,33 +280,39 @@ class Scheduler extends Component {
         let schedulerHeader = <div />;
         if(config.headerEnabled) {
             schedulerHeader = (
+            <div>
                 <Row type="flex" align="middle" justify="space-between" style={{marginBottom: '24px'}}>
-                    {leftCustomHeader}
-                    <Col>
-                        <div className='header2-text'>
-                            <Icon type="left" style={{marginRight: "8px"}} className="icon-nav"
-                                    onClick={this.goBack}/>
-                            {
-                            calendarPopoverEnabled
-                                ?
-                                <Popover content={popover} placement="bottom" trigger="click"
-                                        visible={this.state.visible}
-                                        onVisibleChange={this.handleVisibleChange}>
-                                <span className={'header2-text-label'} style={{cursor: 'pointer'}}>{dateLabel}</span>
-                                </Popover>
-                                : <span className={'header2-text-label'}>{dateLabel}</span>
-                            }
-                            <Icon type="right" style={{marginLeft: "8px"}} className="icon-nav"
-                                    onClick={this.goNext}/>
-                        </div>
-                    </Col>
+                    {TopLeftCustomHeader}
                     <Col>
                         <RadioGroup defaultValue={defaultValue} size="default" onChange={this.onViewChange}>
                             {radioButtonList}
                         </RadioGroup>
                     </Col>
+                    {TopRightCustomHeader}
+                </Row>
+                <Row type="flex" align="middle" justify="space-between" style={{marginBottom: '24px'}}>
+                    <Col>
+                        <div className='header2-text'>
+                            <HomeOutlined type="left" style={{marginRight: "8px"}}
+                                    onClick={this.goBack}/>
+                            {
+                                calendarPopoverEnabled
+                                ?
+                                <Popover content={popover} placement="bottom" trigger="click"
+                                visible={this.state.visible}
+                                onVisibleChange={this.handleVisibleChange}>
+                                <span className={'header2-text-label'} style={{cursor: 'pointer'}}>{dateLabel}</span>
+                                </Popover>
+                                : <span className={'header2-text-label'}>{dateLabel}</span>
+                            }
+                            <HomeOutlined type="right" style={{marginLeft: "8px"}}
+                                    onClick={this.goNext}/>
+                        </div>
+                    </Col>
+                    {leftCustomHeader}
                     {rightCustomHeader}
                 </Row>
+            </div>
             );
         }
 

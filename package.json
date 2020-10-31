@@ -10,48 +10,45 @@
     "resource planning",
     "antd"
   ],
+  "homepage": "https://github.com/StephenChou1017/react-big-scheduler",
+  "bugs": {
+    "url": "http://github.com/StephenChou1017/react-big-scheduler/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:StephenChou1017/react-big-scheduler.git"
+  },
+  "license": "MIT",
+  "author": "Stephen Chou <27788280@qq.com> (https://github.com/StephenChou1017)",
+  "main": "lib/index",
   "files": [
     "lib/",
     "LICENSE",
     "README.md",
     "CHANGELOG.md"
   ],
-  "main": "lib/index",
-  "homepage": "https://github.com/StephenChou1017/react-big-scheduler",
-  "author": "Stephen Chou <27788280@qq.com> (https://github.com/StephenChou1017)",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:StephenChou1017/react-big-scheduler.git"
-  },
-  "bugs": {
-    "url": "http://github.com/StephenChou1017/react-big-scheduler/issues"
-  },
-  "license": "MIT",
-  "config": {},
   "scripts": {
-    "clean": "rimraf ./lib && mkdir lib",
-    "build": "node scripts/build.js",
-    "clean:exampledist": "rimraf ./exampledist/static",
-    "build:exampledist": "npm run clean:exampledist && cpy src/css/style.css exampledist/static && cross-env NODE_ENV=production webpack --config ./webpack/webpack.config.js",
-    "example": "webpack-dev-server --config ./webpack/webpack-dev.config.js --hot",
     "analyz": "cross-env NODE_ENV=production npm_config_report=true npm run build",
-    "build:dll": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.dll.config.js"
+    "build": "node scripts/build.js",
+    "build:dll": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.dll.config.js",
+    "build:exampledist": "npm run clean:exampledist && cpy src/css/style.css exampledist/static && cross-env NODE_ENV=production webpack --config ./webpack/webpack.config.js",
+    "clean": "rimraf ./lib && mkdir lib",
+    "clean:exampledist": "rimraf ./exampledist/static",
+    "example": "webpack-dev-server --config ./webpack/webpack-dev.config.js --hot"
   },
   "pre-commit": [
     "lint"
   ],
+  "config": {},
   "dependencies": {
-    "antd": "^3.16.6",
-    "cpy": "^3.4.1",
     "moment": "^2.24.0",
-    "prop-types": "^15.7.2",
-    "react": "^16.8.6",
-    "react-dnd": "^7.5.0",
-    "react-dnd-html5-backend": "^7.5.0",
-    "react-dom": "^16.8.6",
-    "rrule": "^2.6.0"
+    "react-dnd": "^11.1.3",
+    "react-dnd-html5-backend": "^11.1.3",
+    "rrule": "^2.6.6"
   },
   "devDependencies": {
+    "@ant-design/icons": "^4.2.2",
+    "antd": "^4.5.2",
     "babel": "6.23.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
@@ -62,6 +59,7 @@
     "babel-preset-es2015": "6.24.1",
     "babel-preset-react": "6.24.1",
     "babel-preset-stage-0": "6.24.1",
+    "cpy-cli": "3.1.1",
     "cross-env": "^5.2.0",
     "css-loader": "^2.1.1",
     "eslint": "5.16.0",
@@ -71,18 +69,28 @@
     "less-loader": "^5.0.0",
     "mocha": "^6.1.4",
     "mocha-babel": "3.0.3",
-    "node-sass": "^4.12.0",
-    "react-hot-loader": "^4.8.4",
-    "react-redux": "^7.0.3",
-    "react-router": "^5.0.0",
-    "react-router-dom": "^5.0.0",
-    "react-router-redux": "^4.0.8",
+    "node-sass": "^4.14.1",
+    "prop-types": "^15.7.2",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-hot-loader": "^4.12.18",
+    "react-redux": "^7.1.3",
+    "react-router": "^5.1.2",
+    "react-router-dom": "^5.1.2",
+    "react-router-redux": "^5.0.0-alpha.8",
     "sass-loader": "7.1.0",
     "style-loader": "0.23.1",
     "url-loader": "^1.1.2",
     "webpack": "^4.30.0",
     "webpack-bundle-analyzer": "^3.3.2",
     "webpack-cli": "^3.3.1",
-    "webpack-dev-server": "^3.3.1"
+    "webpack-dev-server": "^3.11.0"
+  },
+  "peerDependencies": {
+    "@ant-design/icons": "^4.2.2",
+    "antd": "^4.5.2",
+    "prop-types": "^15.7.2",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
   }
 }
