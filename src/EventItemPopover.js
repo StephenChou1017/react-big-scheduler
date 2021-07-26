@@ -88,13 +88,43 @@ class EventItemPopover extends Component {
                 );
             }
 
+            let colorRow = config.eventItemPopoverShowColor ? (
+              <Col span={2}>
+                <div
+                  className="status-dot"
+                  style={{ backgroundColor: statusColor }}
+                />
+              </Col>
+            ) : null;
+
             let dateFormat = config.eventItemPopoverDateFormat;
+
+            let dateTimeRow = (
+              <Col span={22}>
+                <span className="header1-text">{start.format("HH:mm")}</span>
+                {dateFormat && (
+                  <span className="help-text" style={{ marginLeft: "8px" }}>
+                    {start.format(dateFormat)}
+                  </span>
+                )}
+                <span className="header2-text" style={{ marginLeft: "8px" }}>
+                  -
+                </span>
+                <span className="header1-text" style={{ marginLeft: "8px" }}>
+                  {end.format("HH:mm")}
+                </span>
+                {dateFormat && (
+                  <span className="help-text" style={{ marginLeft: "8px" }}>
+                    {end.format(dateFormat)}
+                  </span>
+                )}
+              </Col>
+            );
+
             return (
                 <div style={{width: '300px'}}>
                     <Row type="flex" align="middle">
-                        <Col span={2}>
-                            <div className="status-dot" style={{backgroundColor: statusColor}} />
-                        </Col>
+                        {colorRow}
                         <Col span={22} className="overflow-text">
                             <span className="header2-text" title={title}>{title}</span>
                         </Col>
@@ -104,9 +134,7 @@ class EventItemPopover extends Component {
                         <Col span={2}>
                             <div />
                         </Col>
-                        <Col span={22}>
-                            <span className="header1-text">{start.format('HH:mm')}</span><span className="help-text" style={{marginLeft: '8px'}}>{start.format(dateFormat)}</span><span className="header2-text"  style={{marginLeft: '8px'}}>-</span><span className="header1-text" style={{marginLeft: '8px'}}>{end.format('HH:mm')}</span><span className="help-text" style={{marginLeft: '8px'}}>{end.format(dateFormat)}</span>
-                        </Col>
+                        {dateTimeRow}
                     </Row>
                     {opsRow}
                 </div>
