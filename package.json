@@ -69,7 +69,7 @@
     "json-loader": "0.5.7",
     "less": "^3.9.0",
     "less-loader": "^5.0.0",
-    "mocha": "^6.1.4",
+    "mocha": "^10.2.0",
     "mocha-babel": "3.0.3",
     "node-sass": "^4.12.0",
     "react-hot-loader": "^4.8.4",
